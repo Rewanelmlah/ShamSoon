@@ -38,8 +38,8 @@ class ContactUsScreen extends StatelessWidget {
         ],
       ),
              ),
-            // SizedBox(height: 30.h),
-           //  Center(child: Text("Contact Us Through",style: TextStyle(fontSize: 18.sp,fontWeight: FontWeight.bold,color: AppColors.primaryColor),)),
+             SizedBox(height: 30.h),
+             Center(child: Text("Contact Us Through",style: TextStyle(fontSize: 18.sp,fontWeight: FontWeight.bold,color: AppColors.primaryColor),)),
              SizedBox(height: 20.h),
             CustomTile(
               color: Color(0xFFBFDDD7),
