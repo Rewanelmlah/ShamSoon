@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
 import 'package:shamsoon/features/Analystics/presentation/views/analystics_screen.dart';
 import 'package:shamsoon/features/community/presentation/views/Community_screen.dart';
+import 'package:shamsoon/features/home/presentation/views/Home_Screen.dart';
 import 'package:shamsoon/features/settings/presentation/views/setting_screen.dart';
 
 class LayoutScreen extends StatefulWidget {
@@ -59,13 +60,6 @@ class _LayoutScreenState extends State<LayoutScreen> {
         type: BottomNavigationBarType.fixed,
       ),
     );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Home Screen', style: TextStyle(fontSize: 24)));
   }
 }
 
