@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shamsoon/core/app_colors.dart';
 import 'package:shamsoon/features/settings/presentation/widgets/custome_tile.dart';
 
 
@@ -23,6 +24,23 @@ class ContactUsScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 40.h),
+             Container(
+      width: double.infinity,
+      height: 70.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: AppColors.primaryColor, width: 2.w),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('ShamSoon Make Sun Works For You',style: TextStyle(fontSize: 15.sp,fontWeight: FontWeight.bold,color: Colors.black),),
+        ],
+      ),
+             ),
+            // SizedBox(height: 30.h),
+           //  Center(child: Text("Contact Us Through",style: TextStyle(fontSize: 18.sp,fontWeight: FontWeight.bold,color: AppColors.primaryColor),)),
+             SizedBox(height: 20.h),
             CustomTile(
               color: Color(0xFFBFDDD7),
               icon: Icons.mail_outline,
@@ -39,12 +57,7 @@ class ContactUsScreen extends StatelessWidget {
               onTap: () {},
             ),
             SizedBox(height: 20.h),
-            CustomTile(
-              color: Color(0xFFBFDDD7),
-              icon: Icons.call_outlined,
-              title: "Phone number",
-              onTap: () {},
-            ),
+            
           ],
         ),
       ),

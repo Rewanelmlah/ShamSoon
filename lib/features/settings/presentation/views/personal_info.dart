@@ -34,15 +34,7 @@ class PersonalInfoScreen extends StatelessWidget {
                 sufficon: Icons.edit_outlined,
                 color: Color(0xFFBFDDD7),icon: Icons.call_outlined, label: "Phone number", initialValue: "+903432432890"),
              SizedBox(height: 15.h,),
-              const CustomTextField(
-                sufficon: Icons.visibility_outlined,
-                color: Color(0xFFBFDDD7),icon: Icons.key_outlined, label: "Change Password", initialValue: "hhvffhbvvnn", obscureText: false),
-             SizedBox(height: 15.h,),
-             const CustomTextField(
-              sufficon: Icons.visibility_off_outlined,
-              color: Color(0xFFBFDDD7),
-              icon: Icons.key_off_outlined, label: "Confirm Password", initialValue: "*******", obscureText: true),
-            ],
+               ],
           ),
         ),
       ),
