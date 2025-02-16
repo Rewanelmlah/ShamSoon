@@ -56,7 +56,7 @@ class CustomeHalfchart extends StatelessWidget {
                           showTitle: false,
                         ),
                         PieChartSectionData(
-                          color: Colors.transparent,
+                         color: Colors.transparent,
                           value: 50,
                           radius: 20.w,
                           title: '',
