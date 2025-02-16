@@ -12,12 +12,14 @@ class GradientPieChartPainter extends CustomPainter {
         Offset(size.width / 2, size.height / 2), 
         [
           Colors.grey.shade300,
-          AppColors.primaryColor,
+           Colors.redAccent,
+           Colors.orangeAccent,
+           Colors.yellow.shade700,
           Colors.green.shade600,
-          Colors.yellow.shade700,
-          Colors.redAccent,
+         AppColors.primaryColor,
+         
         ],
-        [0.0, 0.4,0.4, 0.7, 1.0],
+        [0.2, 0.4,0.2,0.4, 0.7, 1.0],
         TileMode.clamp,
       )
       ..style = PaintingStyle.stroke
@@ -31,8 +33,8 @@ class GradientPieChartPainter extends CustomPainter {
         width: 160.w,
         height: 160.h,
       ),
-      -90 * (3.1415927 / 180),
-      270 * (3.1415927 / 150),
+      -30 * (3.1415927 / 180),
+      250 * (3.1415927 / 140),
       false,
       paint,
     );
