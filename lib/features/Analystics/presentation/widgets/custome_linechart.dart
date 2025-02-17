@@ -1,15 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shamsoon/core/app_colors.dart'; // استيراد مكتبة ScreenUtil
+import 'package:shamsoon/core/app_colors.dart'; 
 
 class CurvedChartSample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300.h, // استخدام ScreenUtil للتحجيم
-      width: 450.w, // استخدام ScreenUtil للتحجيم
-      padding: EdgeInsets.all(25.w), // تعديل الحواف باستخدام ScreenUtil
+      height: 300.h, 
+      width: 450.w, 
+      padding: EdgeInsets.all(28.w), 
       child: LineChart(
         LineChartData(
           lineBarsData: [
@@ -25,7 +25,7 @@ class CurvedChartSample extends StatelessWidget {
               ],
               isCurved: true,
               color:AppColors.primaryColor,
-              barWidth: 5.w, // استخدام ScreenUtil لسمك الخط
+              barWidth: 5.w, 
               belowBarData: BarAreaData(
                 show: true,
                 gradient: LinearGradient(
@@ -40,24 +40,24 @@ class CurvedChartSample extends StatelessWidget {
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                reservedSize: 40.w, // المسافة بين الأرقام باستخدام ScreenUtil
+                reservedSize: 40.w, 
                 getTitlesWidget: (value, _) {
                   if ([0, 50, 100, 150, 200].contains(value.toInt())) {
                     return Text(
                       "${value.toInt()}k",
                       style: TextStyle(
-                          fontSize: 14.sp, fontWeight: FontWeight.bold), // استخدام ScreenUtil لحجم الخط
+                          fontSize: 14.sp, fontWeight: FontWeight.bold), 
                     );
                   }
-                  return SizedBox(); // إخفاء القيم غير المطلوبة
+                  return SizedBox(); 
                 },
               ),
             ),
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                reservedSize: 40.w, // المسافة بين العناوين السفلية باستخدام ScreenUtil
-                interval: 1, // عرض كل يوم بدون تكرار
+                reservedSize: 40.w, 
+                interval: 1,
                 getTitlesWidget: (value, _) {
                   List<String> labels = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
                   int index = value.toInt();
@@ -65,26 +65,26 @@ class CurvedChartSample extends StatelessWidget {
                     return Text(
                       labels[index],
                       style: TextStyle(
-                          fontSize: 14.sp, fontWeight: FontWeight.bold), // استخدام ScreenUtil لحجم الخط
+                          fontSize: 14.sp, fontWeight: FontWeight.bold),
                     );
                   }
-                  return SizedBox(); // إخفاء القيم غير الموجودة
+                  return SizedBox();
                 },
               ),
             ),
             topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
             rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           ),
-          borderData: FlBorderData(show: false), // إخفاء الحدود
-          clipData: FlClipData.all(), // يمنع خروج أي عنصر خارج الكونتينر
+          borderData: FlBorderData(show: false), 
+          clipData: FlClipData.all(),
           gridData: FlGridData(
             show: true,
             drawHorizontalLine: true,
             drawVerticalLine: false,
-            horizontalInterval: 50, // خطوط الشبكة عند 50، 100، 150، 200
+            horizontalInterval: 50, 
           ),
           minY: 0,
-          maxY: 220, // تعيين الحد الأقصى ليتناسب مع القيم الجديدة
+          maxY: 220, 
         ),
       ),
     );

@@ -24,7 +24,7 @@ class LogoutButton extends StatelessWidget {
             child: Icon(Icons.exit_to_app, size: 24.sp, color: Colors.red)),
         label: Text("Log out", style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.bold, color: Colors.white)),
         onPressed: () {
-          // تنفيذ عملية تسجيل الخروج هنا
+          //logout operation
         },
       ),
     );

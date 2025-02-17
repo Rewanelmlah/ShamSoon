@@ -6,22 +6,25 @@ class WeekScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'Weekly average :120 kw/h',
-          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-        ),
-        Image.asset(
-          'assets/images/week.png', // مسار الصورة
-          width: 150.w, // ضبط العرض باستخدام ScreenUtil
-          height: 150.h, // ضبط الطول باستخدام ScreenUtil
-         // fit: BoxFit.contain, // لعرض الصورة كاملة
-        ),
-        
-        CurvedChartSample(),
-        Spacer(),
-      ],
-     );
+    return Padding(
+      padding:  EdgeInsets.all(8.0.w),
+      child: Column(
+        children: [
+          Text(
+            'Weekly average :120 kw/h',
+            style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+          ),
+          Image.asset(
+            'assets/images/week.png', 
+            width: 150.w, 
+            height: 150.h, 
+           
+          ),
+          
+          CurvedChartSample(),
+          Spacer(),
+        ],
+       ),
+    );
   }
 }

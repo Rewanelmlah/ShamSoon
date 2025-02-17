@@ -12,8 +12,7 @@ class EnergyDashboard extends StatefulWidget {
 }
 
 class _EnergyDashboardState extends State<EnergyDashboard> {
-  String selectedPeriod = "Day"; // افتراضيًا يومي
-
+  String selectedPeriod = "Day"; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +56,6 @@ class _EnergyDashboardState extends State<EnergyDashboard> {
 
           SizedBox(height: 10.h),
 
-          // الرسومات البيانية حسب الفترة المختارة
           if (selectedPeriod == "Day") ...[
             Expanded(child: CustomeBarChartSample()),
           ] else if (selectedPeriod == "Week") ...[

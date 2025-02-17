@@ -13,6 +13,7 @@ class CircularChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        margin: EdgeInsets.all(4.w),
         width: 200.w, // Responsive width
         height: 200.h, // Responsive height
         decoration: BoxDecoration(
@@ -22,7 +23,7 @@ class CircularChart extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // تطبيق التدرج اللوني على PieChart
+            
             ShaderMask(
               shaderCallback: (Rect bounds) {
                 return LinearGradient(
@@ -36,38 +37,38 @@ class CircularChart extends StatelessWidget {
                 PieChartData(
                   sections: [
                     PieChartSectionData(
-                      value: 80, // 80% => ثلثي الدائرة تقريبًا
-                      color: Colors.white, // سيتم استبداله بالتدرج
-                      radius: 20.w, // Responsive radius
+                      value: 80, 
+                      color: Colors.white,
+                      radius: 20.w, 
                       title: '',
                     ),
                     PieChartSectionData(
-                      value: 10, // 10% => ربع الدائرة أحمر
+                      value: 10,
                       color: Colors.white,
                       radius: 20.w,
                       title: '',
                     ),
                     PieChartSectionData(
-                      value: 10, // 10% => ربع الدائرة أصفر
+                      value: 10,
                       color: Colors.white,
                       radius: 20.w,
                       title: '',
                     ),
                   ],
                   sectionsSpace: 0,
-                  centerSpaceRadius: 75.w, // Responsive center space
+                  centerSpaceRadius: 75.w, 
                 ),
               ),
             ),
 
-            // النصوص في المنتصف
+            
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   value,
                   style: TextStyle(
-                    fontSize: 35.sp, // Responsive font size
+                    fontSize: 35.sp, 
                     fontWeight: FontWeight.bold,
                     color: AppColors.primaryColor,
                   ),
@@ -75,7 +76,7 @@ class CircularChart extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 16.sp, // Responsive font size
+                    fontSize: 16.sp, 
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),

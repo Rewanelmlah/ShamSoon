@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // الانتقال للشاشة الرئيسية بعد 2 ثانية مع أنيميشن
+    
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
@@ -23,8 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
           pageBuilder: (context, animation, secondaryAnimation) =>
               const OnBoarding(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            // هنا يتم تحديد الأنيميشن
-            const begin = Offset(0.0, 1.0); // ابدأ من أسفل الشاشة
+             
+            const begin = Offset(0.0, 1.0);
             const end = Offset.zero;
             const curve = Curves.fastOutSlowIn;
 
@@ -45,13 +45,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // لون خلفية الشاشة
+      backgroundColor: Colors.white,
       body: Center(
         child: Image.asset(
-          'assets/images/logo.png', // مسار الصورة
-          width: 250.w, // ضبط العرض باستخدام ScreenUtil
-          height: 300.h, // ضبط الطول باستخدام ScreenUtil
-          fit: BoxFit.contain, // لعرض الصورة كاملة
+          'assets/images/logo.png', 
+          width: 250.w, 
+          height: 300.h, 
+          fit: BoxFit.contain,
         ),
       ),
     );

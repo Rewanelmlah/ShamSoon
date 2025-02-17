@@ -54,19 +54,19 @@ class DetailsGraphs extends StatelessWidget {
       leftTitles: AxisTitles(
   sideTitles: SideTitles(
     showTitles: true,
-    reservedSize: 50.w, // توفير مساحة كافية للأرقام
-    interval: 200, // لضمان توزيع القيم بالتساوي
+    reservedSize: 50.w,
+    interval: 200, 
     getTitlesWidget: (value, _) {
-      int intValue = value.toInt(); // تحويل القيمة إلى عدد صحيح
+      int intValue = value.toInt();
 
-      // إظهار الأرقام فقط 200، 400، 600، 800، 1000
+      
       if ([200, 400, 600,800,1000].contains(intValue)) {
         return Text(
-          "$intValue ", // استخدام intValue بدلاً من value
+          "$intValue ", 
           style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
         );
       }
-      return SizedBox(); // إخفاء أي قيم أخرى
+      return SizedBox(); 
     },
   ),
 ),

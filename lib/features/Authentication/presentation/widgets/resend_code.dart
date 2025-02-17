@@ -8,7 +8,7 @@ class ResendCodeWidget extends StatefulWidget {
 }
 
 class _ResendCodeWidgetState extends State<ResendCodeWidget> {
-  int _remainingTime = 60; // المدة الزمنية للمؤقت (بالثواني)
+  int _remainingTime = 60; 
   late Timer _timer;
 
   @override
@@ -19,7 +19,7 @@ class _ResendCodeWidgetState extends State<ResendCodeWidget> {
 
   @override
   void dispose() {
-    _timer.cancel(); // إنهاء المؤقت عند إلغاء الودجت
+    _timer.cancel(); 
     super.dispose();
   }
 
@@ -37,10 +37,10 @@ class _ResendCodeWidgetState extends State<ResendCodeWidget> {
 
   void _resendCode() {
     setState(() {
-      _remainingTime = 30; // إعادة تعيين المؤقت
+      _remainingTime = 30; 
     });
     _startTimer();
-    // يمكنك هنا استدعاء وظيفة إعادة إرسال الكود
+    
     print("Resend code triggered!");
   }
 
@@ -49,7 +49,7 @@ class _ResendCodeWidgetState extends State<ResendCodeWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // إذا انتهى المؤقت
+        
         TextButton(
           onPressed: _resendCode,
           child: Text(

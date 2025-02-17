@@ -16,10 +16,10 @@ class CustomeBarChartSample extends StatelessWidget {
         SizedBox(height: 40.h),
         Container(
           
-          height: 300.h, // الحجم بالنسبة لحجم الشاشة
-          width: 400.w, // العرض بالنسبة لحجم الشاشة
+          height: 300.h, 
+          width: 400.w, 
           child: Padding(
-            padding: EdgeInsets.all(17.w), // المسافة (padding) تتناسب مع العرض
+            padding: EdgeInsets.all(20.w), 
             child: BarChart(
               BarChartData(
                 barGroups: [
@@ -83,24 +83,24 @@ class CustomeBarChartSample extends StatelessWidget {
                   leftTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
-                      reservedSize: 60.w, // المسافة بين الأرقام
+                      reservedSize: 60.w,
                       getTitlesWidget: (value, _) {
                         return Text(
                           "${value.toInt()} kWh",
                           style: TextStyle(
                               fontSize: 16.sp, fontWeight: FontWeight.bold),
-                        ); // الحجم يتناسب مع الشاشة
+                        ); 
                       },
                     ),
                   ),
                   bottomTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
-                      reservedSize: 50.w, // المسافة بين العناوين السفلية
+                      reservedSize: 50.w,
                       getTitlesWidget: (value, _) {
                         List<String> labels = ["8:0", "10:0", "12:0", "2:0", "4:0", "6:0", "8:0"];
                         return Padding(
-                          padding: EdgeInsets.all(16.w), // المسافة بين النصوص والعناوين السفلية
+                          padding: EdgeInsets.all(16.w), 
                           child: Text(labels[value.toInt()],
                               style: TextStyle(
                                   fontSize: 14.sp, fontWeight: FontWeight.bold)),

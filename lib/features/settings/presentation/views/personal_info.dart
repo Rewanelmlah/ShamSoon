@@ -17,7 +17,7 @@ class PersonalInfoScreen extends StatelessWidget {
       ),
        title:Text("Personal Info",style: TextStyle(fontSize: 24.sp,fontWeight: FontWeight.bold),),),
       body: Padding(
-        padding: EdgeInsets.all(16.w), // استخدم ScreenUtil للحصول على قيمة مرنة
+        padding: EdgeInsets.all(16.w), 
         child: SingleChildScrollView(
           child: Column(
             children: [
