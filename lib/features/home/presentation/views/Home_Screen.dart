@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: CustomAppBar(),
         body: Padding(
-          padding:  EdgeInsets.all(8.w),
+          padding:  EdgeInsets.all(6.w),
           child: SingleChildScrollView(
              scrollDirection: Axis.vertical,
             child: Column(
