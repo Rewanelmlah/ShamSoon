@@ -72,7 +72,7 @@ class _CameraScreenState extends State<CameraScreen> {
         ),
       ),
       body: Padding(
-        padding:  EdgeInsets.all(8.0.r),
+        padding:  EdgeInsets.all(1.0.r),
         child: Column(
           children: [
             Expanded(
