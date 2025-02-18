@@ -32,7 +32,7 @@ class PredictionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           
           children: [
-            SizedBox(height: 30.h), 
+            SizedBox(height: 50.h), 
             Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
