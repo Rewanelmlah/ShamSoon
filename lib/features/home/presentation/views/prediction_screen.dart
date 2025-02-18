@@ -26,7 +26,7 @@ class PredictionScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10.w), 
+        padding: EdgeInsets.all(8.w), 
         child: Column(
            
           crossAxisAlignment: CrossAxisAlignment.center,

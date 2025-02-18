@@ -71,63 +71,66 @@ class _CameraScreenState extends State<CameraScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: _isCameraInitialized
-                ? SizedBox(
-                    width: double.infinity,  
-                    height: 0.4.sh,  
-                    child: Stack(
-                      children: [
-                        CameraPreview(_cameraController!),
-                        Center(
-                          child: Container(
-                            width: 0.50.sw,  // 45% of screen width
-                            height: 0.50.sw,  
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 3),
-                              borderRadius: BorderRadius.circular(10.r),
+      body: Padding(
+        padding:  EdgeInsets.all(8.0.r),
+        child: Column(
+          children: [
+            Expanded(
+              child: _isCameraInitialized
+                  ? SizedBox(
+                      width: double.infinity,  
+                      height: 0.4.sh,  
+                      child: Stack(
+                        children: [
+                          CameraPreview(_cameraController!),
+                          Center(
+                            child: Container(
+                              width: 0.50.sw,  // 45% of screen width
+                              height: 0.50.sw,  
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white, width: 3),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                : Center(child: CircularProgressIndicator()),
-          ),
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.all(20.w),  
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.photo_outlined, size: 50.sp, color: AppColors.primaryColor),
-                  onPressed: pickImageFromGallery,
-                ),
-                IconButton(
-                  icon: Icon(Icons.radio_button_checked_outlined, size: 60.sp, color: AppColors.primaryColor),
-                  onPressed: captureImage,
-                ),
-                IconButton(
-                  icon: Icon(Icons.check_circle, size: 50.sp, color: AppColors.primaryColor),
-                  onPressed: () {
-                    if (_capturedImage != null) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PredictionScreen(imagePath: _capturedImage!.path),
-                       ),
-                     );
-                    }
-                  },
-                ),
-              ],
+                        ],
+                      ),
+                    )
+                  : Center(child: CircularProgressIndicator()),
             ),
-          ),
-          SizedBox(height: 30.h),  
-        ],
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(20.w),  
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.photo_outlined, size: 50.sp, color: AppColors.primaryColor),
+                    onPressed: pickImageFromGallery,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.radio_button_checked_outlined, size: 60.sp, color: AppColors.primaryColor),
+                    onPressed: captureImage,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.check_circle, size: 50.sp, color: AppColors.primaryColor),
+                    onPressed: () {
+                      if (_capturedImage != null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PredictionScreen(imagePath: _capturedImage!.path),
+                         ),
+                       );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30.h),  
+          ],
+        ),
       ),
     );
   }
