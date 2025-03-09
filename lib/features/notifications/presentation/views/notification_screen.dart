@@ -36,8 +36,6 @@ class NotificationScreen extends StatelessWidget {
               SizedBox(height: 20.h),
               CustomNotificationTile(title: 'High temperature detected', onTap: () {}),
               SizedBox(height: 20.h),
-             
-              
             ],
           ),
         ),
