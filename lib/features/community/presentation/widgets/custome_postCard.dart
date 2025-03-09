@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
+import 'package:shamsoon/features/community/presentation/views/comments_screen.dart';
 import 'package:shamsoon/features/community/presentation/widgets/Custome_likeButton.dart';
 class CustomePostCard extends StatelessWidget {
   const CustomePostCard({super.key});
@@ -43,10 +44,10 @@ class CustomePostCard extends StatelessWidget {
                           SizedBox(height: 10.h),
                           GestureDetector(
   onTap: () {
-   // Navigator.push(
-   //   context,
-   //   MaterialPageRoute(builder: (context) => NextPage()), // استبدل NextPage بالصفحة التي تريد التنقل إليها
-   // );
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CommentsScreen()), 
+    );
   },
   child: Row(
     mainAxisAlignment: MainAxisAlignment.center,
