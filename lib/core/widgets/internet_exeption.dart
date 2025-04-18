@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/config/language/locale_keys.g.dart';
-import 'package:flutter_base/src/config/res/assets.gen.dart';
-import 'package:flutter_base/src/config/res/color_manager.dart';
-import 'package:flutter_base/src/core/extensions/context_extension.dart';
+import 'package:shamsoon/core/extensions/context_extension.dart';
 
-import '../../config/res/app_sizes.dart';
+import '../../src/config/language/locale_keys.g.dart';
+import '../../src/config/res/assets.gen.dart';
+import '../helpers/app_sizes.dart';
 
 class InternetExpetion extends StatelessWidget {
   const InternetExpetion({super.key});
@@ -26,7 +25,6 @@ class InternetExpetion extends StatelessWidget {
             Text(
               LocaleKeys.errorExeptionNoconnection,
               style: context.textTheme.titleLarge!.copyWith(
-                color: AppColors.secondary,
               ),
             ),
             SizedBox(height: AppSize.sH10),

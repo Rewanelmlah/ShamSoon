@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/config/res/color_manager.dart';
-import 'package:flutter_base/src/config/res/constants_manager.dart';
-
-import '../../../config/res/app_sizes.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../app_colors.dart';
+import '../../helpers/constant_manager.dart';
 import 'custom_animated_button.dart';
 
 class LoadingButton extends StatelessWidget {
@@ -41,16 +40,16 @@ class LoadingButton extends StatelessWidget {
     return Padding(
       padding: margin ??
           EdgeInsets.symmetric(
-            horizontal: AppMargin.mW10,
-            vertical: AppMargin.mH10,
+            horizontal: 10.w,
+            vertical: 10.h,
           ),
       child: CustomAnimatedButton(
         onTap: onTap,
         width: width ?? MediaQuery.sizeOf(context).width,
-        minWidth: AppSize.sW50,
-        height: height ?? AppSize.sH50,
+        minWidth: 50.w,
+        height: height ?? 50.sp,
         color: color ?? AppColors.primaryColor,
-        borderRadius: borderRadius ?? AppSize.sH40,
+        borderRadius: borderRadius ?? 40.sp,
         disabledColor: color ?? AppColors.primaryColor,
         borderSide: borderSide,
         loader: const CupertinoActivityIndicator(
@@ -61,7 +60,7 @@ class LoadingButton extends StatelessWidget {
           style: TextStyle(
             fontFamily: ConstantManager.fontFamily,
             color: textColor ?? Colors.white,
-            fontSize: fontSize ?? FontSize.s14,
+            fontSize: fontSize ?? 14.sp,
           ),
         ),
       ),

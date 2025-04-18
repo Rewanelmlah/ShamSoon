@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shamsoon/core/network/extensions.dart';
+import 'package:shamsoon/core/shared/base_model.dart';
+import '../../src/config/language/locale_keys.g.dart';
 import '../error/exceptions.dart';
 import '../helpers/constant_manager.dart';
 import 'configuration_interceptor.dart';

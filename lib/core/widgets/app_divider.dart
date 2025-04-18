@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/core/extensions/padding_extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shamsoon/core/extensions/padding_extension.dart';
 
 class AppDivider extends StatelessWidget {
   final Color? color;

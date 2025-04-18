@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/config/language/locale_keys.g.dart';
-import 'package:flutter_base/src/config/res/assets.gen.dart';
-
-import '../../config/res/app_sizes.dart';
+import '../../src/config/language/locale_keys.g.dart';
+import '../../src/config/res/assets.gen.dart';
+import '../helpers/app_sizes.dart';
 
 class NotContainData extends StatelessWidget {
   const NotContainData({super.key});

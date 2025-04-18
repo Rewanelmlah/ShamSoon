@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/config/res/constants_manager.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../config/res/app_sizes.dart';
-import '../../../config/res/color_manager.dart';
+import '../../helpers/color_manager.dart';
+import '../../helpers/constant_manager.dart';
 
 class DefaultButton extends StatelessWidget {
   final String? title;
@@ -46,7 +46,7 @@ class DefaultButton extends StatelessWidget {
         title ?? 'Click!',
         style: TextStyle(
           color: textColor ?? Colors.white,
-          fontSize: fontSize ?? FontSize.s16,
+          fontSize: fontSize ?? 16.sp,
           fontFamily: fontFamily,
           fontWeight: fontWeight ?? FontWeight.w500,
         ),
@@ -57,12 +57,12 @@ class DefaultButton extends StatelessWidget {
     return Padding(
       padding: margin ??
           EdgeInsets.symmetric(
-            horizontal: AppMargin.mW10,
-            vertical: AppMargin.mH4,
+            horizontal: 10.w,
+            vertical: 4.h,
           ),
       child: SizedBox(
         width: width ?? MediaQuery.of(context).size.width,
-        height: height ?? AppSize.sH60,
+        height: height ?? 60.sp,
         child: ElevatedButton(
             onPressed: onTap,
             style: ElevatedButton.styleFrom(
@@ -72,7 +72,7 @@ class DefaultButton extends StatelessWidget {
               backgroundColor: color ?? AppColors.primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius:
-                    borderRadius ?? BorderRadius.circular(AppSize.sH10),
+                    borderRadius ?? BorderRadius.circular(10.r),
                 side: borderColor != null
                     ? BorderSide(
                         color: borderColor ?? AppColors.primaryColor,

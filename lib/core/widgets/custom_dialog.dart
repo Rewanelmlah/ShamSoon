@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/config/res/app_sizes.dart';
-import 'package:flutter_base/src/config/res/color_manager.dart';
-import 'package:flutter_base/src/config/res/constants_manager.dart';
+
+import '../app_colors.dart';
+import '../helpers/app_sizes.dart';
+import '../helpers/constant_manager.dart';
 
 Future showCustomDialog(BuildContext context,
     {required Widget child,
@@ -25,7 +26,7 @@ Future showCustomDialog(BuildContext context,
             margin: margin ?? EdgeInsets.symmetric(horizontal: AppPadding.pH20),
             padding: padding ?? EdgeInsets.all(AppPadding.pH20),
             decoration: BoxDecoration(
-              color: color ?? AppColors.white,
+              color: color ?? Colors.white,
               borderRadius: borderRadius ?? BorderRadius.circular(AppSize.sH25),
             ),
             child: child,

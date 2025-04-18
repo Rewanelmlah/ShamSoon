@@ -31,7 +31,7 @@ class SuccessedVerify extends StatelessWidget {
             ),
             Center(
                 child: Image.asset(
-              'assets/images/Verified-pana 1.png',
+              'assets/images/Verified-pana_1.png',
               height: 320.h,
               width: 320.w,
             )),

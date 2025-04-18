@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_base/src/config/res/app_sizes.dart';
-import 'package:flutter_base/src/config/res/constants_manager.dart';
 
-import '../../../config/res/color_manager.dart';
+import '../../app_colors.dart';
+import '../../helpers/app_sizes.dart';
+import '../../helpers/constant_manager.dart';
+
 
 class DefaultTextField extends StatefulWidget {
   final String? title;
@@ -126,7 +127,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
         filled: widget.filled,
         suffixText: widget.suffixText,
         prefixIcon: widget.isPassword == true
-            ? const Icon(Icons.lock_outline, color: AppColors.hintText)
+            ? const Icon(Icons.lock_outline, color: Colors.grey)
             : widget.prefixIcon,
         suffixIcon: widget.isPassword == true
             ? IconButton(
@@ -139,7 +140,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
                   _isSecure
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
-                  color: AppColors.hintText,
+                  color: Colors.grey,
                 ),
               )
             : widget.suffixIcon,
@@ -150,14 +151,14 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
         labelStyle: isLabel ? const TextStyle(color: AppColors.primaryColor) : null,
         hintStyle: widget.hintStyle??  const TextStyle(
           fontFamily: ConstantManager.fontFamily,
-          color: AppColors.grey,
+          color: Colors.grey,
           fontWeight: FontWeight.w300,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppCircular.r10),
           borderSide: widget.hasBorderColor == true
               ? BorderSide(
-                  color: widget.borderColor ?? AppColors.border,
+                  color: widget.borderColor ?? Colors.grey,
                 )
               : BorderSide.none,
         ),

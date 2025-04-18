@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../config/res/color_manager.dart';
-
 class CustomWidgetValidator<T> extends StatelessWidget {
   final T? initialValue;
   final FormFieldValidator<T> validator;
@@ -42,7 +40,7 @@ class DefaultErrorBody extends StatelessWidget {
           border: const OutlineInputBorder(borderSide: BorderSide.none),
           errorBorder: UnderlineInputBorder(
             borderSide: value.hasError
-                ? const BorderSide(color: AppColors.error)
+                ? const BorderSide(color: Colors.red)
                 : BorderSide.none,
           ),
         ),

@@ -1,7 +1,11 @@
-part of '../../features/auth/complete_profile/presentation/imports/imports.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:shamsoon/core/extensions/padding_extension.dart';
+import '../helpers/validators.dart';
+import 'custom_text_field.dart';
 
 class TitleWithTextField extends StatefulWidget {
-
   final bool? readOnly;
   final String title;
   final String hintText;

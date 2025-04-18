@@ -1,10 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/core/widgets/app_text.dart';
-import 'package:flutter_base/src/core/widgets/text_fields/default_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shamsoon/core/widgets/text_fields/default_text_field.dart';
 
-import '../../config/res/constants_manager.dart';
+import '../helpers/constant_manager.dart';
+import 'app_text.dart';
+
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({super.key,

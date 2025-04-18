@@ -2,8 +2,6 @@ import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
 
-import '../../../config/res/color_manager.dart';
-
 enum ButtonStatus { loading, idle }
 
 class CustomAnimatedButton extends StatefulWidget {
@@ -170,7 +168,7 @@ class CustomButtonState extends State<CustomAnimatedButton>
               backgroundColor: widget.color,
               elevation: widget.elevation,
               padding: widget.padding,
-              disabledBackgroundColor: widget.disabledColor ?? AppColors.black,
+              disabledBackgroundColor: widget.disabledColor ?? Colors.black,
               shape: RoundedRectangleBorder(
                 side: widget.borderSide,
                 borderRadius: BorderRadius.circular(widget.roundLoadingShape

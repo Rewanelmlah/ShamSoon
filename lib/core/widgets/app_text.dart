@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/config/res/app_sizes.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../config/res/constants_manager.dart';
+import '../helpers/constant_manager.dart';
 
 class AppText extends StatelessWidget {
   final String text;
@@ -34,7 +34,7 @@ class AppText extends StatelessWidget {
       style: TextStyle(
         fontFamily: ConstantManager.fontFamily,
         color: color,
-        fontSize: fontSize ?? FontSize.s16,
+        fontSize: fontSize ?? 16.sp,
         fontWeight: fontWeight,
         height: height,
       ),

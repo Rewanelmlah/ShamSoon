@@ -23,7 +23,7 @@ class LogIn extends StatelessWidget {
             SizedBox(height: 40.h),
             Center(
                 child: Image.asset(
-              'assets/images/LOGO-png1 2.png',
+              'assets/images/LOGO-png1_2.png',
               height: 100.h,
               width: 100.w,
             )),

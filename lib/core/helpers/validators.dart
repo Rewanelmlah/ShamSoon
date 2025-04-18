@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../src/config/language/locale_keys.g.dart';
+
 class Validators {
   static String? validateEmpty(String? value, {String? message}) {
     if (value == null || value.isEmpty) {

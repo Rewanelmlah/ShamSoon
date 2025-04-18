@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/config/res/app_sizes.dart';
-import 'package:flutter_base/src/config/res/constants_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../config/res/color_manager.dart';
-import '../navigation/navigator.dart';
+import '../app_colors.dart';
+import '../helpers/app_sizes.dart';
+import '../helpers/constant_manager.dart';
+import '../helpers/navigation.dart';
 
 class MessageUtils {
   static void showSnackBar(
@@ -20,7 +20,7 @@ class MessageUtils {
         style:
             TextStyle(color: textColor ?? Colors.red, fontSize: FontSize.s14),
       ),
-      backgroundColor: backgroundColor ?? AppColors.white,
+      backgroundColor: backgroundColor ?? Colors.white,
       behavior: SnackBarBehavior.floating,
     );
     ScaffoldMessenger.of(context ?? Go.navigatorKey.currentContext!)
@@ -37,7 +37,7 @@ class MessageUtils {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       backgroundColor: color ?? AppColors.primaryColor,
-      textColor: textColor ?? AppColors.white,
+      textColor: textColor ?? Colors.white,
       fontSize: FontSize.s16,
     );
   }

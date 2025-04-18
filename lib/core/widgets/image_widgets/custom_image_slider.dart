@@ -1,13 +1,12 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_base/src/config/res/app_sizes.dart';
-import 'package:flutter_base/src/config/res/color_manager.dart';
-import 'package:flutter_base/src/config/res/constants_manager.dart';
-import 'package:flutter_base/src/core/extensions/context_extension.dart';
-import 'package:flutter_base/src/core/extensions/padding_extension.dart';
-import 'package:flutter_base/src/core/extensions/sized_box_helper.dart';
-import 'package:flutter_base/src/core/widgets/image_widgets/cached_image.dart';
-
+import 'package:shamsoon/core/extensions/context_extension.dart';
+import 'package:shamsoon/core/extensions/sized_box_helper.dart';
+import '../../app_colors.dart';
+import '../../helpers/app_sizes.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import '../../helpers/constant_manager.dart';
+import 'cached_image.dart';
 
 class ImageSlider extends StatefulWidget {
   final Color? activeColor;
@@ -40,7 +39,7 @@ class _ImageSliderState extends State<ImageSlider> {
             fit: BoxFit.fill,
           ),
           options: CarouselOptions(
-            height: widget.height ?? context.mediaQuery.size.width * .2,
+            height: widget.height ?? context.width * .2,
             aspectRatio: ConstantManager.customImageSliderAspectRatio,
             viewportFraction: 1,
             initialPage: ConstantManager.zero,

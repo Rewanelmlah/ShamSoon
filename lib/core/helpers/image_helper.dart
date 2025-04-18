@@ -5,7 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../src/config/language/locale_keys.g.dart';
+import '../../src/config/res/assets.gen.dart';
 import '../app_colors.dart';
+import '../widgets/app_text.dart';
+import 'navigation.dart';
 
 class ImageHelper {
   static final ImagePicker _picker = ImagePicker();
@@ -108,7 +112,7 @@ class ImageHelper {
 
     final value = await showMenu<String?>(
       context: context,
-      color: AppColors.white,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),

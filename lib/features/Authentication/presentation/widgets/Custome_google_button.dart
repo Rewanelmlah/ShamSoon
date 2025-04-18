@@ -16,7 +16,7 @@ class CustomeGoogleButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: onPressed,
         icon: Image.asset(
-          "assets/images/google 2.png",
+          "assets/images/google2.png",
           height: 22.h,
           width: 22.w,
         ),

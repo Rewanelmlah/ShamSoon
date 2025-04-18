@@ -1,11 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../config/language/locale_keys.g.dart';
+import '../../src/config/language/locale_keys.g.dart';
 
 class LauncherHelper {
   static void launchURL({required String url}) async {
@@ -156,28 +154,12 @@ class LauncherHelper {
     await launchUrl(Uri.parse('mailto:$mail'));
   }
 
-  static Future<void> launchGoogleMap(LatLng latLng) async {
-    final Uri googleMapsUri = Uri.parse('https://www.google.com/maps/search/?api=1&query=${latLng.latitude},${latLng.longitude}');
-    if (await canLaunchUrl(googleMapsUri)) {
-      await launchUrl(googleMapsUri, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch $googleMapsUri';
-    }
-  }
-
-  static Future<void> launchMapToViewProviders(List<LatLng> locations)async{
-    String googleMapsUrl = "https://www.google.com/maps/dir/";
-
-    for (LatLng location in locations) {
-      googleMapsUrl += "${location.latitude},${location.longitude}/";
-    }
-
-    Uri uri = Uri.parse(googleMapsUrl);
-
-    if (await canLaunchUrl(uri)) {
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      throw "Could not launch Google Maps";
-    }
-  }
+  // static Future<void> launchGoogleMap(LatLng latLng) async {
+  //   final Uri googleMapsUri = Uri.parse('https://www.google.com/maps/search/?api=1&query=${latLng.latitude},${latLng.longitude}');
+  //   if (await canLaunchUrl(googleMapsUri)) {
+  //     await launchUrl(googleMapsUri, mode: LaunchMode.externalApplication);
+  //   } else {
+  //     throw 'Could not launch $googleMapsUri';
+  //   }
+  // }
 }

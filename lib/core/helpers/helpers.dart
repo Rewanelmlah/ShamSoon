@@ -2,11 +2,13 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shamsoon/core/extensions/padding_extension.dart';
+import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../app_colors.dart';
+import '../../src/config/language/locale_keys.g.dart';
 import '../shared/base_state.dart';
+import '../widgets/custom_messages.dart';
 import 'check_permission/model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -162,18 +164,18 @@ class Helpers {
                   },
                 ),
               ],
-            ).paddingAll(AppPadding.pH10),
+            ).paddingAll(10),
           );
         });
     return image;
   }
 
-  static void shareApp(url) {
-    CustomLoading.showFullScreenLoading();
-    Share.share(url).whenComplete(() {
-      CustomLoading.hideFullScreenLoading();
-    });
-  }
+  // static void shareApp(url) {
+  //   CustomLoading.showFullScreenLoading();
+  //   Share.share(url).whenComplete(() {
+  //     CustomLoading.hideFullScreenLoading();
+  //   });
+  // }
 
   static Future<void> changeAppLang(BuildContext context, {required Locale newLang})async {
     context.setLocale(newLang);
