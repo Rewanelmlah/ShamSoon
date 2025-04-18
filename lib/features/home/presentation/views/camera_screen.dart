@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,35 +9,35 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  CameraController? _cameraController;
-  List<CameraDescription>? _cameras;
-  bool _isCameraInitialized = false;
+  // CameraController? _cameraController;
+  // List<CameraDescription>? _cameras;
+  // bool _isCameraInitialized = false;
   XFile? _capturedImage;
   final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
-    initializeCamera();
+    // initializeCamera();
   }
 
-  void initializeCamera() async {
-    _cameras = await availableCameras();
-    _cameraController = CameraController(_cameras![0], ResolutionPreset.medium);
-    await _cameraController!.initialize();
-    setState(() {
-      _isCameraInitialized = true;
-    });
-  }
+  // void initializeCamera() async {
+  //   _cameras = await availableCameras();
+  //   _cameraController = CameraController(_cameras![0], ResolutionPreset.medium);
+  //   await _cameraController!.initialize();
+  //   setState(() {
+  //     _isCameraInitialized = true;
+  //   });
+  // }
 
-  void captureImage() async {
-    if (_cameraController != null) {
-      XFile image = await _cameraController!.takePicture();
-      setState(() {
-        _capturedImage = image;
-      });
-    }
-  }
+  // void captureImage() async {
+  //   if (_cameraController != null) {
+  //     XFile image = await _cameraController!.takePicture();
+  //     setState(() {
+  //       _capturedImage = image;
+  //     });
+  //   }
+  // }
 
   void pickImageFromGallery() async {
     XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -51,7 +50,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-    _cameraController?.dispose();
+    // _cameraController?.dispose();
     super.dispose();
   }
 
@@ -75,59 +74,59 @@ class _CameraScreenState extends State<CameraScreen> {
         padding:  EdgeInsets.all(1.0.r),
         child: Column(
           children: [
-            Expanded(
-              child: _isCameraInitialized
-                  ? SizedBox(
-                      width: double.infinity,  
-                      height: 0.4.sh,  
-                      child: Stack(
-                        children: [
-                          CameraPreview(_cameraController!),
-                          Center(
-                            child: Container(
-                              width: 0.50.sw,  // 45% of screen width
-                              height: 0.50.sw,  
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white, width: 3),
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Center(child: CircularProgressIndicator()),
-            ),
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.all(20.w),  
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.photo_outlined, size: 50.sp, color: AppColors.primaryColor),
-                    onPressed: pickImageFromGallery,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.radio_button_checked_outlined, size: 60.sp, color: AppColors.primaryColor),
-                    onPressed: captureImage,
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.check_circle, size: 50.sp, color: AppColors.primaryColor),
-                    onPressed: () {
-                      if (_capturedImage != null) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PredictionScreen(imagePath: _capturedImage!.path),
-                         ),
-                       );
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
+            // Expanded(
+            //   child: _isCameraInitialized
+            //       ? SizedBox(
+            //           width: double.infinity,
+            //           height: 0.4.sh,
+            //           child: Stack(
+            //             children: [
+            //               // CameraPreview(_cameraController!),
+            //               Center(
+            //                 child: Container(
+            //                   width: 0.50.sw,  // 45% of screen width
+            //                   height: 0.50.sw,
+            //                   decoration: BoxDecoration(
+            //                     border: Border.all(color: Colors.white, width: 3),
+            //                     borderRadius: BorderRadius.circular(10.r),
+            //                   ),
+            //                 ),
+            //               ),
+            //             ],
+            //           ),
+            //         )
+            //       : Center(child: CircularProgressIndicator()),
+            // ),
+            // Container(
+            //   color: Colors.white,
+            //   padding: EdgeInsets.all(20.w),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //     children: [
+            //       IconButton(
+            //         icon: Icon(Icons.photo_outlined, size: 50.sp, color: AppColors.primaryColor),
+            //         onPressed: pickImageFromGallery,
+            //       ),
+            //       IconButton(
+            //         icon: Icon(Icons.radio_button_checked_outlined, size: 60.sp, color: AppColors.primaryColor),
+            //         onPressed: captureImage,
+            //       ),
+            //       IconButton(
+            //         icon: Icon(Icons.check_circle, size: 50.sp, color: AppColors.primaryColor),
+            //         onPressed: () {
+            //           if (_capturedImage != null) {
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                 builder: (context) => PredictionScreen(imagePath: _capturedImage!.path),
+            //              ),
+            //            );
+            //           }
+            //         },
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(height: 30.h),  
           ],
         ),

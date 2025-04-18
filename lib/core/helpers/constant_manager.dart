@@ -5,12 +5,13 @@ import 'package:get_it/get_it.dart';
 class ConstantManager {
   static final serviceLocator = GetIt.instance;
   static const String bundleId = "";
-  static const String appName = "Trucky";
+  static const String appName = "ShamSoon";
   static const String fontFamily = "Tajawal";
   static const String token = "token";
   static const String projectName = "";
   static const int splashTimer = 4;
   static const String baseUrl = "https://trucky-sa.com/api/";
+  static const String aiUrl = "https://caec-35-227-115-50.ngrok-free.app/";
   static const String emptyText = "";
   static const int zero = 0;
   static const double zeroAsDouble = 0.0;
