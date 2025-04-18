@@ -55,8 +55,6 @@ void main() async {
 }
 
 class ShamSoon extends StatelessWidget {
-  
-
   const ShamSoon({super.key, });
 
   @override

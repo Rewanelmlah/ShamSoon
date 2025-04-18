@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shamsoon/core/network/extensions.dart';
@@ -8,7 +7,6 @@ import 'package:shamsoon/core/shared/base_model.dart';
 import '../../src/config/language/locale_keys.g.dart';
 import '../error/exceptions.dart';
 import '../helpers/constant_manager.dart';
-import 'configuration_interceptor.dart';
 import 'log_interceptor.dart';
 import 'network_request.dart';
 import 'network_service.dart';
@@ -16,13 +14,13 @@ import 'network_service.dart';
 class AiService implements NetworkService {
   late final Dio _dio;
 
-  DioService() {
+  AiService() {
     _initDio();
   }
 
   void _initDio() {
     _dio = Dio()
-      ..options.baseUrl = ConstantManager.baseUrl
+      ..options.baseUrl = ConstantManager.aiUrl
       ..options.connectTimeout = const Duration(
         seconds: ConstantManager.connectTimeoutDuration,
       )
@@ -88,28 +86,28 @@ class AiService implements NetworkService {
         throw NoInternetConnectionException(LocaleKeys.checkInternet);
       case DioExceptionType.badResponse:
         switch (error.response!.statusCode) {
-          case HttpStatus.forbidden:
-            throw ForbiddenException(
-              error.response?.data['message'] ?? LocaleKeys.forbidden,
-            );
+          // case HttpStatus.forbidden:
+          //   throw ForbiddenException(
+          //     error.response?.data['message'] ?? LocaleKeys.forbidden,
+          //   );
 
           case HttpStatus.badRequest:
             throw BadRequestException(
-              error.response?.data['message'] ?? LocaleKeys.badRequest,
+              error.response?.data['error'] ?? LocaleKeys.badRequest,
             );
-          case HttpStatus.unauthorized:
-            throw UnauthorizedException(
-              error.response?.data['message'] ?? LocaleKeys.unauthorized,
-            );
-          case HttpStatus.locked:
-            throw BlockedException(
-              error.response?.data['message'] ?? LocaleKeys.unauthorized,
-            );
+          // case HttpStatus.unauthorized:
+          //   throw UnauthorizedException(
+          //     error.response?.data['message'] ?? LocaleKeys.unauthorized,
+          //   );
+          // case HttpStatus.locked:
+          //   throw BlockedException(
+          //     error.response?.data['message'] ?? LocaleKeys.unauthorized,
+          //   );
           case HttpStatus.notFound:
             throw NotFoundException(LocaleKeys.notFound);
           case HttpStatus.conflict:
             throw ConflictException(
-              error.response?.data['message'] ?? LocaleKeys.serverError,
+              error.response?.data['error'] ?? LocaleKeys.serverError,
             );
           case HttpStatus.internalServerError:
             throw InternalServerErrorException(
@@ -122,11 +120,11 @@ class AiService implements NetworkService {
         throw ServerException(LocaleKeys.intenetWeakness);
       case DioExceptionType.unknown:
         throw ServerException(
-          error.response?.data['message'] ?? LocaleKeys.exceptionError,
+          error.response?.data['error'] ?? LocaleKeys.exceptionError,
         );
       default:
         throw ServerException(
-          error.response?.data['message'] ?? LocaleKeys.exceptionError,
+          error.response?.data['error'] ?? LocaleKeys.exceptionError,
         );
     }
   }

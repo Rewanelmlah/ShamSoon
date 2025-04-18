@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
+import 'package:shamsoon/core/helpers/helpers.dart';
+import 'package:shamsoon/features/home/presentation/cubit/predict_cubit.dart';
 import 'package:shamsoon/features/home/presentation/views/panel_details.dart';
 import 'package:shamsoon/features/home/presentation/widgets/custome_gradient.dart';
 
@@ -9,13 +12,13 @@ class BatteryStatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
             InkWell(
-              onTap: () {
-                
-                 Navigator.push(
-                   context,
-                   MaterialPageRoute(builder: (context) => PanelDetailes()),
-                 );
-              },
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (ctx) => BlocProvider.value(
+                    value: context.read<PredictCubit>(),
+                    child: const PanelDetailes()
+                )),
+              ),
               borderRadius: BorderRadius.circular(16.r), 
               child: Container(
                 height: 300.h,

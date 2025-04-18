@@ -11,7 +11,7 @@ class PanelDetailes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar:  AppBar(
+     appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         centerTitle: true,
         leading: IconButton(
@@ -36,7 +36,6 @@ class PanelDetailes extends StatelessWidget {
           const UploadphotoCard(),
             SizedBox(height: 20.h,),
           const  WeatherCard(),
-            
           ],),
         ),
       ),

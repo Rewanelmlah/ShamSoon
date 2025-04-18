@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,10 @@ class Helpers {
   static bool isCubitProvided<T extends StateStreamableSource>(BuildContext context) {
     try {
       BlocProvider.of<T>(context, listen: false);
+      log('provided');
       return true;
     } catch (e) {
+      log('not provided');
       return false;
     }
   }
