@@ -14,11 +14,11 @@ void setUpHomeDependencies() {
   );
 
   sl.registerLazySingleton<HomeDataSource>(
-        () => HomeDataSourceImpl(sl<NetworkService>()),
+        () => HomeDataSourceImpl(),
   );
 
 
-  sl.registerLazySingleton<NetworkService>(
-        () => AiService(),
-  );
+  // sl.registerLazySingleton<NetworkService>(
+  //       () => AiService(),
+  // );
 }

@@ -8,18 +8,21 @@ class CustomTextFormField extends StatelessWidget {
   final IconData? suffixIcon;
   final bool obscureText;
   final VoidCallback? onSuffixIconPressed;
+  final TextEditingController? controller;
 
   const CustomTextFormField({
-    Key? key,
+    super.key,
+    this.controller,
     required this.hintText,
     this.suffixIcon,
     this.obscureText = false,
     this.onSuffixIconPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hintText,

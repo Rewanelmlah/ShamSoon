@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/shared/Functions/setup_service_locators.dart';
+import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
 import 'package:shamsoon/features/home/presentation/views/Home_Screen.dart';
 import 'core/helpers/cache.dart';
 import 'core/helpers/constant_manager.dart';
@@ -46,9 +47,9 @@ void main() async {
     EasyLocalization(
       supportedLocales: Languages.suppoerLocales,
       path: 'assets/translations',
-      startLocale: const Locale('ar'),
+      startLocale: const Locale('en'),
       saveLocale: true,
-      fallbackLocale: const Locale('ar'),
+      fallbackLocale: const Locale('en'),
       child: const ShamSoon(),
     ),
   );
@@ -70,7 +71,7 @@ class ShamSoon extends StatelessWidget {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           navigatorKey: Go.navigatorKey,
-          home: HomeScreen(),
+          home: LoginScreen(),
           navigatorObservers: [AppNavigationObserver()],
           builder: (context, child) {
             return OfflineWidget(

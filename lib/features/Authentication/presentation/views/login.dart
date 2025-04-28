@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
+import 'package:shamsoon/core/helpers/helpers.dart';
+import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
+import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
+import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/forget_Password.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/sigh_up.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/Custome_google_button.dart';
@@ -9,8 +14,23 @@ import 'package:shamsoon/features/home/presentation/views/layout_view.dart';
 
 import '../../../../core/core_widgets/custome_button.dart';
 
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AuthCubit(),
+      child: LogIn(),
+    );
+  }
+}
+
 class LogIn extends StatelessWidget {
-  const LogIn({super.key});
+  LogIn({super.key});
+
+  final TextEditingController emailCont = TextEditingController();
+  final TextEditingController passCont = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +60,12 @@ class LogIn extends StatelessWidget {
             ),
             SizedBox(height: 30.h),
             CustomTextFormField(
+              controller: emailCont,
               hintText: "Enter your Email",
             ),
             SizedBox(height: 20.h),
             CustomTextFormField(
+              controller: passCont,
               hintText: "Enter your password",
               obscureText: true,
               suffixIcon: Icons.visibility,
@@ -86,14 +108,16 @@ class LogIn extends StatelessWidget {
               ],
             ),
             SizedBox(height: 30.h),
-            CustomButton(
-              onPressed: () {
-                Navigator.pushReplacement(
+            BlocListener<AuthCubit, AuthState>(
+              listener: (context, state) => Helpers.manageBlocConsumer(
+                  state.baseStatus,
+                  msg: state.msg,
+                actionWhenSuccess: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => LayoutScreen()),
-                );
-              },
-              text: 'Log In',
+                )
+              ),
+              child: LoadingButton(title: 'Log In', onTap: () async => await context.read<AuthCubit>().login(email: emailCont.text, pass: passCont.text),)
             ),
             Row(
               children: [

@@ -10,8 +10,11 @@ class ConstantManager {
   static const String token = "token";
   static const String projectName = "";
   static const int splashTimer = 4;
-  static const String baseUrl = "https://trucky-sa.com/api/";
+  static const String baseUrl = "https://19e7-156-197-155-37.ngrok-free.app/";
   static const String aiUrl = "https://caec-35-227-115-50.ngrok-free.app/";
+  static const String dioService = "dioService";
+  static const String aiService = "aiService";
+
   static const String emptyText = "";
   static const int zero = 0;
   static const double zeroAsDouble = 0.0;

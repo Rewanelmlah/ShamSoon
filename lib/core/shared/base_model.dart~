@@ -12,7 +12,7 @@ class BaseModel<T> {
     T Function(dynamic json)? jsonToModel,
   }) {
     return BaseModel(
-      message: json['message'] ?? '',
+      message: json['msg'] ?? '',
       // data: jsonToModel != null ? jsonToModel(json['data']) : json['data'],
       data: jsonToModel != null ? jsonToModel(json) : json['data'],
     );
