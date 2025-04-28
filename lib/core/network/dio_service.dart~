@@ -78,6 +78,7 @@ class DioService implements NetworkService {
       if (mapper != null) {
         return BaseModel.fromJson(response.data, jsonToModel: mapper);
       } else {
+        log('reponseeeeeeeeeeeeeee ${response.data}');
         return BaseModel.fromJson(response.data);
       }
     } on DioException catch (e) {

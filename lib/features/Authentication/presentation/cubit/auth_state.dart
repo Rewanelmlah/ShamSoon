@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import '../../../../core/shared/base_state.dart';
 
 final class AuthState extends Equatable {
