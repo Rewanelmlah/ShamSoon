@@ -30,6 +30,7 @@ class DioService implements NetworkService {
         seconds: ConstantManager.recieveTimeoutDuration,
       )
       ..options.responseType = ResponseType.json;
+      _dio.interceptors.add(ConfigurationInterceptor());
 
     // if (BackendConfiguation.type.isPhp) {
     //   _dio.interceptors.add(ConfigurationInterceptor());
@@ -86,6 +87,7 @@ class DioService implements NetworkService {
   }
 
   dynamic _handleError(DioException error) {
+    log('statusCode ${error.response?.statusCode}');
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:

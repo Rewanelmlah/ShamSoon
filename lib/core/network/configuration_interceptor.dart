@@ -7,7 +7,7 @@ class ConfigurationInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.headers.addAll({
-      HttpHeaders.acceptHeader: ContentType.json,
+      'Accept': ContentType.json,
       // Headers.contentTypeHeader: Headers,
       HttpHeaders.acceptLanguageHeader:
           Languages.currentLanguage.locale.languageCode
@@ -15,18 +15,18 @@ class ConfigurationInterceptor extends Interceptor {
     handler.next(options);
   }
 
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) async{
-    if (response.statusCode == 302) {
-      final newUrl = response.headers.value('location');
-      if (newUrl != null) {
-        final redirectedResponse = await Dio().get(newUrl);
-        handler.resolve(redirectedResponse);
-      }
-    }
-
-    handler.next(response);
-  }
+  // @override
+  // void onResponse(Response response, ResponseInterceptorHandler handler) async{
+  //   if (response.statusCode == 302) {
+  //     final newUrl = response.headers.value('location');
+  //     if (newUrl != null) {
+  //       final redirectedResponse = await Dio().get(newUrl);
+  //       handler.resolve(redirectedResponse);
+  //     }
+  //   }
+  //
+  //   handler.next(response);
+  // }
 
   // @override
   // void onResponse(Response response, ResponseInterceptorHandler handler) {

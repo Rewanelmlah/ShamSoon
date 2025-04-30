@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
 import 'package:shamsoon/core/helpers/helpers.dart';
+import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
@@ -95,10 +96,10 @@ class LogIn extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => ForgetPassword()),
-                    );
+                    Go.to(BlocProvider.value(
+                        value: context.read<AuthCubit>(),
+                        child: const ForgetPassword()
+                    ));
                   },
                   child: Text(
                     "Forgot password?",

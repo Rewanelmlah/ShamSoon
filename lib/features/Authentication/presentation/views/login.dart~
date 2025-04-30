@@ -97,7 +97,10 @@ class LogIn extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => ForgetPassword()),
+                      MaterialPageRoute(builder: (ctx) => BlocProvider.value(
+                        value: context.read<AuthCubit>(),
+                        child: const ForgetPassword()
+                    )),
                     );
                   },
                   child: Text(
@@ -153,7 +156,7 @@ class LogIn extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BlocProvider.value(
+                      MaterialPageRoute(builder: (ctx) => BlocProvider.value(
                           value: context.read<AuthCubit>(),
                           child: SignUpScreen())),
                     );

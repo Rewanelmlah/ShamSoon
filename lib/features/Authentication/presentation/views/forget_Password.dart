@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
+import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
+import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dart';
 
@@ -13,17 +17,6 @@ class ForgetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => LogIn()));
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 18.sp,
-            )),
-      ),
       body: SingleChildScrollView(
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -54,14 +47,19 @@ class ForgetPassword extends StatelessWidget {
                     hintText: "Enter your Email",
                   ),
                   SizedBox(height: 30.h),
-                  CustomButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => OTPScreen()),
-                      );
-                    },
-                    text: 'Reset Password',
+                  BlocListener<AuthCubit, AuthState>(
+                    listener: (context, state) {},
+                    child: CustomButton(
+                      onPressed: () {
+                        context.read<AuthCubit>().forgetPassword('ahmed@gmail.com');
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) =>
+                        //       OTPScreen()),
+                        // );
+                      },
+                      text: 'Reset Password',
+                    ),
                   ),
                 ])),
       ),

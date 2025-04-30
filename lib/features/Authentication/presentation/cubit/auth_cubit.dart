@@ -42,4 +42,19 @@ class AuthCubit extends Cubit<AuthState> {
       )),
     );
   }
+
+  Future<void> forgetPassword(String email)async{
+    emit(state.copyWith(baseStatus: BaseStatus.loading));
+    final result = await authDataSource.forgetPassword(email);
+    result.when(
+          (success) => emit(state.copyWith(
+          baseStatus: BaseStatus.success,
+          msg: success.message
+      )),
+          (error) => emit(state.copyWith(
+          baseStatus: BaseStatus.error,
+          msg: error.message
+      )),
+    );
+  }
 }

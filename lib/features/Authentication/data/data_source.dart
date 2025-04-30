@@ -19,6 +19,7 @@ abstract interface class AuthDataSource{
   });
 
   Future<Result<BaseModel<void>, Failure>> register(RegisterModel model);
+  Future<Result<BaseModel<void>, Failure>> forgetPassword(String email);
 }
 
 class AuthDataSourceImpl implements AuthDataSource{
@@ -32,7 +33,7 @@ class AuthDataSourceImpl implements AuthDataSource{
           body: {
             'email': email,
             'password': pass
-          }
+          },
         )
     ).handleCallbackWithFailure();
   }
@@ -44,6 +45,18 @@ class AuthDataSourceImpl implements AuthDataSource{
             method: RequestMethod.post,
             path: ApiConstants.register,
             body: model.toJson(),
+        )
+    ).handleCallbackWithFailure();
+  }
+
+  @override
+  Future<Result<BaseModel<void>, Failure>> forgetPassword(String email) async{
+    return authDataSource.callApi(
+        NetworkRequest(
+          method: RequestMethod.post,
+          path: ApiConstants.forgetPassword,
+          body: {'email' : email},
+          // headers: {'Accept' : 'application/json'}
         )
     ).handleCallbackWithFailure();
   }
