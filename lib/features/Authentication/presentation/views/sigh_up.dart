@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
+import 'package:shamsoon/core/helpers/validators.dart';
+import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/data/models/register.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
@@ -20,6 +22,7 @@ class SignUpScreen extends StatelessWidget {
   final confirmPasswordController = TextEditingController();
   final phoneController = TextEditingController();
   final userNameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,124 +30,134 @@ class SignUpScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 40.h),
-              Center(
-                child: Image.asset(
-                  'assets/images/LOGO-png1_2.png',
-                  height: 100.h,
-                  width: 100.w,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 40.h),
+                Center(
+                  child: Image.asset(
+                    'assets/images/LOGO-png1_2.png',
+                    height: 100.h,
+                    width: 100.w,
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.h),
-              Text(
-                "Welcome",
-                style: TextStyle(
-                  fontSize: 22.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                SizedBox(height: 10.h),
+                Text(
+                  "Welcome",
+                  style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              SizedBox(height: 15.h),
-              CustomTextFormField(
-                hintText: "Enter your Name",
-                controller: nameController,
-              ),
-              SizedBox(height: 15.h),
-              CustomTextFormField(
-                hintText: "Enter your user name",
-                controller: nameController,
-              ),
-              SizedBox(height: 15.h),
-              CustomTextFormField(
-                hintText: "Enter your phone",
-                controller: nameController,
-              ),
-              SizedBox(height: 15.h),
-              CustomTextFormField(
-                hintText: "Enter your Email",
-                controller: emailController,
-              ),
-              SizedBox(height: 15.h),
-              CustomTextFormField(
-                hintText: "Enter your password",
-                obscureText: true,
-                suffixIcon: Icons.visibility,
-                controller: passwordController,
-                onSuffixIconPressed: () {
-                  print(
-                    "Toggle password visibility",
-                  );
-                },
-              ),
-              SizedBox(height: 15.h),
-              CustomTextFormField(
-                hintText: "Confirm your password",
-                obscureText: true,
-                controller: confirmPasswordController,
-                suffixIcon: Icons.visibility,
-                onSuffixIconPressed: () {
-                  print("Toggle password visibility");
-                },
-              ),
-              SizedBox(height: 20.h),
-              CustomButton(
-                onPressed: () => context.read<AuthCubit>().register(
-                    RegisterModel(
-                        name: nameController.text,
-                        email: emailController.text,
-                        pass: passwordController.text,
-                        phone: phoneController.text,
-                        userName: userNameController.text,
-                        passConfirmation: confirmPasswordController.text)),
-                text: 'Sign In',
-              ),
-              Row(
-                children: [
-                  Expanded(child: Divider(thickness: 1, color: Colors.grey)),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                    child: Text(
-                      "or",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold),
+                SizedBox(height: 15.h),
+                CustomTextFormField(
+                  validator: Validators.validateEmpty,
+                  hintText: "Enter your Name",
+                  controller: nameController,
+                ),
+                SizedBox(height: 15.h),
+                CustomTextFormField(
+                  validator: Validators.validateEmpty,
+                  hintText: "Enter your user name",
+                  controller: userNameController,
+                ),
+                SizedBox(height: 15.h),
+                CustomTextFormField(
+                  validator: Validators.validateEmpty,
+                  hintText: "Enter your phone",
+                  controller: phoneController,
+                ),
+                SizedBox(height: 15.h),
+                CustomTextFormField(
+                  validator: Validators.validateEmail,
+                  hintText: "Enter your Email",
+                  controller: emailController,
+                ),
+                SizedBox(height: 15.h),
+                CustomTextFormField(
+                  validator: Validators.validatePassword,
+                  hintText: "Enter your password",
+                  obscureText: true,
+                  suffixIcon: Icons.visibility,
+                  controller: passwordController,
+                  onSuffixIconPressed: () {
+                    print(
+                      "Toggle password visibility",
+                    );
+                  },
+                ),
+                SizedBox(height: 15.h),
+                CustomTextFormField(
+                  validator: (value) => Validators.validatePasswordConfirm(value, passwordController.text),
+                  hintText: "Confirm your password",
+                  obscureText: true,
+                  controller: confirmPasswordController,
+                  suffixIcon: Icons.visibility,
+                  onSuffixIconPressed: () {
+                    print("Toggle password visibility");
+                  },
+                ),
+                SizedBox(height: 20.h),
+                LoadingButton(
+                  title: 'Sign Up',
+                  onTap: () => _formKey.currentState!.validate()?
+                  context.read<AuthCubit>().register(
+                      RegisterModel(
+                          name: nameController.text,
+                          email: emailController.text,
+                          pass: passwordController.text,
+                          phone: phoneController.text,
+                          userName: userNameController.text,
+                          passConfirmation: confirmPasswordController.text)): null,
+                ),
+                Row(
+                  children: [
+                    Expanded(child: Divider(thickness: 1, color: Colors.grey)),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                      child: Text(
+                        "or",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  Expanded(child: Divider(thickness: 1, color: Colors.grey)),
-                ],
-              ),
-              SizedBox(height: 20.h),
-              CustomeGoogleButton(onPressed: () {}),
-              SizedBox(height: 10.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Do you have an account? ",
-                    style: TextStyle(fontSize: 14.sp),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => LogIn()),
-                      );
-                    },
-                    child: Text(
-                      "Log In",
-                      style: TextStyle(
-                          color: AppColors.primaryColor, fontSize: 14.sp),
+                    Expanded(child: Divider(thickness: 1, color: Colors.grey)),
+                  ],
+                ),
+                SizedBox(height: 20.h),
+                CustomeGoogleButton(onPressed: () {}),
+                SizedBox(height: 10.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Do you have an account? ",
+                      style: TextStyle(fontSize: 14.sp),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 30.h),
-            ],
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => LogIn()),
+                        );
+                      },
+                      child: Text(
+                        "Log In",
+                        style: TextStyle(
+                            color: AppColors.primaryColor, fontSize: 14.sp),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30.h),
+              ],
+            ),
           ),
         ),
       ),

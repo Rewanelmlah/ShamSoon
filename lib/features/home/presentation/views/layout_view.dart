@@ -8,14 +8,14 @@ import 'package:shamsoon/features/settings/presentation/views/setting_screen.dar
 
 class LayoutScreen extends StatefulWidget {
   @override
-  _LayoutScreenState createState() => _LayoutScreenState();
+  State<LayoutScreen> createState() => _LayoutScreenState();
 }
 
 class _LayoutScreenState extends State<LayoutScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    HomeScreen(),
+    const HomeScreen(),
     EnergyDashboard(),
     CommunityScreen(),
     SettingsScreen(),
