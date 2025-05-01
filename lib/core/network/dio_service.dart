@@ -72,7 +72,6 @@ class DioService implements NetworkService {
               : null,
           options: Options(
               followRedirects: true,
-              validateStatus: (status) => status != null && status < 500,
               method: networkRequest.asString(),
               headers: networkRequest.headers));
       log('response ${response.data.toString()}');
@@ -82,57 +81,60 @@ class DioService implements NetworkService {
         return BaseModel.fromJson(response.data);
       }
     } on DioException catch (e) {
-      return _handleError(e);
+      throw _handleError(e);
     }
   }
 
-  dynamic _handleError(DioException error) {
-    log('statusCode ${error.response?.statusCode}');
+  ServerException _handleError(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        throw NoInternetConnectionException(LocaleKeys.checkInternet);
+        return NoInternetConnectionException(LocaleKeys.checkInternet);
       case DioExceptionType.badResponse:
         switch (error.response!.statusCode) {
+          case HttpStatus.unprocessableEntity:
+            return UnprocessableEntityException(
+              error.response?.data['message'] ?? 'unprocessableEntity',
+            );
           case HttpStatus.forbidden:
-            throw ForbiddenException(
+            return ForbiddenException(
               error.response?.data['message'] ?? LocaleKeys.forbidden,
             );
 
           case HttpStatus.badRequest:
-            throw BadRequestException(
+            return BadRequestException(
               error.response?.data['message'] ?? LocaleKeys.badRequest,
             );
           case HttpStatus.unauthorized:
-            throw UnauthorizedException(
+            return UnauthorizedException(
               error.response?.data['message'] ?? LocaleKeys.unauthorized,
             );
           case HttpStatus.locked:
-            throw BlockedException(
+            return BlockedException(
               error.response?.data['message'] ?? LocaleKeys.unauthorized,
             );
           case HttpStatus.notFound:
-            throw NotFoundException(LocaleKeys.notFound);
+            return NotFoundException(LocaleKeys.notFound);
           case HttpStatus.conflict:
-            throw ConflictException(
+            return ConflictException(
               error.response?.data['message'] ?? LocaleKeys.serverError,
             );
           case HttpStatus.internalServerError:
-            throw InternalServerErrorException(
+            return InternalServerErrorException(
               error.response?.data['message'] ?? LocaleKeys.serverError,
             );
           default:
-            throw ServerException(LocaleKeys.serverError);
+            return ServerException(LocaleKeys.serverError);
         }
       case DioExceptionType.cancel:
-        throw ServerException(LocaleKeys.intenetWeakness);
+        return ServerException(LocaleKeys.intenetWeakness);
       case DioExceptionType.unknown:
-        throw ServerException(
+        return ServerException(
           error.response?.data['message'] ?? LocaleKeys.exceptionError,
         );
       default:
-        throw ServerException(
+        return ServerException(
           error.response?.data['message'] ?? LocaleKeys.exceptionError,
         );
     }

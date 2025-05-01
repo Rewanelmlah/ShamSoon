@@ -1,27 +1,37 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/core_widgets/custome_button.dart';
+import 'package:shamsoon/core/helpers/navigation.dart';
+import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dart';
 
 import 'Reset_password.dart';
 
-class SuccessedVerify extends StatelessWidget {
+class SuccessedVerify extends StatefulWidget {
   const SuccessedVerify({super.key});
+
+  @override
+  State<SuccessedVerify> createState() => _SuccessedVerifyState();
+}
+
+class _SuccessedVerifyState extends State<SuccessedVerify> {
+
+  void _startTimer()async{
+    await Future.delayed(const Duration(seconds: 3));
+    Go.offAll(const LoginScreen());
+  }
+
+  @override
+  void initState() {
+    // _startTimer();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => OTPScreen()));
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 18.sp,
-            )),
-      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(

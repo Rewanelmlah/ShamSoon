@@ -33,8 +33,9 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await authDataSource.register(model);
     result.when(
           (success) => emit(state.copyWith(
-          baseStatus: BaseStatus.success,
-          msg: success.message
+              baseStatus: BaseStatus.success,
+              msg: success.message,
+            userModel: success.data
       )),
           (error) => emit(state.copyWith(
           baseStatus: BaseStatus.error,
@@ -46,6 +47,97 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> forgetPassword(String email)async{
     emit(state.copyWith(baseStatus: BaseStatus.loading));
     final result = await authDataSource.forgetPassword(email);
+    result.when(
+          (success) => emit(state.copyWith(
+          baseStatus: BaseStatus.success,
+          msg: success.message
+      )),
+          (error) => emit(state.copyWith(
+          baseStatus: BaseStatus.error,
+          msg: error.message
+      )),
+    );
+  }
+
+  Future<void> logout()async{
+    emit(state.copyWith(baseStatus: BaseStatus.loading));
+    final result = await authDataSource.logout();
+    result.when(
+          (success) => emit(state.copyWith(
+          baseStatus: BaseStatus.success,
+          msg: success.message
+      )),
+          (error) => emit(state.copyWith(
+          baseStatus: BaseStatus.error,
+          msg: error.message
+      )),
+    );
+  }
+
+  Future<void> sendEmailVerification()async{
+    emit(state.copyWith(baseStatus: BaseStatus.loading));
+    final result = await authDataSource.sendEmailVerification();
+    result.when(
+          (success) => emit(state.copyWith(
+          baseStatus: BaseStatus.success,
+          msg: success.message
+      )),
+          (error) => emit(state.copyWith(
+          baseStatus: BaseStatus.error,
+          msg: error.message
+      )),
+    );
+  }
+
+  Future<void> sendOtp({
+    required String email,
+    required String otp
+})async{
+    emit(state.copyWith(baseStatus: BaseStatus.loading));
+    final result = await authDataSource.sendOtp(email: email, otp: otp);
+    result.when(
+          (success) => emit(state.copyWith(
+          baseStatus: BaseStatus.success,
+          msg: success.message
+      )),
+          (error) => emit(state.copyWith(
+          baseStatus: BaseStatus.error,
+          msg: error.message
+      )),
+    );
+  }
+
+  Future<void> verifyEmail({
+    required String email,
+    required String otp
+  })async{
+    emit(state.copyWith(baseStatus: BaseStatus.loading));
+    final result = await authDataSource.verifyEmail(email: email, otp: otp);
+    result.when(
+          (success) => emit(state.copyWith(
+          baseStatus: BaseStatus.success,
+          msg: success.message
+      )),
+          (error) => emit(state.copyWith(
+          baseStatus: BaseStatus.error,
+          msg: error.message
+      )),
+    );
+  }
+
+
+
+  Future<void> resetPassword({
+    required String email,
+    required String password,
+    required String confirmPassword,
+  })async{
+    emit(state.copyWith(baseStatus: BaseStatus.loading));
+    final result = await authDataSource.resetPassword(
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword
+    );
     result.when(
           (success) => emit(state.copyWith(
           baseStatus: BaseStatus.success,

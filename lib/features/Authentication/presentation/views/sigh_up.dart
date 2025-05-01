@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
+import 'package:shamsoon/core/helpers/helpers.dart';
+import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:shamsoon/core/helpers/validators.dart';
+import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/data/models/register.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
+import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
+import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/Custome_google_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
-import 'package:shamsoon/features/home/presentation/views/layout_view.dart';
-
-import '../../../../core/core_widgets/custome_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -54,68 +56,86 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  validator: Validators.validateEmpty,
+                  // validator: Validators.validateEmpty,
                   hintText: "Enter your Name",
                   controller: nameController,
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  validator: Validators.validateEmpty,
+                  // validator: Validators.validateEmpty,
                   hintText: "Enter your user name",
                   controller: userNameController,
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  validator: Validators.validateEmpty,
+                  // validator: Validators.validateEmpty,
                   hintText: "Enter your phone",
                   controller: phoneController,
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  validator: Validators.validateEmail,
+                  // validator: Validators.validateEmail,
                   hintText: "Enter your Email",
                   controller: emailController,
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  validator: Validators.validatePassword,
+                  // validator: Validators.validatePassword,
                   hintText: "Enter your password",
                   obscureText: true,
                   suffixIcon: Icons.visibility,
                   controller: passwordController,
-                  onSuffixIconPressed: () {
-                    print(
-                      "Toggle password visibility",
-                    );
-                  },
+                  onSuffixIconPressed: () {},
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  validator: (value) => Validators.validatePasswordConfirm(value, passwordController.text),
+                  // validator: (value) => Validators.validatePasswordConfirm(value, passwordController.text),
                   hintText: "Confirm your password",
                   obscureText: true,
                   controller: confirmPasswordController,
                   suffixIcon: Icons.visibility,
-                  onSuffixIconPressed: () {
-                    print("Toggle password visibility");
-                  },
+                  onSuffixIconPressed: () {},
                 ),
                 SizedBox(height: 20.h),
-                LoadingButton(
-                  title: 'Sign Up',
-                  onTap: () => _formKey.currentState!.validate()?
-                  context.read<AuthCubit>().register(
-                      RegisterModel(
-                          name: nameController.text,
-                          email: emailController.text,
-                          pass: passwordController.text,
-                          phone: phoneController.text,
-                          userName: userNameController.text,
-                          passConfirmation: confirmPasswordController.text)): null,
+                BlocListener<AuthCubit, AuthState>(
+                  listener: (ctx, state) => Helpers.manageBlocConsumer(
+                    state.baseStatus,
+                    msg: state.msg,
+                    actionWhenSuccess: () async{
+                      await context.read<UserCubit>().setUserLoggedIn(user: state.user!, token: state.user!.token!);
+
+                      Go.to(BlocProvider.value(
+                          value: context.read<AuthCubit>()..sendEmailVerification(),
+                          child: const LoginScreen()
+                      ));
+                    }
+                  ),
+                  child: LoadingButton(
+                    title: 'Sign Up',
+                    onTap: () => _formKey.currentState!.validate()?
+                    context.read<AuthCubit>().register(
+                        RegisterModel(
+                            name: 'nameController.text',
+                            email: 'emailController.textss@g.c',
+                            pass: 'Ahmed123',
+                            phone: '92875302',
+                            userName: 'userNameController.tasext',
+                            passConfirmation: 'Ahmed123'
+                        )) : null,
+
+                    // context.read<AuthCubit>().register(
+                    //     RegisterModel(
+                    //         name: nameController.text,
+                    //         email: emailController.text,
+                    //         pass: passwordController.text,
+                    //         phone: phoneController.text,
+                    //         userName: userNameController.text,
+                    //         passConfirmation: confirmPasswordController.text)) : null,
+                  ),
                 ),
                 Row(
                   children: [
-                    Expanded(child: Divider(thickness: 1, color: Colors.grey)),
+                    const Expanded(child: Divider(thickness: 1, color: Colors.grey)),
                     Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
@@ -127,7 +147,7 @@ class SignUpScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Expanded(child: Divider(thickness: 1, color: Colors.grey)),
+                    const Expanded(child: Divider(thickness: 1, color: Colors.grey)),
                   ],
                 ),
                 SizedBox(height: 20.h),
@@ -141,12 +161,7 @@ class SignUpScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 14.sp),
                     ),
                     TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => LogIn()),
-                        );
-                      },
+                      onPressed: () => Navigator.pop(context),
                       child: Text(
                         "Log In",
                         style: TextStyle(

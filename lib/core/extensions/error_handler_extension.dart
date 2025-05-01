@@ -22,10 +22,8 @@ extension ErrorHandler<T extends dynamic> on Future<T> {
       return Success(result);
     } on BlockedException catch (e) {
       return Error(Failure(e.message));
-    } on UnauthorizedException catch (e) {
-      return Error(Failure(e.message));
-    } on ServerException catch (e) {
-      return Error(Failure(e.message));
+    }on ServerException catch (e) {
+      return Result.error(Failure(e.message));
     }
   }
 }

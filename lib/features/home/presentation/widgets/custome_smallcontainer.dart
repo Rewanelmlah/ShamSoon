@@ -18,7 +18,7 @@ class CustomResponsiveContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 140.w,
-      height: 80.h,
+      height: 90.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),

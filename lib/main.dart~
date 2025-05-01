@@ -81,7 +81,7 @@ class ShamSoon extends StatelessWidget {
                 child: FullScreenLoadingManager(child: child!),
               );
             },
-          ),
+          ),  
         );
       },
     );

@@ -56,3 +56,7 @@ class ForbiddenException extends ServerException {
 class BlockedException extends ServerException {
   const BlockedException(super.message);
 }
+
+class UnprocessableEntityException extends ServerException{
+  const UnprocessableEntityException(super.message);
+}

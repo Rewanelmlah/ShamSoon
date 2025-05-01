@@ -9,6 +9,7 @@ import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/forget_Password.dart';
+import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/sigh_up.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/Custome_google_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
@@ -32,6 +33,11 @@ class LogIn extends StatelessWidget {
   final TextEditingController emailCont = TextEditingController();
   final TextEditingController passCont = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  ValueNotifier<bool> rememberMe = ValueNotifier<bool>(false);
+  void _changeRememberMe(){
+    rememberMe.value = !rememberMe.value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +90,14 @@ class LogIn extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Checkbox(
-                        value: true,
-                        onChanged: (value) {
-                          // Handle remember me
-                        },
-                        activeColor: AppColors.primaryColor,
-                        checkColor: Colors.white,
+                      ValueListenableBuilder(
+                        valueListenable: rememberMe,
+                        builder: (context, value, child) => Checkbox(
+                          value: value,
+                          onChanged: (value) => _changeRememberMe(),
+                          activeColor: AppColors.primaryColor,
+                          checkColor: Colors.white,
+                        ),
                       ),
                       Text(
                         "Remember me",
@@ -116,11 +123,9 @@ class LogIn extends StatelessWidget {
                   listener: (context, state) =>
                       Helpers.manageBlocConsumer(state.baseStatus,
                           msg: state.msg,
-                          actionWhenSuccess: () => Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LayoutScreen()),
-                              )),
+                          actionWhenSuccess: () => Go.offAll(OTPScreen()),
+                          // actionWhenSuccess: () => Go.offAll(LayoutScreen())
+                      ),
                   child: LoadingButton(
                     title: 'Log In',
                     onTap: () async => _formKey.currentState!.validate()
@@ -131,7 +136,7 @@ class LogIn extends StatelessWidget {
                   )),
               Row(
                 children: [
-                  Expanded(child: Divider(thickness: 1, color: Colors.grey)),
+                  const Expanded(child: Divider(thickness: 1, color: Colors.grey)),
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
@@ -143,7 +148,7 @@ class LogIn extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Expanded(child: Divider(thickness: 1, color: Colors.grey)),
+                  const Expanded(child: Divider(thickness: 1, color: Colors.grey)),
                 ],
               ),
               SizedBox(

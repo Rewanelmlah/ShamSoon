@@ -13,8 +13,7 @@ class BaseModel<T> {
   }) {
     return BaseModel(
       message: json['message'] ?? '',
-      // data: jsonToModel != null ? jsonToModel(json['data']) : json['data'],
-      data: jsonToModel != null ? jsonToModel(json) : json['data'],
+      data: jsonToModel != null ? jsonToModel(json['data']) : json['data'],
     );
   }
 }
