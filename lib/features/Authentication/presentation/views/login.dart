@@ -20,10 +20,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(),
-      child: LogIn(),
-    );
+    return LogIn();
   }
 }
 
@@ -107,9 +104,7 @@ class LogIn extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      Go.to(BlocProvider.value(
-                          value: context.read<AuthCubit>(),
-                          child: ForgetPassword()));
+                      Go.to(ForgetPassword());
                     },
                     child: Text(
                       "Forgot password?",
@@ -123,7 +118,7 @@ class LogIn extends StatelessWidget {
                   listener: (context, state) =>
                       Helpers.manageBlocConsumer(state.baseStatus,
                           msg: state.msg,
-                          actionWhenSuccess: () => Go.offAll(OTPScreen()),
+                          actionWhenSuccess: () => Go.offAll( OTPScreen()),
                           // actionWhenSuccess: () => Go.offAll(LayoutScreen())
                       ),
                   child: LoadingButton(
@@ -170,9 +165,7 @@ class LogIn extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (ctx) => BlocProvider.value(
-                                value: context.read<AuthCubit>(),
-                                child: SignUpScreen())),
+                            builder: (ctx) => SignUpScreen()),
                       );
                     },
                     child: Text(

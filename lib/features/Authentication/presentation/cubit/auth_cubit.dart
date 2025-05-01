@@ -1,9 +1,13 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shamsoon/features/Authentication/data/data_source.dart';
 import 'package:shamsoon/features/Authentication/data/models/register.dart';
 
+import '../../../../core/helpers/navigation.dart';
 import '../../../../core/shared/base_state.dart';
+import '../../../../core/shared/cubits/user_cubit/user_cubit.dart';
+import '../views/login.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -28,15 +32,26 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> register(RegisterModel model)async{
+  void _handleSignUpSuccess(BuildContext context)async{
+    await context.read<UserCubit>().setUserLoggedIn(user: state.user!, token: state.user!.token!);
+    Go.to(BlocProvider.value(
+        value: context.read<AuthCubit>()..sendEmailVerification(),
+        child: const LoginScreen()
+    ));
+  }
+
+  Future<void> register(BuildContext context, RegisterModel model)async{
     emit(state.copyWith(baseStatus: BaseStatus.loading));
     final result = await authDataSource.register(model);
     result.when(
-          (success) => emit(state.copyWith(
-              baseStatus: BaseStatus.success,
-              msg: success.message,
-            userModel: success.data
-      )),
+          (success) {
+            emit(state.copyWith(
+                baseStatus: BaseStatus.success,
+                msg: success.message,
+                userModel: success.data
+            ));
+            // _handleSignUpSuccess(context);
+          },
           (error) => emit(state.copyWith(
           baseStatus: BaseStatus.error,
           msg: error.message

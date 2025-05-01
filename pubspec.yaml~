@@ -41,6 +41,7 @@ dependencies:
   watcher: ^1.1.0
   fluttertoast: ^8.2.6
   flutter_offline: ^3.0.1
+  html: ^0.15.6
 
 
 dev_dependencies:

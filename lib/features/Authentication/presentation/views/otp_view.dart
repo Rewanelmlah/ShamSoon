@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
-import 'package:shamsoon/core/core_widgets/custome_button.dart';
+import 'package:shamsoon/core/helpers/helpers.dart';
 import 'package:shamsoon/core/helpers/navigation.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/Successed_verify.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/forget_Password.dart';
+import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
+import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
+import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/resend_code.dart';
 
 import '../../../../core/app_colors.dart';
+import 'Successed_verify.dart';
 
 class OTPScreen extends StatelessWidget {
-  const OTPScreen({super.key});
+  OTPScreen({super.key});
 
+  String pinCode = '';
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -57,19 +61,30 @@ class OTPScreen extends StatelessWidget {
                   SizedBox(height: 30.h),
                   Pinput(
                     length: 5,
+                    onCompleted: (value) => pinCode = value,
+                    onChanged: (value) => pinCode = value,
                     defaultPinTheme: defaultPinTheme,
                     focusedPinTheme: defaultPinTheme.copyWith(
                       decoration: defaultPinTheme.decoration!.copyWith(
                           border: Border.all(color: AppColors.primaryColor)),
                     ),
                   ),
-                  // onCompleted: (pin) => debugPrint(pin),
 
                   SizedBox(height: 30.h),
-                  CustomButton(
-                    onPressed: () => Go.offAll(const SuccessedVerify()),
-                    text: 'Verify',
-                  ),
+                  BlocConsumer<AuthCubit, AuthState>(
+                    listener: (context, state) => Helpers.manageBlocConsumer(
+                        state.baseStatus,
+                      msg: state.msg,
+                      actionWhenSuccess: () => Go.to(const SuccessedVerify()),
+                    ),
+                      builder: (context, state) =>
+                          LoadingButton(
+                            title: 'Verify',
+                            onTap: () => context.read<AuthCubit>().sendOtp(
+                              email: state.user!.email,
+                              otp: pinCode,
+                          ),
+                          )),
                   ResendCodeWidget(),
                   SizedBox(
                     height: 100.h,

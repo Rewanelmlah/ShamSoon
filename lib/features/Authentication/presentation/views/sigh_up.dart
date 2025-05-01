@@ -98,31 +98,28 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 BlocListener<AuthCubit, AuthState>(
-                  listener: (ctx, state) => Helpers.manageBlocConsumer(
+                  listener: (context, state) => Helpers.manageBlocConsumer(
                     state.baseStatus,
                     msg: state.msg,
-                    actionWhenSuccess: () async{
-                      await context.read<UserCubit>().setUserLoggedIn(user: state.user!, token: state.user!.token!);
-
-                      Go.to(BlocProvider.value(
-                          value: context.read<AuthCubit>()..sendEmailVerification(),
-                          child: const LoginScreen()
-                      ));
-                    }
+                    // actionWhenSuccess: () => Navigator.push(context, MaterialPageRoute(builder: (ctx) => BlocProvider.value(
+                    //     value: context.read<AuthCubit>(),
+                    //     child: const LoginScreen()),)),
+                    actionWhenSuccess: () => Go.to(const LoginScreen()),
                   ),
                   child: LoadingButton(
                     title: 'Sign Up',
                     onTap: () => _formKey.currentState!.validate()?
                     context.read<AuthCubit>().register(
+                      context,
                         RegisterModel(
                             name: 'nameController.text',
-                            email: 'emailController.textss@g.c',
                             pass: 'Ahmed123',
-                            phone: '92875302',
-                            userName: 'userNameController.tasext',
+                            email: 'emaixssslCsonxtrsasollser.teasxtss@g.c',
+                            phone: '5555sx55777',
+                            userName: 'usssexsrsNasmeCsontrloller.tasasext',
                             passConfirmation: 'Ahmed123'
                         )) : null,
-
+                  
                     // context.read<AuthCubit>().register(
                     //     RegisterModel(
                     //         name: nameController.text,

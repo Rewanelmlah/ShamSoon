@@ -18,6 +18,7 @@ import 'core/shared/bloc_observer.dart';
 import 'core/shared/route_observer.dart';
 import 'core/widgets/exeption_view.dart';
 import 'core/widgets/offline_widget.dart';
+import 'features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'firebase_options.dart';
 
 
@@ -65,8 +66,13 @@ class ShamSoon extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       builder: (context, child) {
-        return BlocProvider(
-          create: (context) => UserCubit(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<UserCubit>(create: (context) => UserCubit()),
+            BlocProvider(
+              create: (context) => AuthCubit(),
+            )
+          ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: ConstantManager.projectName,
