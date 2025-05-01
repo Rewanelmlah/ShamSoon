@@ -5,6 +5,7 @@ import 'package:shamsoon/core/app_colors.dart';
 import 'package:shamsoon/core/helpers/helpers.dart';
 import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:shamsoon/core/helpers/validators.dart';
+import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
@@ -118,8 +119,13 @@ class LogIn extends StatelessWidget {
                   listener: (context, state) =>
                       Helpers.manageBlocConsumer(state.baseStatus,
                           msg: state.msg,
-                          actionWhenSuccess: () => Go.offAll( OTPScreen()),
-                          // actionWhenSuccess: () => Go.offAll(LayoutScreen())
+                          actionWhenSuccess: () async{
+                        if(rememberMe.value){
+                          await context.read<UserCubit>().setUserLoggedIn(user: state.user!, token: state.user!.token!);
+                        }
+                        Go.offAll( OTPScreen());
+                        },
+                        // actionWhenSuccess: () => Go.offAll(LayoutScreen())
                       ),
                   child: LoadingButton(
                     title: 'Log In',

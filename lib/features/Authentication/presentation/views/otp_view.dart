@@ -12,10 +12,21 @@ import 'package:shamsoon/features/Authentication/presentation/widgets/resend_cod
 import '../../../../core/app_colors.dart';
 import 'Successed_verify.dart';
 
-class OTPScreen extends StatelessWidget {
+class OTPScreen extends StatefulWidget {
   OTPScreen({super.key});
 
+  @override
+  State<OTPScreen> createState() => _OTPScreenState();
+}
+
+class _OTPScreenState extends State<OTPScreen> {
   String pinCode = '';
+
+  @override
+  void initState() {
+    context.read<AuthCubit>().sendEmailVerification();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -80,7 +91,7 @@ class OTPScreen extends StatelessWidget {
                       builder: (context, state) =>
                           LoadingButton(
                             title: 'Verify',
-                            onTap: () => context.read<AuthCubit>().sendOtp(
+                            onTap: () => context.read<AuthCubit>().verifyEmail(
                               email: state.user!.email,
                               otp: pinCode,
                           ),

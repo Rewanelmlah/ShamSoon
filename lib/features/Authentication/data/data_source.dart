@@ -12,7 +12,7 @@ import 'package:shamsoon/features/Authentication/data/models/register.dart';
 import '../../../core/helpers/global_variables.dart';
 
 abstract interface class AuthDataSource{
-  Future<Result<BaseModel<void>, Failure>> login({
+  Future<Result<BaseModel<UserModel>, Failure>> login({
     required String email,
     required String pass,
   });
@@ -42,8 +42,8 @@ class AuthDataSourceImpl implements AuthDataSource{
   final NetworkService authDataSource = sl<NetworkService>(instanceName: ConstantManager.dioService);
 
   @override
-  Future<Result<BaseModel<void>, Failure>> login({required String email, required String pass}) async{
-    return await authDataSource.callApi(
+  Future<Result<BaseModel<UserModel>, Failure>> login({required String email, required String pass}) async{
+    return await authDataSource.callApi<UserModel>(
         NetworkRequest(
           method: RequestMethod.post,
           path: ApiConstants.login,
@@ -51,7 +51,8 @@ class AuthDataSourceImpl implements AuthDataSource{
             'email': email,
             'password': pass
           },
-        )
+        ),
+      mapper: (json) => UserModel.fromJson(json),
     ).handleCallbackWithFailure();
   }
 

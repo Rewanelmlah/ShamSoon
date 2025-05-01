@@ -23,7 +23,8 @@ class AuthCubit extends Cubit<AuthState> {
     result.when(
           (success) => emit(state.copyWith(
             baseStatus: BaseStatus.success,
-            msg: success.message
+            msg: success.message,
+            userModel: success.data
           )),
           (error) => emit(state.copyWith(
             baseStatus: BaseStatus.error,
@@ -32,13 +33,9 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  void _handleSignUpSuccess(BuildContext context)async{
-    await context.read<UserCubit>().setUserLoggedIn(user: state.user!, token: state.user!.token!);
-    Go.to(BlocProvider.value(
-        value: context.read<AuthCubit>()..sendEmailVerification(),
-        child: const LoginScreen()
-    ));
-  }
+  // void _handleSignUpSuccess(BuildContext context)async{
+  //   Go.to(const LoginScreen());
+  // }
 
   Future<void> register(BuildContext context, RegisterModel model)async{
     emit(state.copyWith(baseStatus: BaseStatus.loading));

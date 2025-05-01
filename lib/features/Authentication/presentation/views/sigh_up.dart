@@ -56,31 +56,31 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  // validator: Validators.validateEmpty,
+                  validator: Validators.validateEmpty,
                   hintText: "Enter your Name",
                   controller: nameController,
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  // validator: Validators.validateEmpty,
+                  validator: Validators.validateEmpty,
                   hintText: "Enter your user name",
                   controller: userNameController,
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  // validator: Validators.validateEmpty,
+                  validator: Validators.validateEmpty,
                   hintText: "Enter your phone",
                   controller: phoneController,
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  // validator: Validators.validateEmail,
+                  validator: Validators.validateEmail,
                   hintText: "Enter your Email",
                   controller: emailController,
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  // validator: Validators.validatePassword,
+                  validator: Validators.validatePassword,
                   hintText: "Enter your password",
                   obscureText: true,
                   suffixIcon: Icons.visibility,
@@ -89,7 +89,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 15.h),
                 CustomTextFormField(
-                  // validator: (value) => Validators.validatePasswordConfirm(value, passwordController.text),
+                  validator: (value) => Validators.validatePasswordConfirm(value, passwordController.text),
                   hintText: "Confirm your password",
                   obscureText: true,
                   controller: confirmPasswordController,
@@ -104,30 +104,31 @@ class SignUpScreen extends StatelessWidget {
                     // actionWhenSuccess: () => Navigator.push(context, MaterialPageRoute(builder: (ctx) => BlocProvider.value(
                     //     value: context.read<AuthCubit>(),
                     //     child: const LoginScreen()),)),
-                    actionWhenSuccess: () => Go.to(const LoginScreen()),
+                    actionWhenSuccess: () => Go.to( OTPScreen()),
                   ),
                   child: LoadingButton(
                     title: 'Sign Up',
                     onTap: () => _formKey.currentState!.validate()?
+                    // context.read<AuthCubit>().register(
+                    //   context,
+                    //     RegisterModel(
+                    //         name: 'nameController.text',
+                    //         pass: 'Ahmed123',
+                    //         email: 'emaixssslCsonxtrsasollser.teasxtss@g.c',
+                    //         phone: '5555sx55777',
+                    //         userName: 'usssexsrsNasmeCsontrloller.tasasext',
+                    //         passConfirmation: 'Ahmed123'
+                    //     )) : null,
+                  
                     context.read<AuthCubit>().register(
                       context,
                         RegisterModel(
-                            name: 'nameController.text',
-                            pass: 'Ahmed123',
-                            email: 'emaixssslCsonxtrsasollser.teasxtss@g.c',
-                            phone: '5555sx55777',
-                            userName: 'usssexsrsNasmeCsontrloller.tasasext',
-                            passConfirmation: 'Ahmed123'
-                        )) : null,
-                  
-                    // context.read<AuthCubit>().register(
-                    //     RegisterModel(
-                    //         name: nameController.text,
-                    //         email: emailController.text,
-                    //         pass: passwordController.text,
-                    //         phone: phoneController.text,
-                    //         userName: userNameController.text,
-                    //         passConfirmation: confirmPasswordController.text)) : null,
+                            name: nameController.text,
+                            email: emailController.text,
+                            pass: passwordController.text,
+                            phone: phoneController.text,
+                            userName: userNameController.text,
+                            passConfirmation: confirmPasswordController.text)) : null,
                   ),
                 ),
                 Row(
