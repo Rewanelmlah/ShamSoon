@@ -123,7 +123,7 @@ class LogIn extends StatelessWidget {
                         if(rememberMe.value){
                           await context.read<UserCubit>().setUserLoggedIn(user: state.user!, token: state.user!.token!);
                         }
-                        Go.offAll( OTPScreen());
+                        Go.offAll( const OTPScreen(type: OtpType.verification));
                         },
                         // actionWhenSuccess: () => Go.offAll(LayoutScreen())
                       ),

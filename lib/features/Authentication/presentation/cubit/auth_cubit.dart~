@@ -91,7 +91,7 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await authDataSource.sendEmailVerification();
     result.when(
           (success) => emit(state.copyWith(
-          // baseStatus: BaseStatus.success,
+          baseStatus: BaseStatus.success,
           msg: success.message
       )),
           (error) => emit(state.copyWith(

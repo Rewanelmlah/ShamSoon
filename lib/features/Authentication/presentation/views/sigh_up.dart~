@@ -16,7 +16,6 @@ import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dar
 import 'package:shamsoon/features/Authentication/presentation/widgets/Custome_google_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
 
-import '../../../../core/helpers/constant_manager.dart';
 import '../../../../core/helpers/global_variables.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -31,7 +30,9 @@ class SignUpScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   void _setToken(String token){
-    sl<NetworkService>(instanceName: ConstantManager.dioService).setToken(token);
+    print('token set');
+    sl<NetworkService>().setToken(token);
+    print('token set');
   }
 
   @override

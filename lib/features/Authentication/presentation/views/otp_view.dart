@@ -12,8 +12,12 @@ import 'package:shamsoon/features/Authentication/presentation/widgets/resend_cod
 import '../../../../core/app_colors.dart';
 import 'Successed_verify.dart';
 
+enum OtpType{verification, checkOtpAfterForgetPass}
 class OTPScreen extends StatefulWidget {
-  OTPScreen({super.key});
+  final OtpType type;
+  const OTPScreen({super.key,
+    required this.type
+  });
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -86,12 +90,14 @@ class _OTPScreenState extends State<OTPScreen> {
                     listener: (context, state) => Helpers.manageBlocConsumer(
                         state.baseStatus,
                       msg: state.msg,
-                      actionWhenSuccess: () => Go.to(const SuccessedVerify()),
+                      actionWhenSuccess: () => Go.to(SuccessedVerify(type: widget.type, email: state.user!.email)),
                     ),
                       builder: (context, state) =>
                           LoadingButton(
                             title: 'Verify',
-                            onTap: () => context.read<AuthCubit>().verifyEmail(
+                            onTap: () => widget.type == OtpType.checkOtpAfterForgetPass ?
+                            context.read<AuthCubit>().sendOtp(email: state.user!.email, otp: pinCode) :
+                            context.read<AuthCubit>().verifyEmail(
                               email: state.user!.email,
                               otp: pinCode,
                           ),

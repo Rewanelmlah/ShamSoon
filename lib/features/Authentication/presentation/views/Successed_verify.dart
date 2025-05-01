@@ -7,10 +7,15 @@ import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dart';
 
-import 'Reset_password.dart';
+import 'reset_password.dart';
 
 class SuccessedVerify extends StatefulWidget {
-  const SuccessedVerify({super.key});
+  final String email;
+  final OtpType type;
+  const SuccessedVerify({super.key,
+    required this.email,
+    required this.type
+  });
 
   @override
   State<SuccessedVerify> createState() => _SuccessedVerifyState();
@@ -20,7 +25,11 @@ class _SuccessedVerifyState extends State<SuccessedVerify> {
 
   void _startTimer()async{
     await Future.delayed(const Duration(seconds: 3));
-    Go.offAll(const LoginScreen());
+    if(widget.type == OtpType.verification){
+      Go.offAll(const LoginScreen());
+    }else{
+      Go.offAll(ResetPassword(email: widget.email));
+    }
   }
 
   @override
@@ -57,12 +66,7 @@ class _SuccessedVerifyState extends State<SuccessedVerify> {
             ),
             CustomButton(
               text: 'Reset Password',
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => ResetPassword()),
-                );
-              },
+              onPressed: () {},
             ),
             SizedBox(
               height: 30.h,

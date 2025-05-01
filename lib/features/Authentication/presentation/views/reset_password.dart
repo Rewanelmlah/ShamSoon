@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/core_widgets/custome_button.dart';
+import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
+import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/views/Successed_verify.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
 import 'package:shamsoon/features/home/presentation/views/layout_view.dart';
@@ -9,22 +12,19 @@ import 'otp_view.dart';
 
 
 class ResetPassword extends StatelessWidget {
-  const ResetPassword({super.key});
+  final String email;
+  ResetPassword({super.key,
+    required this.email
+  });
+
+  final passCont = TextEditingController();
+  final confirmPassCont = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => SuccessedVerify()));
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 18.sp,
-            )),
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -71,15 +71,16 @@ class ResetPassword extends StatelessWidget {
                   SizedBox(
                     height: 30.h,
                   ),
-                  CustomButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => OTPScreen()),
-                      );
-                    },
-                    text: 'Log In',
-                  ),
+                  LoadingButton(onTap: () => context.read<AuthCubit>().resetPassword(
+                      email: email,
+                      password: passCont.text,
+                      confirmPassword: confirmPassCont.text
+                  ), title: 'Reset Password'),
+                  LoadingButton(onTap: () => context.read<AuthCubit>().resetPassword(
+                      email: email,
+                      password: passCont.text,
+                      confirmPassword: confirmPassCont.text
+                  ))
                 ])),
       ),
     );
