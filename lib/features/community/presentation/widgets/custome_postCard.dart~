@@ -2,22 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
+import 'package:shamsoon/core/widgets/buttons/default_button.dart';
+import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
+import 'package:shamsoon/core/widgets/text_fields/default_text_field.dart';
 import 'package:shamsoon/features/community/data/models/post.dart';
 import 'package:shamsoon/features/community/presentation/posts_cubit.dart';
 import 'package:shamsoon/features/community/presentation/views/comments_screen.dart';
 import 'package:shamsoon/features/community/presentation/widgets/Custome_likeButton.dart';
 
-class PostCard extends StatelessWidget {
+class PostCard extends StatefulWidget {
   final Post post;
+  final int index;
 
-  PostCard({super.key, required this.post});
+  PostCard({super.key, required this.post, required this.index});
 
-  final GlobalKey key = GlobalKey();
+  @override
+  State<PostCard> createState() => _PostCardState();
+}
 
-  void _showPostMenu(BuildContext context, GlobalKey key) {
+class _PostCardState extends State<PostCard> {
+  bool editMode = false;
+
+  void enableEditMode(){
+    contentField.text = widget.post.content?? '';
+    setState(() => editMode = true);
+  }
+
+  void disableEditMode(){
+    setState(() => editMode = false);
+  }
+
+  final contentField = TextEditingController();
+
+  void _showPostMenu(BuildContext context) {
     // Get the position and size of the widget (post container)
     final RenderBox renderBox =
-        key.currentContext!.findRenderObject() as RenderBox;
+        context.findRenderObject() as RenderBox;
     final position = renderBox.localToGlobal(Offset.zero);
     final size = renderBox.size;
 
@@ -41,7 +61,7 @@ class PostCard extends StatelessWidget {
       items: [
         PopupMenuItem(
           value: 'edit',
-          // onTap: () => Go.to(),
+          onTap: () => enableEditMode(),
           child: const Row(
             children: [
               Icon(Icons.edit, size: 20, color: Colors.black54), // Pencil icon
@@ -52,7 +72,7 @@ class PostCard extends StatelessWidget {
         ),
         PopupMenuItem(
           value: 'delete',
-          onTap: () => context.read<PostsCubit>().deletePost(post),
+          onTap: () => context.read<PostsCubit>().deletePost(widget.post, widget.index),
           child: const Row(
             children: [
               Icon(Icons.delete, size: 20, color: Colors.black54), // Trash icon
@@ -62,6 +82,15 @@ class PostCard extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void _completeEditing()async{
+    context.read<PostsCubit>().controller.access(widget.index).content = contentField.text;
+    await context.read<PostsCubit>().updatePost(
+        postId: widget.post.id.toString(),
+        newTitle: 'new post',
+        content: contentField.text
     );
   }
 
@@ -93,15 +122,45 @@ class PostCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 10.w),
-                Expanded(
+                if(!editMode)
+                  Expanded(
                   child: Text(
-                    post.content ?? '',
-                    style: TextStyle(fontSize: 16.sp),
+                    widget.post.content??"",
+                    style: TextStyle(fontSize: 16.sp,),
                   ),
-                ),
-                const Spacer(),
+                )
+                else
+                  Expanded(
+                    child: Column(
+                      children: [
+                        DefaultTextField(
+                          controller: contentField,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: LoadingButton(
+                                title: 'Save',
+                                onTap: () => _completeEditing()
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                height: 40.h,
+                                child: DefaultButton(
+                                  title: 'Cancel',
+                                  color: Colors.grey,
+                                  onTap: () => disableEditMode(),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 IconButton(
-                  onPressed: () => _showPostMenu(context, key),
+                  onPressed: () => _showPostMenu(context),
                   icon: const Icon(Icons.more_vert),
                 ),
               ],
@@ -117,7 +176,7 @@ class PostCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  LikeButton(postId: post.id ?? 0),
+                  LikeButton(postId: widget.post.id ?? 0),
                   SizedBox(width: 25.w),
                   Icon(
                     Icons.comment_outlined,

@@ -485,6 +485,12 @@ class EasyPaginationController<E> {
     items.value = updatedList;
   }
 
+  E access(int index) {
+    final updatedList = List<E>.from(items.value);
+    items.value = updatedList;
+    return items.value.elementAt(index);
+  }
+
   void removeItem(E item) {
     final updatedList = List<E>.from(items.value)..remove(item);
     items.value = updatedList;
