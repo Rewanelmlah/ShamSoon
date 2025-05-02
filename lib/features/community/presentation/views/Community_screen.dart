@@ -7,7 +7,6 @@ import 'package:shamsoon/core/widgets/custom_loading.dart';
 import 'package:shamsoon/features/community/data/data_source/posts_data_source.dart';
 import 'package:shamsoon/features/community/data/models/post.dart';
 import 'package:shamsoon/features/community/presentation/posts_cubit.dart';
-import 'package:shamsoon/features/community/presentation/posts_state.dart';
 import 'package:shamsoon/features/community/presentation/widgets/custome_addpost_putton.dart';
 import 'package:shamsoon/features/community/presentation/widgets/custome_postCard.dart';
 import 'package:shamsoon/features/community/presentation/widgets/custome_searchfield.dart';
@@ -22,58 +21,61 @@ class CommunityScreen extends StatefulWidget {
 
 class _CommunityScreenState extends State<CommunityScreen> {
   @override
-  EasyPaginationController<Post> controller = EasyPaginationController<Post>();
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PostsCubit(),
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text('Forum', style: TextStyle(fontSize: 24.sp,fontWeight: FontWeight.bold)),
-          centerTitle: true,
-        ),
-        body: ListView(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.w,vertical: 5.h),
-              child: Row(
-                children: [
-                  const Expanded(
-                      child: SearchFeiled()
-                  ),
-                  SizedBox(width: 8.w),
-                  InkWell(
-                      onTap: () async{
-                        final result = await Go.to(BlocProvider.value(
-                            value: context.read<PostsCubit>(),
-                            child: AddPostScreen()
-                        ));
-                        if(result == 'success'){
-                          setState(() {});
-                        }
-                      },
-                      child: const AddPostButton()),
-                ],
-              ),
+      child: Builder(
+        builder: (ctx) {
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text('Forum', style: TextStyle(fontSize: 24.sp,fontWeight: FontWeight.bold)),
+              centerTitle: true,
             ),
-            EasyPagination<BaseModel<PostsResponse>, Post>.listView(
-              key: UniqueKey(),
-              asyncCall: (currentPage) => PostsDataSourceImpl().getPosts(),
-              mapper: (response) => DataListAndPaginationData(
-                  data: response.data.posts,
-                  paginationData: PaginationData(totalPages: response.data.totalPages)
-              ),
-              errorMapper: ErrorMapper(errorWhenDio: (e) => e.response?.data['message']),
-              itemBuilder: (data, index) => PostCard(post: data[index]),
-              loadingBuilder: CustomLoading.showLoadingView(),
-              shrinkWrap: true,
-              controller: controller,
-              scrollPhysics: const NeverScrollableScrollPhysics(),
-            ).paddingSymmetric(horizontal: 15.w, vertical: 5.h)
-          ],
-        ),
+            body: ListView(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.w,vertical: 5.h),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                          child: SearchFeiled()
+                      ),
+                      SizedBox(width: 8.w),
+                      InkWell(
+                          onTap: () async{
+                            final result = await Go.to(BlocProvider.value(
+                                value: context.read<PostsCubit>(),
+                                child: AddPostScreen()
+                            ));
+                            if(result == 'success'){
+                              setState(() {});
+                            }
+                          },
+                          child: const AddPostButton()),
+                    ],
+                  ),
+                ),
+
+                EasyPagination<BaseModel<PostsResponse>, Post>.listView(
+                  key: UniqueKey(),
+                  asyncCall: (currentPage) => PostsDataSourceImpl().getPosts(),
+                  mapper: (response) => DataListAndPaginationData(
+                      data: response.data.posts,
+                      paginationData: PaginationData(totalPages: response.data.totalPages)
+                  ),
+                  errorMapper: ErrorMapper(errorWhenDio: (e) => e.response?.data['message']),
+                  itemBuilder: (data, index) => PostCard(post: data[index], index: index),
+                  loadingBuilder: CustomLoading.showLoadingView(),
+                  shrinkWrap: true,
+                  controller: ctx.read<PostsCubit>().controller,
+                  scrollPhysics: const NeverScrollableScrollPhysics(),
+                ).paddingSymmetric(horizontal: 15.w, vertical: 5.h)
+              ],
+            ),
+          );
+        }
       ),
     );
   }
 }
-

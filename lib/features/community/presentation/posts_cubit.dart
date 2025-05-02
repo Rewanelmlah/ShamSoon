@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:shamsoon/core/shared/base_state.dart';
 import 'package:shamsoon/features/community/data/data_source/posts_data_source.dart';
 import 'package:shamsoon/features/community/presentation/posts_state.dart';
+
+import '../../../core/widgets/easy_pagination.dart';
+import '../data/models/post.dart';
 
 
 class PostsCubit extends Cubit<PostsState> {
@@ -23,18 +28,24 @@ class PostsCubit extends Cubit<PostsState> {
           )),
     );
   }
+  EasyPaginationController<Post> controller = EasyPaginationController<Post>();
 
-  Future<void> deletePost(String postId)async{
-    final result = await dataSource.deletePost(postId);
+  Future<void> deletePost(Post post, int index)async{
+    log('changeddddd');
+    controller.removeItem(post);
+    final result = await dataSource.deletePost('post.id.toString()');
     result.when(
           (success) => emit(state.copyWith(
-          baseStatus: BaseStatus.success,
-          msg: success.message
-      )),
-          (error) => emit(state.copyWith(
-          baseStatus: BaseStatus.error,
-          msg: error.message
-      )),
+              baseStatus: BaseStatus.success,
+              msg: success.message
+          )),
+          (error) {
+            controller.addItemAt(post, index);
+            emit(state.copyWith(
+                baseStatus: BaseStatus.error,
+                msg: error.message
+            ));
+          },
     );
   }
 

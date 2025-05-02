@@ -40,12 +40,12 @@ class PostsResponse{
 }
 
 class Post{
-  int id;
-  int userId;
-  String title;
-  String content;
-  String createdAt;
-  String updatedAt;
+  int? id;
+  int? userId;
+  String? title;
+  String? content;
+  String? createdAt;
+  String? updatedAt;
   User? user;
 
   Post({

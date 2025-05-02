@@ -475,16 +475,6 @@ class EasyPaginationController<E> {
     items.value = updatedList;
   }
 
-  void addItemAt(E item, int index) {
-    final updatedList = List<E>.from(items.value)..insert(index, item);
-    items.value = updatedList;
-  }
-
-  void addAtBeginning(E item) {
-    final updatedList = List<E>.from(items.value)..insert(0, item);
-    items.value = updatedList;
-  }
-
   void removeItem(E item) {
     final updatedList = List<E>.from(items.value)..remove(item);
     items.value = updatedList;

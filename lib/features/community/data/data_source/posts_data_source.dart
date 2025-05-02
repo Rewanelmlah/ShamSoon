@@ -65,7 +65,7 @@ class PostsDataSourceImpl implements PostsDataSource{
     final result  = await networkService.callApi(
       NetworkRequest(
         method: RequestMethod.put,
-        path: ApiConstants.posts+postId,
+        path: '${ApiConstants.posts}/$postId',
         body: {'title' : newTitle, 'content' : content},
       ),
       mapper: (json) => Post.fromJson(json['post']),
@@ -79,7 +79,7 @@ class PostsDataSourceImpl implements PostsDataSource{
     final result  = await networkService.callApi(
       NetworkRequest(
         method: RequestMethod.delete,
-        path: ApiConstants.posts+postId,
+        path: '${ApiConstants.posts}/$postId',
       ),
     ).handleCallbackWithFailure();
     return result;
@@ -90,7 +90,7 @@ class PostsDataSourceImpl implements PostsDataSource{
     final result  = await networkService.callApi(
       NetworkRequest(
         method: RequestMethod.post,
-        path: '${ApiConstants.posts}$postId/like',
+        path: '${ApiConstants.posts}/$postId/like',
       ),
     ).handleCallbackWithFailure();
     return result;

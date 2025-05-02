@@ -9,9 +9,8 @@ import 'package:shamsoon/features/community/presentation/widgets/Custome_likeBut
 
 class PostCard extends StatelessWidget {
   final Post post;
-  final int index;
 
-  PostCard({super.key, required this.post, required this.index});
+  PostCard({super.key, required this.post});
 
   final GlobalKey key = GlobalKey();
 
@@ -53,7 +52,7 @@ class PostCard extends StatelessWidget {
         ),
         PopupMenuItem(
           value: 'delete',
-          onTap: () => context.read<PostsCubit>().deletePost(post, index),
+          onTap: () => context.read<PostsCubit>().deletePost(post),
           child: const Row(
             children: [
               Icon(Icons.delete, size: 20, color: Colors.black54), // Trash icon
