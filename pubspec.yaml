@@ -7,7 +7,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: '>=3.7.2'
 
 dependencies:
 #  camera:
@@ -42,7 +42,8 @@ dependencies:
   fluttertoast: ^8.2.6
   flutter_offline: ^3.0.1
   html: ^0.15.6
-
+#  easy_pagination:
+#    git: https://github.com/ahmedemara231/pagination_helper
 
 dev_dependencies:
   flutter_lints: ^3.0.0
@@ -54,10 +55,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    #    - assets/fonts/
     - assets/images/
-#    - assets/icons/
-#    - assets/svg/
     - assets/lottie/
     - assets/translations/
 

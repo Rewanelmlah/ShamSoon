@@ -19,6 +19,7 @@ import 'core/shared/route_observer.dart';
 import 'core/widgets/exeption_view.dart';
 import 'core/widgets/offline_widget.dart';
 import 'features/Authentication/presentation/cubit/auth_cubit.dart';
+import 'features/community/presentation/views/Community_screen.dart';
 import 'firebase_options.dart';
 
 
@@ -80,7 +81,7 @@ class ShamSoon extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
-            home: LoginScreen(),
+            home: CommunityScreen(),
             navigatorObservers: [AppNavigationObserver()],
             builder: (context, child) {
               return OfflineWidget(

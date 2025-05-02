@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
+import 'package:shamsoon/features/community/data/models/post.dart';
 import 'package:shamsoon/features/community/presentation/views/comments_screen.dart';
 import 'package:shamsoon/features/community/presentation/widgets/Custome_likeButton.dart';
-class CustomePostCard extends StatelessWidget {
-  const CustomePostCard({super.key});
+class PostCard extends StatelessWidget {
 
+  final Post post;
+  const PostCard({super.key,
+    required this.post
+  });
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -29,13 +33,13 @@ class CustomePostCard extends StatelessWidget {
                                 ),
                                 child: CircleAvatar(
                                   radius: 24.r,
-                                  backgroundImage: AssetImage('assets/images/logo.png'),
+                                  backgroundImage: const AssetImage('assets/images/logo.png'),
                                 ),
                               ),
                               SizedBox(width: 10.w),
                               Expanded(
                                 child: Text(
-                                  "What's the best way to clean solar panels to maintain their efficiency?",
+                                  post.content,
                                   style: TextStyle(fontSize: 16.sp),
                                 ),
                               ),
@@ -52,7 +56,7 @@ class CustomePostCard extends StatelessWidget {
   child: Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      LikeButton(),
+      LikeButton(postId: post.id),
       SizedBox(width: 25.w),
       Icon(Icons.comment_outlined, size: 18.sp, color: AppColors.primaryColor),
       SizedBox(width: 4.w),

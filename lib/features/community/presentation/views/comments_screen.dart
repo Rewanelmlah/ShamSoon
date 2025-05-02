@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
-import 'package:shamsoon/features/community/presentation/widgets/custome_postCard.dart';
+
+import '../widgets/custome_postCard.dart';
+
 class CommentsScreen extends StatefulWidget {
   const CommentsScreen({super.key});
 
@@ -50,10 +52,10 @@ class _CommentsScreenState extends State<CommentsScreen> {
         padding: EdgeInsets.all(5.w),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-              child: CustomePostCard(),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+            //   child: PostCard(post: ,),
+            // ),
             Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),

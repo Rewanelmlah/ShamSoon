@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
+import 'package:shamsoon/core/helpers/helpers.dart';
+import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
+import 'package:shamsoon/features/community/presentation/posts_cubit.dart';
+
+import '../posts_state.dart';
 
 
 class AddPostScreen extends StatelessWidget {
-  const AddPostScreen({super.key});
+  AddPostScreen({super.key});
+  // final titleController = TextEditingController();
+  final contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +45,7 @@ class AddPostScreen extends StatelessWidget {
             ),
             SizedBox(height: 15.h),
             TextField(
+              controller: contentController,
               maxLines: 8,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -58,13 +67,15 @@ class AddPostScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.h),
+                BlocListener<PostsCubit, PostsState>(
+                  listener: (context, state) => Helpers.manageBlocConsumer(
+                      state.baseStatus,
+                      msg: state.msg,
+                      actionWhenSuccess: () => Navigator.pop(context, 'success')
                   ),
-                  child: Text("Post", style: TextStyle(fontSize: 16.sp, color: Colors.white)),
+                  child: LoadingButton(onTap: () => context.read<PostsCubit>().createPost(
+                      newTitle: 'New post', content: contentController.text
+                  ), width: 120.w, height: 40.h, title: "Post",),
                 ),
                 SizedBox(width: 20.w),
                 ElevatedButton(

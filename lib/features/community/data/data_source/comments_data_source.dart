@@ -1,0 +1,27 @@
+import 'package:multiple_result/multiple_result.dart';
+import 'package:shamsoon/core/error/failure.dart';
+import 'package:shamsoon/core/shared/base_model.dart';
+import 'package:shamsoon/features/community/data/models/comments.dart';
+
+abstract interface class CommentsDataSource{
+  Future<Result<BaseModel<List<Comment>>, Failure>> getAllComments(String postId);
+  Future<Result<BaseModel<Comment>, Failure>> createComment({
+    required String postId,
+    required String content
+});
+}
+
+class CommentsDataSourceImpl implements CommentsDataSource{
+  @override
+  Future<Result<BaseModel<Comment>, Failure>> createComment({required String postId, required String content}) {
+    // TODO: implement createComment
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<BaseModel<List<Comment>>, Failure>> getAllComments(String postId) {
+    // TODO: implement getAllComments
+    throw UnimplementedError();
+  }
+
+}

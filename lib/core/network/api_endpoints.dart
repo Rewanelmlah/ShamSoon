@@ -6,7 +6,7 @@ class ApiConstants {
 
   // back end
 
-
+  // Auth
   static const String users = 'api/v1/users';
   static const String login = '$users/login';
   static const String logout = '$users/logout';
@@ -16,6 +16,10 @@ class ApiConstants {
   static const String sendEmailVerification = '$users/email/verify/send';
   static const String verifyEmail = '$users/email/verify';
   static const String forgetPassword = '$users/forget-password';
+
+  // Posts
+  static const String posts = '$users/posts';
+  static const String deletePost = '$users/posts';
 
 
 }

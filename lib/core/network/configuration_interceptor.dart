@@ -8,7 +8,8 @@ class ConfigurationInterceptor extends Interceptor {
     options.headers.addAll({
       'Accept': ContentType.json,
       HttpHeaders.acceptLanguageHeader:
-          Languages.currentLanguage.locale.languageCode
+          Languages.currentLanguage.locale.languageCode,
+      HttpHeaders.authorizationHeader : 'bearer THPjQGAyayVijgkQFIfQZG0U3xCeRQQK8sPRZO21fcebb0e9'
     });
     handler.next(options);
   }
