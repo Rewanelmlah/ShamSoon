@@ -89,8 +89,8 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
   AsyncCallStatus status = AsyncCallStatus.initial;
   int currentPage = 1;
   late int totalPages;
-  ValueNotifier<List<E>> newItems = ValueNotifier([]);
-  // List<E> newItems = [];
+  // ValueNotifier<List<E>> newItems = ValueNotifier([]);
+  List<E> newItems = [];
 
 
   @override
@@ -136,14 +136,14 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
         if(currentPage <= mapperResult.paginationData.totalPages!.toInt()){
           currentPage++;
         }
-        newItems.value.addAll(mapperResult.data);
+        newItems.addAll(mapperResult.data);
         if(widget.controller != null){
-          widget.controller!.updateItems(newItems.value);
+          widget.controller!.updateItems(newItems);
         }
         setState(() => status = AsyncCallStatus.success);
       });
       if(widget.onSuccess != null){
-        widget.onSuccess!(newItems.value);
+        widget.onSuccess!(newItems);
       }
       scrollController.restoreOffset();
 
@@ -170,7 +170,8 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
   Future<void> _fetchDataWhenRefresh() async {
     setState(() => status = AsyncCallStatus.loading);
     currentPage = 1;
-    newItems.value= [];
+    newItems= [];
+    widget.controller!.items.value = [];
     scrollController.retainOffset();
     try {
       final mapperResult = await _manageMapper();
@@ -178,9 +179,9 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
         if(currentPage <= mapperResult.paginationData.totalPages!.toInt()){
           currentPage++;
         }
-        newItems.value.addAll(mapperResult.data);
+        newItems.addAll(mapperResult.data);
         if(widget.controller != null){
-          widget.controller!.updateItems(newItems.value);
+          widget.controller!.updateItems(newItems);
         }
         setState(() => status = AsyncCallStatus.success);
       });
@@ -252,7 +253,7 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
           itemCount: widget.showNoDataAlert? value.length + 1 :
           status == AsyncCallStatus.loading? value.length + 1 : value.length,
           itemBuilder: (context, index) {
-            if (index < newItems.value.length) {
+            if (index < value.length) {
               return widget.itemBuilder(value, index);
             } else {
               if(widget.showNoDataAlert){
@@ -270,28 +271,32 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
   }
 
   Widget _gridView() {
-    return GridView.count(
-      physics: widget.scrollPhysics?? const AlwaysScrollableScrollPhysics(),
-      shrinkWrap: widget.shrinkWrap?? false,
-      crossAxisCount: widget.crossAxisCount?? 2,
-      mainAxisSpacing: widget.mainAxisSpacing?? 0.0,
-      crossAxisSpacing: widget.crossAxisSpacing?? 0.0,
-      childAspectRatio: widget.childAspectRatio?? 0.0,
-      scrollDirection: widget.scrollDirection?? Axis.vertical,
-      controller: scrollController,
-      children: List.generate(
-        newItems.value.length + 1, (index) {
-        if (index < newItems.value.length) {
-          return widget.itemBuilder(newItems.value, index);
-        } else {
-          if(widget.showNoDataAlert){
-            return currentPage > totalPages?
-            const Text('No more data', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey)) :
-            _loadingWidget;
-          }else{
-            return _loadingWidget;
-          }
-        }},
+    return ValueListenableBuilder(
+      valueListenable: widget.controller!.items,
+      builder: (context, value, child) => GridView.count(
+        physics: widget.scrollPhysics?? const AlwaysScrollableScrollPhysics(),
+        shrinkWrap: widget.shrinkWrap?? false,
+        crossAxisCount: widget.crossAxisCount?? 2,
+        mainAxisSpacing: widget.mainAxisSpacing?? 0.0,
+        crossAxisSpacing: widget.crossAxisSpacing?? 0.0,
+        childAspectRatio: widget.childAspectRatio?? 0.0,
+        scrollDirection: widget.scrollDirection?? Axis.vertical,
+        controller: scrollController,
+        children: List.generate(
+          widget.showNoDataAlert? value.length + 1 :
+          status == AsyncCallStatus.loading? value.length + 1 : value.length, (index) {
+          if (index < value.length) {
+            return widget.itemBuilder(value, index);
+          } else {
+            if(widget.showNoDataAlert){
+              return currentPage > totalPages?
+              const Text('No more data', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey)) :
+              _loadingWidget;
+            }else{
+              return _loadingWidget;
+            }
+          }},
+        ),
       ),
     );
   }
@@ -450,8 +455,12 @@ class EasyPaginationController<E> {
   // Make items a ValueNotifier
   final ValueNotifier<List<E>> items = ValueNotifier<List<E>>([]);
 
+  void _updateView(){
+    items.notifyListeners();
+  }
+
   void updateItems(List<E> newItems) {
-    items.value = List<E>.from(newItems);
+    items.value = newItems;
   }
 
   E? getRandomItem() {
@@ -465,39 +474,36 @@ class EasyPaginationController<E> {
   }
 
   void sort(int Function(E a, E b) compare) {
-    final sortedList = List<E>.from(items.value);
-    sortedList.sort(compare);
-    items.value = sortedList;
+    items.value.sort(compare);
+    _updateView();
   }
 
   void addItem(E item) {
-    final updatedList = List<E>.from(items.value)..add(item);
-    items.value = updatedList;
+    items.value.add(item);
+    _updateView();
   }
 
   void addItemAt(E item, int index) {
-    final updatedList = List<E>.from(items.value)..insert(index, item);
-    items.value = updatedList;
+    items.value.insert(index, item);
+    _updateView();
   }
 
   void addAtBeginning(E item) {
-    final updatedList = List<E>.from(items.value)..insert(0, item);
-    items.value = updatedList;
+    items.value.insert(0, item);
+    _updateView();
   }
 
   E access(int index) {
-    final updatedList = List<E>.from(items.value);
-    items.value = updatedList;
     return items.value.elementAt(index);
   }
 
   void removeItem(E item) {
-    final updatedList = List<E>.from(items.value)..remove(item);
-    items.value = updatedList;
+    items.value.remove(item);
+    _updateView();
   }
 
   void clear() {
-    items.value = [];
+    items.value.clear();
   }
 
   // Don't forget to dispose the ValueNotifier when done

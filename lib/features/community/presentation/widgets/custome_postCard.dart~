@@ -14,7 +14,7 @@ class PostCard extends StatefulWidget {
   final Post post;
   final int index;
 
-  PostCard({super.key, required this.post, required this.index});
+  const PostCard({super.key, required this.post, required this.index});
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -87,11 +87,23 @@ class _PostCardState extends State<PostCard> {
 
   void _completeEditing()async{
     context.read<PostsCubit>().controller.access(widget.index).content = contentField.text;
+    disableEditMode();
     await context.read<PostsCubit>().updatePost(
         postId: widget.post.id.toString(),
         newTitle: 'new post',
         content: contentField.text
     );
+
+  }
+
+  ValueNotifier<bool> isChanged = ValueNotifier(false);
+  void _onChange(String value){
+    if(contentField.text != widget.post.content){
+      isChanged.value = true;
+    }else{
+      isChanged.value = false;
+    }
+    isChanged.notifyListeners();
   }
 
   @override
@@ -135,13 +147,18 @@ class _PostCardState extends State<PostCard> {
                       children: [
                         DefaultTextField(
                           controller: contentField,
+                          onChanged: (p0) => _onChange,
                         ),
                         Row(
                           children: [
                             Expanded(
-                              child: LoadingButton(
-                                title: 'Save',
-                                onTap: () => _completeEditing()
+                              child: ValueListenableBuilder(
+                                valueListenable: isChanged,
+                                builder: (context, value, child) => LoadingButton(
+                                    title: 'Save',
+                                    color: value? AppColors.primaryColor : Colors.grey,
+                                    onTap: () => value? _completeEditing() : null
+                                ),
                               ),
                             ),
                             Expanded(

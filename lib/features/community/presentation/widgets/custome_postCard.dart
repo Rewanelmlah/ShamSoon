@@ -14,7 +14,7 @@ class PostCard extends StatefulWidget {
   final Post post;
   final int index;
 
-  PostCard({super.key, required this.post, required this.index});
+  const PostCard({super.key, required this.post, required this.index});
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -96,6 +96,15 @@ class _PostCardState extends State<PostCard> {
 
   }
 
+  ValueNotifier<bool> isChanged = ValueNotifier(false);
+  void _onChange(String value){
+    if(contentField.text != widget.post.content){
+      isChanged.value = true;
+    }else{
+      isChanged.value = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -137,13 +146,18 @@ class _PostCardState extends State<PostCard> {
                       children: [
                         DefaultTextField(
                           controller: contentField,
+                          onChanged: (val) => _onChange(val!),
                         ),
                         Row(
                           children: [
                             Expanded(
-                              child: LoadingButton(
-                                title: 'Save',
-                                onTap: () => _completeEditing()
+                              child: ValueListenableBuilder(
+                                valueListenable: isChanged,
+                                builder: (context, value, child) => LoadingButton(
+                                    title: 'Save',
+                                    color: value? AppColors.primaryColor : Colors.grey,
+                                    onTap: () => value? _completeEditing() : null
+                                ),
                               ),
                             ),
                             Expanded(

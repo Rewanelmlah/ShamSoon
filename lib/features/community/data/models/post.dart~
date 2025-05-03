@@ -79,7 +79,7 @@ class User{
   String phoneVerifiedAt;
   String emailVerifiedAt;
   String fcmToken;
-  // String status;
+  String status;
   String createdAt;
   String updatedAt;
   String socialId;
@@ -95,7 +95,7 @@ class User{
     required this.phoneVerifiedAt,
     required this.emailVerifiedAt,
     required this.fcmToken,
-    // required this.status,
+    required this.status,
     required this.createdAt,
     required this.updatedAt,
     required this.socialId,
@@ -112,7 +112,7 @@ class User{
     phoneVerifiedAt: json["phone_verified_at"]?? '',
     emailVerifiedAt: json["email_verified_at"]?? '',
     fcmToken: json["fcm_token"]?? '',
-    // status: json["status"],
+    status: json["status"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
     socialId: json["social_id"]?? '',

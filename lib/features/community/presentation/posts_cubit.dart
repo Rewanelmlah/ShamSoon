@@ -31,9 +31,9 @@ class PostsCubit extends Cubit<PostsState> {
   EasyPaginationController<Post> controller = EasyPaginationController<Post>();
 
   Future<void> deletePost(Post post, int index)async{
-    log('changeddddd');
     controller.removeItem(post);
-    final result = await dataSource.deletePost('post.id.toString()');
+    emit(state.copyWith(baseStatus: BaseStatus.loading));
+    final result = await dataSource.deletePost(post.id.toString());
     result.when(
           (success) => emit(state.copyWith(
               baseStatus: BaseStatus.success,

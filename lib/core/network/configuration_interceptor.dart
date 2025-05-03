@@ -9,7 +9,7 @@ class ConfigurationInterceptor extends Interceptor {
       'Accept': ContentType.json,
       HttpHeaders.acceptLanguageHeader:
           Languages.currentLanguage.locale.languageCode,
-      HttpHeaders.authorizationHeader : 'bearer THPjQGAyayVijgkQFIfQZG0U3xCeRQQK8sPRZO21fcebb0e9'
+      HttpHeaders.authorizationHeader : 'bearer hLCqZzPc4Uv00WEM5EHLjdrcwWil4p1J1d1jYkQD27d40c0c'
     });
     handler.next(options);
   }
