@@ -86,12 +86,12 @@ class _PostCardState extends State<PostCard> {
   }
 
   void _completeEditing()async{
-    context.read<PostsCubit>().controller.access(widget.index).content = contentField.text;
     disableEditMode();
     await context.read<PostsCubit>().updatePost(
-        postId: widget.post.id.toString(),
+        post: widget.post,
         newTitle: 'new post',
-        content: contentField.text
+        content: contentField.text,
+        index: widget.index
     );
 
   }

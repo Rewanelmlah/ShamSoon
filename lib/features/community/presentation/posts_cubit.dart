@@ -1,10 +1,7 @@
-import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shamsoon/core/shared/base_state.dart';
 import 'package:shamsoon/features/community/data/data_source/posts_data_source.dart';
 import 'package:shamsoon/features/community/presentation/posts_state.dart';
-
 import '../../../core/widgets/easy_pagination.dart';
 import '../data/models/post.dart';
 
@@ -50,26 +47,40 @@ class PostsCubit extends Cubit<PostsState> {
   }
 
   Future<void> updatePost({
-    required String postId,
+    required Post post,
     required String newTitle,
     required String content,
-  })async{
+    required int index,
+  }) async {
+    final originalPost = post.copyWith(); // Make a snapshot copy
+    // Now safe to mutate controller's item
+    controller.access(index).content = content;
+
     final result = await dataSource.updatePost(
-        newTitle: newTitle,
-        content: content,
-        postId: postId
+      newTitle: newTitle,
+      content: content,
+      postId: post.id.toString(),
     );
+
     result.when(
-          (success) => emit(state.copyWith(
+          (success) {
+        emit(state.copyWith(
           baseStatus: BaseStatus.success,
-          msg: success.message
-      )),
-          (error) => emit(state.copyWith(
+          msg: success.message,
+        ));
+      },
+          (error) {
+        // Restore content from the saved copy
+        controller.access(index).content = originalPost.content;
+        controller.refresh();
+        emit(state.copyWith(
           baseStatus: BaseStatus.error,
-          msg: error.message
-      )),
+          msg: error.message,
+        ));
+      },
     );
   }
+
 
   Future<void> like(String postId)async{
     final result = await dataSource.likePost(postId);

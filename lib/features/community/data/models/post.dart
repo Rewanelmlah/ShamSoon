@@ -40,6 +40,7 @@ class PostsResponse{
 }
 
 class Post{
+  int? index;
   int? id;
   int? userId;
   String? title;
@@ -49,6 +50,7 @@ class Post{
   User? user;
 
   Post({
+    this.index,
     required this.id,
     required this.userId,
     required this.title,
@@ -57,6 +59,26 @@ class Post{
     required this.updatedAt,
     required this.user
 });
+
+  Post copyWith({
+    int? index,
+    int? id,
+    int? userId,
+    String? title,
+    String? content,
+    String? createdAt,
+    String? updatedAt,
+    User? user,
+}) => Post(
+    index: index ?? this.index,
+    id: id ?? this.id,
+    userId: userId ?? this.userId,
+    title: title ?? this.title,
+    content: content ?? this.content,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    user: user ?? this.user
+);
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
     id: json["id"],

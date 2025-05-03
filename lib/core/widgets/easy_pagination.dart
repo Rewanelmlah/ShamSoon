@@ -497,6 +497,10 @@ class EasyPaginationController<E> {
     return items.value.elementAt(index);
   }
 
+  void refresh(){
+    _updateView();
+  }
+
   void removeItem(E item) {
     items.value.remove(item);
     _updateView();

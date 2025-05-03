@@ -171,6 +171,7 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
     setState(() => status = AsyncCallStatus.loading);
     currentPage = 1;
     newItems= [];
+    widget.controller!.items.value = [];
     scrollController.retainOffset();
     try {
       final mapperResult = await _manageMapper();

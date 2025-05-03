@@ -86,7 +86,6 @@ class _PostCardState extends State<PostCard> {
   }
 
   void _completeEditing()async{
-    context.read<PostsCubit>().controller.access(widget.index).content = contentField.text;
     disableEditMode();
     await context.read<PostsCubit>().updatePost(
         postId: widget.post.id.toString(),
@@ -103,7 +102,6 @@ class _PostCardState extends State<PostCard> {
     }else{
       isChanged.value = false;
     }
-    isChanged.notifyListeners();
   }
 
   @override
@@ -147,7 +145,7 @@ class _PostCardState extends State<PostCard> {
                       children: [
                         DefaultTextField(
                           controller: contentField,
-                          onChanged: (p0) => _onChange,
+                          onChanged: (val) => _onChange(val!),
                         ),
                         Row(
                           children: [

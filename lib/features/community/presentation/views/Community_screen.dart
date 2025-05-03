@@ -69,7 +69,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   loadingBuilder: CustomLoading.showLoadingView(),
                   shrinkWrap: true,
                   controller: ctx.read<PostsCubit>().controller,
-                  // scrollPhysics: const NeverScrollableScrollPhysics(),
+                  scrollPhysics: const NeverScrollableScrollPhysics(),
                 ).paddingSymmetric(horizontal: 15.w, vertical: 5.h)
               ],
             ),
