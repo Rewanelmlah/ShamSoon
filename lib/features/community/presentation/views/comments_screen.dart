@@ -61,7 +61,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               padding: EdgeInsets.all(5.w),
               child: EasyPagination<BaseModel<CommentsResponse>, PostComment>.listView(
                 loadingBuilder: CustomLoading.showLoadingView(),
-                controller: ctx.read<CommentsCubit>().controller,
+                controller: ctx.read<CommentsCubit>().commentsController,
                 shrinkWrap: true,
                 asyncCall: (currentPage) async => await CommentsDataSourceImpl().getAllComments(widget.post.id.toString()),
                 mapper: (response) => DataListAndPaginationData(
@@ -147,8 +147,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     icon: Icon(Icons.send, color: AppColors.primaryColor, size: 22.sp),
                     onPressed: () {
                       ctx.read<CommentsCubit>().createComment(
-                          postId: widget.post.id.toString(),
-                          content: _commentController.text
+                        postId: widget.post.id.toString(),
+                        content: _commentController.text,
+                        index: ctx.read<CommentsCubit>().commentsController.items.value.length
                       );
                       _commentController.clear();
                     }

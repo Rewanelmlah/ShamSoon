@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shamsoon/features/community/data/data_source/comments_data_source.dart';
 import 'package:shamsoon/features/community/data/models/comments.dart';
@@ -26,7 +24,6 @@ class CommentsCubit extends Cubit<CommentsState> {
     result.when(
         (success) {
           commentsController.replaceWith(index, success.data);
-          log('the id is ${commentsController.access(index).id.toString()}');
           emit(state.copyWith(
               baseStatus: BaseStatus.success,
               msg: success.message
