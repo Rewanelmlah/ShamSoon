@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shamsoon/core/app_colors.dart';
-import 'package:shamsoon/core/helpers/helpers.dart';
 import 'package:shamsoon/core/shared/base_model.dart';
-import 'package:shamsoon/core/widgets/app_text.dart';
-import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
-import 'package:shamsoon/core/widgets/custom_dialog.dart';
 import 'package:shamsoon/core/widgets/custom_loading.dart';
 import 'package:shamsoon/features/community/data/data_source/comments_data_source.dart';
 import 'package:shamsoon/features/community/data/models/comments.dart';
 import 'package:shamsoon/features/community/data/models/post.dart';
 import 'package:shamsoon/features/community/presentation/comments_cubit/comments_cubit.dart';
-import 'package:shamsoon/features/community/presentation/comments_cubit/comments_state.dart';
-import 'package:shamsoon/generated/assets.dart';
+import 'package:shamsoon/features/community/presentation/widgets/comment_widget.dart';
 
 import '../../../../core/widgets/easy_pagination.dart';
 
@@ -48,6 +42,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -78,68 +73,11 @@ class _CommentsScreenState extends State<CommentsScreen> {
                   )
                 ),
                 errorMapper: ErrorMapper(errorWhenDio: (e) => e.response?.data['message']),
-                itemBuilder: (data, index) => Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  elevation: 1,
-                  child: Padding(
-                    padding: EdgeInsets.all(10.w),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: const AssetImage('assets/images/logo.png'),
-                        radius: 20.r,
-                      ),
-                      title: Text(
-                        widget.post.user?.name ?? 'no name',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                      subtitle: Text(
-                        data[index].content?? 'no content',
-                        style: TextStyle(fontSize: 12.sp),
-                      ),
-                      trailing: IconButton(
-                          onPressed: () => showCustomDialog(context, child: Column(
-                            spacing: 10.h,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox.square(
-                                dimension: 80.r,
-                                  child: Lottie.asset(Assets.lottieApiError)),
-                              AppText('Delete your comment?', fontSize: 14.sp, fontWeight: FontWeight.bold),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: LoadingButton(
-                                          onTap: ()async {
-                                            await ctx.read<CommentsCubit>().deleteComment(
-                                                index: index,
-                                                comment: data[index]
-                                            );
-                                            Navigator.pop(context);
-                                          },
-                                          color: Colors.red,
-                                          title: 'Yes, Delete'
-                                      )
-                                  ),
-                                  Expanded(
-                                      child: LoadingButton(
-                                          onTap: () => Navigator.pop(context),
-                                          title: 'Cancel'
-                                      )
-                                  )
-                                ],
-                              )
-                            ],
-                          )),
-                          icon: const Icon(Icons.more_vert)
-                      ),
-                    ),
-                  ),
-                ),
+                itemBuilder: (data, index) => CommentWidget(
+                    post: widget.post,
+                    comments: data,
+                    index: index
+                )
               ),
             ),
             bottomNavigationBar: Padding(

@@ -68,4 +68,33 @@ class CommentsCubit extends Cubit<CommentsState> {
         }
     );
   }
+
+  Future<void> updateComment({
+    required int index,
+    required PostComment comment,
+    required String newComment
+  })async{
+    final originalComment = comment.copyWith();
+    commentsController.access(index).content = newComment;
+    final result = await commentsDataSource.updateComment(
+        postId: comment.postId.toString(),
+        newComment: newComment,
+        commentId: comment.id.toString()
+    );
+    result.when(
+            (success) {
+          emit(state.copyWith(
+              baseStatus: BaseStatus.success,
+              msg: success.message
+          ));
+        },
+            (error) {
+              commentsController.access(index).content = originalComment.content;
+          emit(state.copyWith(
+              baseStatus: BaseStatus.error,
+              msg: error.message
+          ));
+        }
+    );
+  }
 }
