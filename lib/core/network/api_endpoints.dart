@@ -20,6 +20,7 @@ class ApiConstants {
   // Posts
   static const String posts = '$users/posts';
   static const String deletePost = '$users/posts';
+  static const String comments = '/comments';
 
 
 }

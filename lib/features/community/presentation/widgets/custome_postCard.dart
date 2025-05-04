@@ -186,7 +186,7 @@ class _PostCardState extends State<PostCard> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CommentsScreen()),
+                  MaterialPageRoute(builder: (context) => CommentsScreen(post: widget.post)),
                 );
               },
               child: Row(
