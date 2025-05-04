@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shamsoon/core/shared/models/user_model.dart';
 import '../../../helpers/cache.dart';
 import '../../../helpers/global_variables.dart';
 import '../../../network/log_interceptor.dart';
 import '../../../network/network_service.dart';
-import '../../models/user_data.dart';
 
 part 'user_state.dart';
 part 'user_utils.dart';
@@ -36,11 +36,13 @@ class UserCubit extends Cubit<UserState> with UserUtils {
   }
 
   Future<void> setUserLoggedIn(
-      {required UserData user, required String token}) async {
-    await Future.wait([
-      _saveUser(user),
-      _saveToken(token),
-    ]);
+      {required UserModel user, required String token, required bool isRemember}) async {
+    if(isRemember){
+      await Future.wait([
+        _saveUser(user),
+        _saveToken(token),
+      ]);
+    }
     sl<NetworkService>().setToken(token);
     emit(state.copyWith(userModel: user, userStatus: UserStatus.loggedIn)); // in otp and complete profile
   }
@@ -57,7 +59,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     _saveToken(token);
   }
 
-  Future<void> updateUser(UserData user) async {
+  Future<void> updateUser(UserModel user) async {
     await _saveUser(user);
     emit(state.copyWith(userModel: user));
   }
@@ -71,7 +73,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     if (token != null && userMap != null) {
       sl<NetworkService>().setToken(token);
       emit(state.copyWith(
-        userModel: UserData.fromJson(userMap),
+        userModel: UserModel.fromJson(userMap),
         userStatus: UserStatus.loggedIn,
       ));
       return true;
@@ -84,7 +86,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     emit(UserState.initial());
   }
 
-  UserData get user => state.userModel;
+  UserModel get user => state.userModel;
   static UserCubit get instance  => sl<UserCubit>();
 
   bool get isUserLoggedIn => state.userStatus == UserStatus.loggedIn;

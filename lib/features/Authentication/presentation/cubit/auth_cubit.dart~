@@ -1,13 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shamsoon/features/Authentication/data/data_source.dart';
 import 'package:shamsoon/features/Authentication/data/models/register.dart';
-
-import '../../../../core/helpers/navigation.dart';
 import '../../../../core/shared/base_state.dart';
-import '../../../../core/shared/cubits/user_cubit/user_cubit.dart';
-import '../views/login.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -91,7 +86,7 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await authDataSource.sendEmailVerification();
     result.when(
           (success) => emit(state.copyWith(
-          baseStatus: BaseStatus.success,
+          // baseStatus: BaseStatus.success,
           msg: success.message
       )),
           (error) => emit(state.copyWith(

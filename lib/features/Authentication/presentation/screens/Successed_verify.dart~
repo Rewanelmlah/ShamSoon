@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/core_widgets/custome_button.dart';
 import 'package:shamsoon/core/helpers/navigation.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dart';
+import 'package:shamsoon/features/Authentication/presentation/screens/otp_view.dart';
 
+import 'login.dart';
 import 'reset_password.dart';
 
 class SuccessedVerify extends StatefulWidget {

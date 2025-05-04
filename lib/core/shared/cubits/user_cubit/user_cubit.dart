@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shamsoon/core/helpers/constant_manager.dart';
 import 'package:shamsoon/core/shared/models/user_model.dart';
 import '../../../helpers/cache.dart';
 import '../../../helpers/global_variables.dart';
@@ -21,6 +22,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     emit(state.copyWith(userStatus: UserStatus.needActivation));
   }
 
+  final dioService = sl<NetworkService>(instanceName: ConstantManager.dioService);
   Future<bool> checkTokenExistOrNot()async{
     final token = await SecureStorage.read(_tokenKey);
     log('token: ${token.toString()}');
@@ -30,18 +32,20 @@ class UserCubit extends Cubit<UserState> with UserUtils {
         return false;
 
       default:
-        sl<NetworkService>().setToken(token);
+        dioService.setToken(token);
         return true;
     }
   }
 
   Future<void> setUserLoggedIn(
-      {required UserModel user, required String token}) async {
-    await Future.wait([
-      _saveUser(user),
-      _saveToken(token),
-    ]);
-    sl<NetworkService>().setToken(token);
+      {required UserModel user, required String token, required bool isRemember}) async {
+    if(isRemember){
+      await Future.wait([
+        _saveUser(user),
+        _saveToken(token),
+      ]);
+    }
+    dioService.setToken(token);
     emit(state.copyWith(userModel: user, userStatus: UserStatus.loggedIn)); // in otp and complete profile
   }
 
@@ -69,7 +73,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
 
     log('userMap $userMap, token $token');
     if (token != null && userMap != null) {
-      sl<NetworkService>().setToken(token);
+      dioService.setToken(token);
       emit(state.copyWith(
         userModel: UserModel.fromJson(userMap),
         userStatus: UserStatus.loggedIn,
@@ -80,7 +84,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
   }
 
   void _clearUser() {
-    sl<NetworkService>().removeToken();
+    dioService.removeToken();
     emit(UserState.initial());
   }
 

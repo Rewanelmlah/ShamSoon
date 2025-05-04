@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/helpers/helpers.dart';
-import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/reset_password.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dart';
+import 'package:shamsoon/features/Authentication/presentation/screens/otp_view.dart';
+import 'package:shamsoon/features/Authentication/presentation/screens/reset_password.dart';
+import '../../../../core/helpers/navigation.dart';
 import '../../../../core/helpers/validators.dart';
 import '../widgets/customtextformfield.dart';
 
@@ -61,19 +61,15 @@ class ForgetPassword extends StatelessWidget {
                     listener: (context, state) => Helpers.manageBlocConsumer(
                         state.baseStatus,
                         msg: state.msg,
-                      actionWhenSuccess: () => Go.to( ResetPassword(email: emailCont.text)),
+                        actionWhenSuccess: () async {
+                          if(state.phase == AuthPhase.forgetPassword){
+                            Go.to( const OTPScreen(type: OtpType.checkOtpAfterForgetPass));
+                          }}
                     ),
-                    child: BlocListener<AuthCubit, AuthState>(
-                      listener: (context, state) => Helpers.manageBlocConsumer(
-                        state.baseStatus,
-                        msg: state.msg,
-                        actionWhenSuccess: () => Go.to(const OTPScreen(type: OtpType.checkOtpAfterForgetPass)),
-                      ),
-                      child: LoadingButton(
-                          title: 'forget password',
-                          onTap: () => _formKey.currentState!.validate()?
-                          context.read<AuthCubit>().forgetPassword(emailCont.text) : null
-                      ),
+                    child: LoadingButton(
+                        title: 'forget password',
+                        onTap: () => _formKey.currentState!.validate()?
+                        context.read<AuthCubit>().forgetPassword(emailCont.text) : null
                     ),
                   ),
                 ])),

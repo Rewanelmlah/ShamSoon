@@ -11,13 +11,12 @@ import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/data/models/register.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/Custome_google_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
 
 import '../../../../core/helpers/constant_manager.dart';
 import '../../../../core/helpers/global_variables.dart';
+import 'otp_view.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -114,8 +113,10 @@ class SignUpScreen extends StatelessWidget {
                     //     value: context.read<AuthCubit>(),
                     //     child: const LoginScreen()),)),
                     actionWhenSuccess: () {
-                      _setToken(state.user!.token!);
-                      Go.to( const OTPScreen(type: OtpType.verification));
+                      if(state.phase == AuthPhase.register){
+                        _setToken(state.user!.token!);
+                        Go.to( const OTPScreen(type: OtpType.verification));
+                      }
                     },
                   ),
                   child: LoadingButton(

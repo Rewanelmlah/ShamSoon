@@ -7,8 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/shared/Functions/setup_service_locators.dart';
 import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
-import 'package:shamsoon/features/home/presentation/views/Home_Screen.dart';
 import 'core/helpers/cache.dart';
 import 'core/helpers/constant_manager.dart';
 import 'core/helpers/language.dart';
@@ -19,7 +17,7 @@ import 'core/shared/route_observer.dart';
 import 'core/widgets/exeption_view.dart';
 import 'core/widgets/offline_widget.dart';
 import 'features/Authentication/presentation/cubit/auth_cubit.dart';
-import 'features/community/presentation/views/Community_screen.dart';
+import 'features/Authentication/presentation/screens/login.dart';
 import 'firebase_options.dart';
 
 
@@ -81,8 +79,8 @@ class ShamSoon extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
-            home: CommunityScreen(),
-            navigatorObservers: [AppNavigationObserver()],
+            home: LogIn(),
+            // navigatorObservers: [AppNavigationObserver()],
             builder: (context, child) {
               return OfflineWidget(
                 child: FullScreenLoadingManager(child: child!),

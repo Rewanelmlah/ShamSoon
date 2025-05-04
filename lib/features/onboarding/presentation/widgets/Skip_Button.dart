@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
 
+import '../../../Authentication/presentation/screens/login.dart';
 
 class SkipButton extends StatelessWidget {
   const SkipButton({super.key});

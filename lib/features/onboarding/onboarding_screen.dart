@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
 import 'package:shamsoon/core/core_widgets/custome_button.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/login.dart';
 import 'package:shamsoon/features/onboarding/data/static_data.dart';
 import 'package:shamsoon/features/onboarding/presentation/widgets/Skip_Button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../Authentication/presentation/screens/login.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
@@ -104,7 +105,7 @@ class _OnBoardingState extends State<OnBoarding> {
                       controller: _controller, // PageController
                       count: onBoardingList.length,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     // Next/Continue Button
 
                     CustomButton(

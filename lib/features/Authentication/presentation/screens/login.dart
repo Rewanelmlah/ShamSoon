@@ -9,12 +9,13 @@ import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/forget_Password.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/otp_view.dart';
-import 'package:shamsoon/features/Authentication/presentation/views/sigh_up.dart';
+import 'package:shamsoon/features/Authentication/presentation/screens/forget_Password.dart';
+import 'package:shamsoon/features/Authentication/presentation/screens/sigh_up.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/Custome_google_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
 import 'package:shamsoon/features/home/presentation/views/layout_view.dart';
+
+import 'otp_view.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -119,13 +120,15 @@ class LogIn extends StatelessWidget {
                   listener: (context, state) =>
                       Helpers.manageBlocConsumer(state.baseStatus,
                           msg: state.msg,
-                          actionWhenSuccess: () async{
-                        if(rememberMe.value){
-                          await context.read<UserCubit>().setUserLoggedIn(user: state.user!, token: state.user!.token!);
-                        }
-                        Go.offAll( const OTPScreen(type: OtpType.verification));
-                        },
-                        // actionWhenSuccess: () => Go.offAll(LayoutScreen())
+                          actionWhenSuccess: () async {
+                        if(state.phase == AuthPhase.login){
+                          await context.read<UserCubit>().setUserLoggedIn(
+                              user: state.user!,
+                              token: state.user!.token!,
+                              isRemember: rememberMe.value
+                          );
+                          Go.offAll(LayoutScreen());
+                        }},
                       ),
                   child: LoadingButton(
                     title: 'Log In',
