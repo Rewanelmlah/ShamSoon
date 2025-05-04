@@ -6,6 +6,8 @@ import 'package:shamsoon/features/onboarding/data/static_data.dart';
 import 'package:shamsoon/features/onboarding/presentation/widgets/Skip_Button.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../core/helpers/cache.dart';
+import '../../core/helpers/constant_manager.dart';
 import '../Authentication/presentation/screens/login.dart';
 
 class OnBoarding extends StatefulWidget {
@@ -111,6 +113,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     CustomButton(
                       onPressed: () {
                         if (currentIndex == onBoardingList.length - 1) {
+                          CacheStorage.write(CacheConstants.onBoardingSubmission, true);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

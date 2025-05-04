@@ -6,10 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:shamsoon/core/error/exceptions.dart';
-import 'package:shamsoon/features/Authentication/presentation/screens/login.dart';
 import '../../../generated/assets.dart';
-import '../helpers/navigation.dart';
 import 'custom_messages.dart';
 
 enum RankingType {gridView, listView}
@@ -157,8 +154,6 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
         errorMsg = widget.errorMapper.errorWhenDio!(e);
       }else if(e is HttpException){
         errorMsg = widget.errorMapper.errorWhenHttp!(e);
-      }else if(e is UnauthorizedException){
-        Go.offAll(LogIn());
       }else{
         errorMsg = e.toString();
       }
@@ -199,8 +194,6 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
         errorMsg = widget.errorMapper.errorWhenDio!(e);
       }else if(e is HttpException){
         errorMsg = widget.errorMapper.errorWhenHttp!(e);
-      }else if(e is UnauthorizedException){
-        Go.offAll(LogIn());
       }else{
         errorMsg = e.toString();
       }

@@ -80,7 +80,7 @@ class ShamSoon extends StatelessWidget {
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
             home: LogIn(),
-            navigatorObservers: [AppNavigationObserver()],
+            // navigatorObservers: [AppNavigationObserver()],
             builder: (context, child) {
               return OfflineWidget(
                 child: FullScreenLoadingManager(child: child!),

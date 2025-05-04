@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:multiple_result/multiple_result.dart';
+import '../../features/Authentication/presentation/screens/login.dart';
 import '../error/exceptions.dart';
 import '../error/failure.dart';
+import '../helpers/navigation.dart';
 
 extension ErrorHandler<T extends dynamic> on Future<T> {
   Future<Result<T, Failure>> handleCallbackWithFailure() async {
@@ -22,6 +24,9 @@ extension ErrorHandler<T extends dynamic> on Future<T> {
       return Success(result);
     } on BlockedException catch (e) {
       return Error(Failure(e.message));
+    }on UnauthorizedException catch(e){
+      Go.offAll(LogIn());
+      return Result.error(Failure(e.message));
     }on ServerException catch (e) {
       return Result.error(Failure(e.message));
     }

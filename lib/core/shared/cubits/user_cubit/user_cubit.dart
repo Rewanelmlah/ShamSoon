@@ -93,4 +93,16 @@ class UserCubit extends Cubit<UserState> with UserUtils {
 
   bool get isUserLoggedIn => state.userStatus == UserStatus.loggedIn;
   bool get isActivated => state.userStatus == UserStatus.needActivation;
+
+  Future<bool> checkSkippedOnBoarding() async{
+    final bool? result = await CacheStorage.read(CacheConstants.onBoardingSubmission);
+    switch(result){
+      case null:
+      case false:
+        return false;
+
+      default:
+        return true;
+    }
+  }
 }
