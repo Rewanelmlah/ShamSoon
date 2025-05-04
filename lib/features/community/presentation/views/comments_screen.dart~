@@ -15,21 +15,35 @@ import 'package:shamsoon/features/community/data/models/post.dart';
 import 'package:shamsoon/features/community/presentation/comments_cubit/comments_cubit.dart';
 import 'package:shamsoon/features/community/presentation/comments_cubit/comments_state.dart';
 import 'package:shamsoon/generated/assets.dart';
-
 import '../../../../core/widgets/easy_pagination.dart';
 
-class CommentsScreen extends StatefulWidget {
+class CommentsScreen extends StatelessWidget {
+
   final Post post;
   const CommentsScreen({super.key,
     required this.post
   });
 
-
   @override
-  State<CommentsScreen> createState() => _CommentsScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CommentsScreenBody(post: post),
+    );
+  }
 }
 
-class _CommentsScreenState extends State<CommentsScreen> {
+class CommentsScreenBody extends StatefulWidget {
+  final Post post;
+  const CommentsScreenBody({super.key,
+    required this.post
+  });
+
+
+  @override
+  State<CommentsScreenBody> createState() => _CommentsScreenBodyState();
+}
+
+class _CommentsScreenBodyState extends State<CommentsScreenBody> {
   final TextEditingController _commentController = TextEditingController();
   List<String> comments = [
     "Try using a soft brush",
@@ -113,16 +127,20 @@ class _CommentsScreenState extends State<CommentsScreen> {
                               Row(
                                 children: [
                                   Expanded(
-                                      child: LoadingButton(
-                                          onTap: ()async {
-                                            await ctx.read<CommentsCubit>().deleteComment(
+                                      child: BlocListener<CommentsCubit, CommentsState>(
+                                        listener: (context, state) => Helpers.manageBlocConsumer(
+                                            state.baseStatus,
+                                            msg: state.msg,
+                                            actionWhenSuccess: () => Navigator.pop(context)
+                                        ),
+                                        child: LoadingButton(
+                                            onTap: () => ctx.read<CommentsCubit>().deleteComment(
                                                 index: index,
                                                 comment: data[index]
-                                            );
-                                            Navigator.pop(context);
-                                          },
-                                          color: Colors.red,
-                                          title: 'Yes, Delete'
+                                            ),
+                                            color: Colors.red,
+                                            title: 'Yes, Delete'
+                                        ),
                                       )
                                   ),
                                   Expanded(

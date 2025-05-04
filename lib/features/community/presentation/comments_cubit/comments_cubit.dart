@@ -26,7 +26,6 @@ class CommentsCubit extends Cubit<CommentsState> {
     result.when(
         (success) {
           commentsController.replaceWith(index, success.data);
-          log('the id is ${commentsController.access(index).id.toString()}');
           emit(state.copyWith(
               baseStatus: BaseStatus.success,
               msg: success.message
@@ -34,6 +33,34 @@ class CommentsCubit extends Cubit<CommentsState> {
         },
         (error) {
           commentsController.removeAt(index);
+          emit(state.copyWith(
+              baseStatus: BaseStatus.error,
+              msg: error.message
+          ));
+        }
+    );
+  }
+
+  Future<void> deleteComment({
+    required int index,
+    required PostComment comment,
+})async{
+    final originalComment = comment.copyWith();
+    commentsController.removeAt(index);
+    final result = await commentsDataSource.deleteComment(
+        postId: comment.postId.toString(),
+        content: comment.content!,
+        commentId: comment.id.toString()
+    );
+    result.when(
+            (success) {
+          emit(state.copyWith(
+              baseStatus: BaseStatus.success,
+              msg: success.message
+          ));
+        },
+            (error) {
+          commentsController.addItemAt(originalComment, index);
           emit(state.copyWith(
               baseStatus: BaseStatus.error,
               msg: error.message

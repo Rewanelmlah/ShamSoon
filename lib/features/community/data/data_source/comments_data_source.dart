@@ -16,6 +16,12 @@ abstract interface class CommentsDataSource{
     required String postId,
     required String content
 });
+
+  Future<Result<BaseModel, Failure>> deleteComment({
+    required String postId,
+    required String content,
+    required String commentId
+  });
 }
 
 class CommentsDataSourceImpl implements CommentsDataSource{
@@ -43,6 +49,18 @@ class CommentsDataSourceImpl implements CommentsDataSource{
         ),
         mapper: (json) => CommentsResponse.fromJson(json),
     );
+
+    return result;
+  }
+
+  @override
+  Future<Result<BaseModel, Failure>> deleteComment({required String postId, required String content, required String commentId}) {
+    final result = networkService.callApi(
+        NetworkRequest(
+            method: RequestMethod.delete,
+            path: '${ApiConstants.posts}/$postId${ApiConstants.comments}/$commentId'
+        ),
+    ).handleCallbackWithFailure();
 
     return result;
   }
