@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigateBasedToken()async{
     bool result = await UserCubit.instance.checkTokenExistOrNot();
     if(result){
-      await UserCubit.instance.init();
+      UserCubit.instance.init();
       Go.offAll(LayoutScreen());
     }else{
       Go.offAll(LogIn());

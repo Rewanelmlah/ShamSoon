@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -122,6 +124,7 @@ class LogIn extends StatelessWidget {
                           msg: state.msg,
                           actionWhenSuccess: () async {
                         if(state.phase == AuthPhase.login){
+                          log('json test${state.user!.toJson().toString()}');
                           await context.read<UserCubit>().setUserLoggedIn(
                               user: state.user!,
                               token: state.user!.token!,

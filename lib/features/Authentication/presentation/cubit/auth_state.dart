@@ -17,9 +17,9 @@ final class AuthState extends Equatable {
     this.user
   });
 
-  factory AuthState.initial() => AuthState(
+  factory AuthState.initial() => const AuthState(
     baseStatus: BaseStatus.initial,
-    user: UserModel.initial(),
+    user: null,
     phase: AuthPhase.login
   );
 

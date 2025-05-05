@@ -2,11 +2,11 @@ part of 'user_cubit.dart';
 
 mixin UserUtils {
   Future<void> _saveUser(UserModel user) async {
-    logDebug('user saved: ${user.toJson()}');
+    logDebug('user saved: ${user.toJsonCaching()}');
 
     await CacheStorage.write(
       _userKey,
-      jsonEncode(user.toJson()),
+      jsonEncode(user.toJsonCaching()),
     );
   }
 

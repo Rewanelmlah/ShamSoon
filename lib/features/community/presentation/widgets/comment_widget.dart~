@@ -177,7 +177,7 @@ class _CommentWidgetState extends State<CommentWidget> {
             widget.comments[widget.index].content?? 'no content',
             style: TextStyle(fontSize: 12.sp),
           ),
-          trailing:  context.read<UserCubit>().user.id == widget.post.userId? IconButton(
+          trailing:  context.read<UserCubit>().user.id = widget.post.userId? IconButton(
               onPressed: () => _showMenu(context, data: widget.comments, index: widget.index),
               icon: const Icon(Icons.more_vert)
           ) : null,

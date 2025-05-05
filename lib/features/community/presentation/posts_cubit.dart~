@@ -70,6 +70,7 @@ class PostsCubit extends Cubit<PostsState> {
         ));
       },
           (error) {
+        // Restore content from the saved copy
         controller.access(index).content = originalPost.content;
         controller.refresh();
         emit(state.copyWith(

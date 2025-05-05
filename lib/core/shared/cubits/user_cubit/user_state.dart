@@ -7,7 +7,7 @@ enum UserStatus {
 }
 
 class UserState extends Equatable {
-  final UserModel userModel;
+  final UserModel? userModel;
   final UserStatus userStatus;
 
   const UserState(
@@ -16,8 +16,8 @@ class UserState extends Equatable {
       });
 
   factory UserState.initial() {
-    return UserState(
-        userModel: UserModel.initial(),
+    return const UserState(
+        userModel: null,
         userStatus: UserStatus.loggedOut,
         );
   }

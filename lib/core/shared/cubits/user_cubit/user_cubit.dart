@@ -39,12 +39,12 @@ class UserCubit extends Cubit<UserState> with UserUtils {
 
   Future<void> setUserLoggedIn(
       {required UserModel user, required String token, required bool isRemember}) async {
-    if(isRemember){
+    // if(isRemember){
       await Future.wait([
         _saveUser(user),
         _saveToken(token),
       ]);
-    }
+    // }
     dioService.setToken(token);
     emit(state.copyWith(userModel: user, userStatus: UserStatus.loggedIn)); // in otp and complete profile
   }
@@ -78,6 +78,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
         userModel: UserModel.fromJson(userMap),
         userStatus: UserStatus.loggedIn,
       ));
+      log(state.userModel!.toJsonCaching().toString());
       return true;
     }
     return false;
@@ -88,7 +89,14 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     emit(UserState.initial());
   }
 
-  UserModel get user => state.userModel;
+  // UserModel get user => state.userModel!;
+
+  UserModel get user {
+    final Map<String, dynamic>? userMap =
+    CacheStorage.read(_userKey, isDecoded: true);
+    return UserModel.fromJson(userMap!);
+  }
+
   static UserCubit get instance  => sl<UserCubit>();
 
   bool get isUserLoggedIn => state.userStatus == UserStatus.loggedIn;
