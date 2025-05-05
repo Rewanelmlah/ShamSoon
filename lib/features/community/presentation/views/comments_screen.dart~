@@ -65,7 +65,6 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 loadingBuilder: CustomLoading.showLoadingView(),
                 controller: ctx.read<CommentsCubit>().commentsController,
                 shrinkWrap: true,
-                scrollPhysics: AlwaysScrollableScrollPhysics(),
                 asyncCall: (currentPage) async => await CommentsDataSourceImpl().getAllComments(widget.post.id.toString()),
                 mapper: (response) => DataListAndPaginationData(
                   data: response.data.comments,

@@ -88,10 +88,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 listener: (context, state) => Helpers.manageBlocConsumer(
                   state.baseStatus,
                   msg: state.msg,
-                  actionWhenSuccess: () {
-                    context.read<UserCubit>().updateUser(state.user!);
-                    setState(() => canChange = false);
-                  },
+                  actionWhenSuccess: () => context.read<UserCubit>().updateUser(state.user!),
                 ),
                 child: LoadingButton(title: "Save",
                     color: canChange? AppColors.primaryColor : Colors.grey,

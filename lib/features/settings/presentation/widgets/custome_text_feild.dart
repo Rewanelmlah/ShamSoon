@@ -10,11 +10,15 @@ class CustomTextField extends StatelessWidget {
   final String initialValue;
   final bool obscureText;
   final Color color;
+  final TextEditingController controller;
+  final void Function(String)? onChanged;
 
   const CustomTextField({
     Key? key,
     required this.icon,
+    this.onChanged,
     required this.label,
+    required this.controller,
     required this.initialValue,
     this.obscureText = false, required this.color, required this.sufficon,
   }) : super(key: key);
@@ -26,7 +30,8 @@ class CustomTextField extends StatelessWidget {
       child: SizedBox(
         width: 0.9.sw,
         child: TextFormField(
-          initialValue: initialValue,
+          onChanged: onChanged,
+          controller: controller,
           obscureText: obscureText,
           style: TextStyle(fontSize: 16.sp),
           decoration: InputDecoration(

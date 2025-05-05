@@ -74,9 +74,12 @@ class AddPostScreen extends StatelessWidget {
                       msg: state.msg,
                       actionWhenSuccess: () => Navigator.pop(context, 'success')
                   ),
-                  child: LoadingButton(onTap: ()async=> await context.read<PostsCubit>().createPost(
-                      newTitle: 'New post', content: contentController.text
-                  ), width: 120.w, height: 40.h, title: "Post",),
+                  child: LoadingButton(onTap: ()async{
+                    await context.read<PostsCubit>().createPost(
+                        newTitle: 'New post', content: contentController.text
+                    );
+                    Go.back('success');
+                  }, width: 120.w, height: 40.h, title: "Post",),
                 ),
                 SizedBox(width: 20.w),
                 ElevatedButton(

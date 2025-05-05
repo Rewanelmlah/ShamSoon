@@ -1,0 +1,31 @@
+import 'package:equatable/equatable.dart';
+
+import '../../../../core/shared/base_state.dart';
+
+final class SettingState extends Equatable {
+  final BaseStatus baseStatus;
+  final String msg;
+
+  const SettingState({
+    required this.baseStatus,
+    this.msg = '',
+  });
+
+  factory SettingState.initial() => const SettingState(
+    baseStatus: BaseStatus.initial,
+  );
+
+  SettingState copyWith({
+    BaseStatus? baseStatus,
+    String? msg,
+  }) =>  SettingState(
+    baseStatus: baseStatus ?? this.baseStatus,
+    msg: msg ?? this.msg,
+  );
+
+  @override
+  List<Object?> get props => [
+    baseStatus,
+    msg,
+  ];
+}

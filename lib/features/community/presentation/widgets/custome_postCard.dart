@@ -88,6 +88,7 @@ class _PostCardState extends State<PostCard> {
 
   void _completeEditing()async{
     disableEditMode();
+    isChanged.value = false;
     await context.read<PostsCubit>().updatePost(
         post: widget.post,
         newTitle: 'new post',

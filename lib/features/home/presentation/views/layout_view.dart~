@@ -18,7 +18,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     const HomeScreen(),
     EnergyDashboard(),
     CommunityScreen(),
-    SettingScreen(),
+    SettingsScreen(),
   ];
 
   @override

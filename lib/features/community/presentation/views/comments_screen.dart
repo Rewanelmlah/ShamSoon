@@ -62,6 +62,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
             body: Padding(
               padding: EdgeInsets.all(5.w),
               child: EasyPagination<BaseModel<CommentsResponse>, PostComment>.listView(
+                key: UniqueKey(),
                 loadingBuilder: CustomLoading.showLoadingView(),
                 controller: ctx.read<CommentsCubit>().commentsController,
                 shrinkWrap: true,
