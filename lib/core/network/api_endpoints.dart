@@ -28,4 +28,6 @@ class ApiConstants {
   // settings
   static const String feedback = '$users/feedbacks';
 
+  // home
+  static const String carbons = '$users/carbons/1';
 }
