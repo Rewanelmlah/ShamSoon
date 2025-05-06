@@ -23,6 +23,9 @@ class ApiConstants {
   static const String comments = '/comments';
 
   // profile
-  static const String profile = '/profile';
+  static const String profile = '$users/profile';
+
+  // settings
+  static const String settings = '$users/settings'; 
 
 }

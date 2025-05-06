@@ -27,4 +27,19 @@ class SettingCubit extends Cubit<SettingState> {
         ))
     );
   }
+
+  Future<void> feedback({required String msg})async{
+    emit(state.copyWith(baseStatus: BaseStatus.loading));
+    final result = await settingDataSource.feedback(msg: msg);
+    result.when(
+        (success) => emit(state.copyWith(
+            baseStatus: BaseStatus.success,
+            msg: success.message
+        )),
+        (error) => emit(state.copyWith(
+            baseStatus: BaseStatus.error,
+            msg: error.message
+        ))
+    );
+  }
 }

@@ -25,4 +25,7 @@ class ApiConstants {
   // profile
   static const String profile = '$users/profile';
 
+  // settings
+  static const String feedback = '$users/feedbacks';
+
 }

@@ -9,6 +9,8 @@ import 'package:shamsoon/features/settings/presentation/views/personal_info.dart
 import 'package:shamsoon/features/settings/presentation/widgets/custome_tile.dart';
 import 'package:shamsoon/features/settings/presentation/widgets/logout_button.dart';
 
+import 'feedback_screen.dart';
+
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
@@ -82,6 +84,16 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
             title: "Contact Us",
             onTap: ()  => Navigator.push(context, MaterialPageRoute(builder: (_) => ContactUsScreen())),
 
+          ),
+          SizedBox(height: 20.h),
+          CustomTile(
+            color: Colors.white,
+            icon: Icons.feedback_outlined,
+            title: "Feedback",
+            onTap: () => Go.to(BlocProvider.value(
+              value: context.read<SettingCubit>(),
+              child: const FeedbackScreen(),
+            )),
           ),
           SizedBox(height: 20.h),
           LogoutButton(),
