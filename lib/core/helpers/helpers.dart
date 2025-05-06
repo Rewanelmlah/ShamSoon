@@ -14,9 +14,13 @@ import '../widgets/custom_messages.dart';
 import 'check_permission/model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-enum AppBackgroundColors {white, mintGreen}
+enum AppMode {light, dark}
 
 class Helpers {
+  static ValueNotifier<AppMode> appMode = ValueNotifier(AppMode.light);
+  static void changeAppMode(AppMode mode){
+    appMode.value = mode;
+  }
 
   static bool isCubitProvided<T extends StateStreamableSource>(BuildContext context) {
     try {

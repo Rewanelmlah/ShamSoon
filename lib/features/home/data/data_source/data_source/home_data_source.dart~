@@ -8,12 +8,10 @@ import 'package:shamsoon/features/home/data/data_source/models/prediction_respon
 
 import '../../../../../core/helpers/constant_manager.dart';
 import '../../../../../core/helpers/global_variables.dart';
-import '../models/get_solar_panel_response.dart';
 
 abstract interface class HomeDataSource{
   Future<BaseModel<PredictionResponse>> sendSolarPanelToMakeAnalysis(File? image);
   Future<BaseModel<Carbon>> getCarbon();
-  Future<BaseModel<GetSolarPanelResponse>> getSpecificSolarPanelData();
 }
 
 class HomeDataSourceImpl extends HomeDataSource{
@@ -29,18 +27,6 @@ class HomeDataSourceImpl extends HomeDataSource{
       mapper: (json) => PredictionResponse.fromJson(json),
     );
 
-    return result;
-  }
-
-  @override
-  Future<BaseModel<GetSolarPanelResponse>> getSpecificSolarPanelData() async{
-    final result = await sl<NetworkService>(instanceName: ConstantManager.dioService).callApi(
-      NetworkRequest(
-          method: RequestMethod.get,
-          path: ApiConstants.solarPanel
-      ),
-      mapper: (json) => GetSolarPanelResponse.fromJson(json),
-    );
     return result;
   }
 

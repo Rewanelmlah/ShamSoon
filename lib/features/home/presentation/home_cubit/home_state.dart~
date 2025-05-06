@@ -39,7 +39,6 @@ final class HomeState extends Equatable {
   @override
   List<Object?> get props => [
     baseStatus,
-    solarPanel,
     carbon,
     msg,
   ];

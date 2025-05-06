@@ -40,7 +40,6 @@ class Helpers {
         if(actionWhenSuccess != null){
           await actionWhenSuccess();
         }
-        // await actionWhenSuccess!();
         break;
 
       case BaseStatus.error:

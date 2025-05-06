@@ -7,10 +7,12 @@ import 'package:shamsoon/features/home/data/data_source/data_source/home_data_so
 import 'package:shamsoon/features/home/data/data_source/models/prediction_response.dart';
 
 import '../models/carbon.dart';
+import '../models/get_solar_panel_response.dart';
 
 abstract interface class HomeRepo {
   Future<Result<BaseModel<PredictionResponse>, Failure>> sendSolarPanelToMakeAnalysis(File? image);
   Future<Result<BaseModel<Carbon>, Failure>> getCarbons();
+  Future<Result<BaseModel<GetSolarPanelResponse>, Failure>> getSpecificSolarPanelData();
 }
 
 class HomeRepoImpl extends HomeRepo{
@@ -26,5 +28,10 @@ class HomeRepoImpl extends HomeRepo{
   @override
   Future<Result<BaseModel<Carbon>, Failure>> getCarbons() async{
     return homeDataSource.getCarbon().handleCallbackWithFailure();
+  }
+
+  @override
+  Future<Result<BaseModel<GetSolarPanelResponse>, Failure>> getSpecificSolarPanelData() async{
+    return homeDataSource.getSpecificSolarPanelData().handleCallbackWithFailure();
   }
 }

@@ -68,16 +68,13 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
             child: ListTile(
               leading: Icon(Icons.palette_outlined, size: 32.sp, color: Colors.teal),
               title: Text("Dark mode", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold)),
-              trailing: ValueListenableBuilder(
-                valueListenable: Helpers.appMode,
-                builder: (context, value, child) => Switch(
-                  activeTrackColor: AppColors.primaryColor,
-                  activeColor: Colors.white,
-                  inactiveTrackColor: AppColors.primaryColor,
-                  inactiveThumbColor: Colors.white,
-                  value: value == AppMode.light ? false : true,
-                  onChanged: null,
-                ),
+              trailing: Switch(
+                activeTrackColor: AppColors.primaryColor,
+                activeColor: Colors.white,
+                inactiveTrackColor: AppColors.primaryColor,
+                inactiveThumbColor: Colors.white,
+                value: Helpers.appMode == AppMode.light? _isDarkMode,
+                onChanged: null,
               ),
             ),
           ),
