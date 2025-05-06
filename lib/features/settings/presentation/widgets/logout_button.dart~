@@ -116,7 +116,7 @@ class DeleteAccButton extends StatelessWidget {
             ),
             DefaultTextField(
               isPassword: true,
-              controller: confirmPassCont,
+s              controller: confirmPassCont,
               validator: (value) => Validators.validatePasswordConfirm(value, passCont.text),
               title: 'Conform Password',
             ),

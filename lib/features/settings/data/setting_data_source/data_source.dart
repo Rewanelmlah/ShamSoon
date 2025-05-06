@@ -12,7 +12,10 @@ import '../../../../core/shared/models/user_model.dart';
 
 
 abstract interface class SettingDataSource{
-  Future<Result<BaseModel, Failure>> deleteAccount();
+  Future<Result<BaseModel, Failure>> deleteAccount({
+    required String password,
+    required String passwordConfirm
+  });
   Future<Result<BaseModel, Failure>> logout();
 
   Future<Result<BaseModel<UserModel>, Failure>> updateProfile({
@@ -68,11 +71,15 @@ class SettingDataSourceImpl implements SettingDataSource{
   }
 
   @override
-  Future<Result<BaseModel, Failure>> deleteAccount() async{
+  Future<Result<BaseModel, Failure>> deleteAccount({
+    required String password,
+    required String passwordConfirm
+}) async{
     final result = await sl<NetworkService>(instanceName: ConstantManager.dioService).callApi(
         NetworkRequest(
-            method: RequestMethod.delete,
-            path: ApiConstants.profile,
+          method: RequestMethod.delete,
+          path: ApiConstants.profile,
+          body: {'password' : password, 'password_confirmation' : passwordConfirm},
         ),
     ).handleCallbackWithFailure();
     return result;

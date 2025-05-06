@@ -43,9 +43,15 @@ class SettingCubit extends Cubit<SettingState> {
     );
   }
 
-  Future<void> deleteAccount()async{
+  Future<void> deleteAccount({
+    required String password,
+    required String passwordConfirm
+  })async{
     emit(state.copyWith(baseStatus: BaseStatus.loading));
-    final result = await settingDataSource.deleteAccount();
+    final result = await settingDataSource.deleteAccount(
+        password: password,
+        passwordConfirm: passwordConfirm
+    );
     result.when(
         (success) => emit(state.copyWith(
             baseStatus: BaseStatus.success,

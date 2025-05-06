@@ -100,7 +100,7 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
           SizedBox(height: 20.h),
           const LogoutButton(),
           SizedBox(height: 20.h),
-          DeleteAccButton()
+          const DeleteAccButton()
         ],
       ),
     );

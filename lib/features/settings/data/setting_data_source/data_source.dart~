@@ -71,8 +71,9 @@ class SettingDataSourceImpl implements SettingDataSource{
   Future<Result<BaseModel, Failure>> deleteAccount() async{
     final result = await sl<NetworkService>(instanceName: ConstantManager.dioService).callApi(
         NetworkRequest(
-            method: RequestMethod.delete,
-            path: ApiConstants.profile,
+          method: RequestMethod.delete,
+          path: ApiConstants.profile,
+          body: {'password' : GlobalVariables.password, ''},
         ),
     ).handleCallbackWithFailure();
     return result;
@@ -83,7 +84,7 @@ class SettingDataSourceImpl implements SettingDataSource{
     final result = await sl<NetworkService>(instanceName: ConstantManager.dioService).callApi(
       NetworkRequest(
         method: RequestMethod.post,
-        path: ApiConstants.profile,
+        path: ApiConstants.logout,
       ),
     ).handleCallbackWithFailure();
     return result;
