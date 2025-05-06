@@ -6,7 +6,6 @@ import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
 import 'package:shamsoon/features/Authentication/presentation/screens/otp_view.dart';
-import 'package:shamsoon/features/Authentication/presentation/screens/reset_password.dart';
 import '../../../../core/helpers/navigation.dart';
 import '../../../../core/helpers/validators.dart';
 import '../widgets/customtextformfield.dart';

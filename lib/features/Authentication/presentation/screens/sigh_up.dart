@@ -6,7 +6,6 @@ import 'package:shamsoon/core/helpers/helpers.dart';
 import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:shamsoon/core/helpers/validators.dart';
 import 'package:shamsoon/core/network/network_service.dart';
-import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/data/models/register.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';

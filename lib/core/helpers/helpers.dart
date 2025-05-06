@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shamsoon/core/extensions/padding_extension.dart';
+import 'package:shamsoon/core/helpers/cache.dart';
 import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../src/config/language/locale_keys.g.dart';
@@ -14,12 +15,15 @@ import '../widgets/custom_messages.dart';
 import 'check_permission/model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'constant_manager.dart';
+
 enum AppMode {light, dark}
 
 class Helpers {
   static ValueNotifier<AppMode> appMode = ValueNotifier(AppMode.light);
   static void changeAppMode(AppMode mode){
     appMode.value = mode;
+    CacheStorage.write(CacheConstants.appMode, appMode.value.name);
   }
 
   static bool isCubitProvided<T extends StateStreamableSource>(BuildContext context) {

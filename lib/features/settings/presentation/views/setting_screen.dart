@@ -10,6 +10,8 @@ import 'package:shamsoon/features/settings/presentation/views/personal_info.dart
 import 'package:shamsoon/features/settings/presentation/widgets/custome_tile.dart';
 import 'package:shamsoon/features/settings/presentation/widgets/logout_button.dart';
 
+import '../../../../core/helpers/cache.dart';
+import '../../../../core/helpers/constant_manager.dart';
 import 'feedback_screen.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -39,7 +41,6 @@ class SettingsScreenBody extends StatefulWidget {
 }
 
 class _SettingsScreenBodyState extends State<SettingsScreenBody> {
-  bool _isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
             title: "Personal info",
             onTap: () => Go.to(BlocProvider.value(
               value: context.read<SettingCubit>(),
-              child: PersonalInfoScreen(),
+              child: const PersonalInfoScreen(),
             )),
           ),
           SizedBox(height: 20.h),
@@ -72,11 +73,8 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
                 valueListenable: Helpers.appMode,
                 builder: (context, value, child) => Switch(
                   activeTrackColor: AppColors.primaryColor,
-                  activeColor: Colors.white,
-                  inactiveTrackColor: AppColors.primaryColor,
-                  inactiveThumbColor: Colors.white,
-                  value: value == AppMode.light ? false : true,
-                  onChanged: null,
+                  value: CacheStorage.read(CacheConstants.appMode) == AppMode.dark.name? true : false,
+                  onChanged: (value) => Helpers.changeAppMode(value? AppMode.dark : AppMode.light),
                 ),
               ),
             ),
@@ -100,7 +98,9 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
             )),
           ),
           SizedBox(height: 20.h),
-          LogoutButton(),
+          const LogoutButton(),
+          SizedBox(height: 20.h),
+          const DeleteAccButton()
         ],
       ),
     );

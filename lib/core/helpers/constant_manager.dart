@@ -35,6 +35,8 @@ class CacheConstants{
   static const String lastLocation = 'last location';
   static const String conditionsAndTerms = 'conditionsAndTerms';
   static const String isNotificationEnabled = 'isNotificationEnabled';
-  static const String isLoggedIn = 'isLoggedIn';
-  static const String completeProfile = 'completeProfile';
+  // static const String isLoggedIn = 'isLoggedIn';
+  // static const String completeProfile = 'completeProfile';
+  static const String commonQuestions = 'commonQuestions';
+  static const String appMode = 'appMode';
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shamsoon/core/helpers/helpers.dart';
 import 'package:shamsoon/core/shared/Functions/setup_service_locators.dart';
 import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'core/helpers/cache.dart';
@@ -13,12 +14,9 @@ import 'core/helpers/language.dart';
 import 'core/helpers/loading_manager.dart';
 import 'core/helpers/navigation.dart';
 import 'core/shared/bloc_observer.dart';
-import 'core/shared/route_observer.dart';
 import 'core/widgets/exeption_view.dart';
 import 'core/widgets/offline_widget.dart';
 import 'features/Authentication/presentation/cubit/auth_cubit.dart';
-import 'features/Authentication/presentation/screens/login.dart';
-import 'features/settings/presentation/views/feedback_screen.dart';
 import 'features/splash/splash_screen.dart';
 import 'firebase_options.dart';
 
@@ -74,20 +72,25 @@ class ShamSoon extends StatelessWidget {
               create: (context) => AuthCubit(),
             )
           ],
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: ConstantManager.projectName,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            navigatorKey: Go.navigatorKey,
-            home: SplashScreen(),
-            // navigatorObservers: [AppNavigationObserver()],
-            builder: (context, child) {
-              return OfflineWidget(
-                child: FullScreenLoadingManager(child: child!),
-              );
-            },
+          child: ValueListenableBuilder(
+            valueListenable: Helpers.appMode,
+            builder: (context, value, child) => MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: ConstantManager.projectName,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              navigatorKey: Go.navigatorKey,
+              home: const SplashScreen(),
+              // theme: value == AppMode.dark? ThemeData.dark() : ThemeData.light(),
+              theme: CacheStorage.read(CacheConstants.appMode) == AppMode.dark.name? ThemeData.dark() : ThemeData.light(),
+              // navigatorObservers: [AppNavigationObserver()],
+              builder: (context, child) {
+                return OfflineWidget(
+                  child: FullScreenLoadingManager(child: child!),
+                );
+              },
+            ),
           ),
         );
       },

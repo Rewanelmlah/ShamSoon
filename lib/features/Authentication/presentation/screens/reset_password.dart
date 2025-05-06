@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shamsoon/core/core_widgets/custome_button.dart';
 import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
-import 'package:shamsoon/features/Authentication/presentation/screens/Successed_verify.dart';
 import 'package:shamsoon/features/Authentication/presentation/screens/login.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
-import 'package:shamsoon/features/home/presentation/views/layout_view.dart';
 
 import '../../../../core/helpers/helpers.dart';
 import '../cubit/auth_state.dart';
-import 'otp_view.dart';
-
-
 class ResetPassword extends StatelessWidget {
   final String email;
   ResetPassword({super.key,

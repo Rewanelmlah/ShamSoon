@@ -8,6 +8,7 @@ import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
 import 'package:shamsoon/core/widgets/text_fields/default_text_field.dart';
 import 'package:shamsoon/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:shamsoon/features/settings/presentation/cubit/setting_state.dart';
+import 'package:shamsoon/features/settings/presentation/views/setting_screen.dart';
 
 import '../../../../core/app_colors.dart';
 import '../../../../core/helpers/helpers.dart';

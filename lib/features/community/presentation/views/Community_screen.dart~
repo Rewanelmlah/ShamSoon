@@ -59,7 +59,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   ),
                 ),
                 EasyPagination<BaseModel<PostsResponse>, Post>.listView(
-                  // key: UniqueKey(),
+                  key: UniqueKey(),
                   asyncCall: (currentPage) => PostsDataSourceImpl().getPosts(),
                   mapper: (response) => DataListAndPaginationData(
                       data: response.data.posts,

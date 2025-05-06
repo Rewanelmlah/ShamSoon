@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/extensions/sized_box_helper.dart';
 
-import '../app_colors.dart';
 import '../helpers/navigation.dart';
 
 Future showDefaultBottomSheet({BuildContext? context, required Widget child}) {

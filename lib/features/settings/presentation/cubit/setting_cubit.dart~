@@ -49,8 +49,7 @@ class SettingCubit extends Cubit<SettingState> {
     result.when(
         (success) => emit(state.copyWith(
             baseStatus: BaseStatus.success,
-            msg: success.message,
-            type: SheetType.deleteAccount
+            msg: success.message
         )),
         (error) => emit(state.copyWith(
             baseStatus: BaseStatus.error,
@@ -64,10 +63,9 @@ class SettingCubit extends Cubit<SettingState> {
     final result = await settingDataSource.logout();
     result.when(
             (success) => emit(state.copyWith(
-                baseStatus: BaseStatus.success,
-                msg: success.message,
-                type: SheetType.logout
-            )),
+            baseStatus: BaseStatus.success,
+            msg: success.message
+        )),
             (error) => emit(state.copyWith(
             baseStatus: BaseStatus.error,
             msg: error.message

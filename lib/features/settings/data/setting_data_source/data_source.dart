@@ -12,15 +12,17 @@ import '../../../../core/shared/models/user_model.dart';
 
 
 abstract interface class SettingDataSource{
+  Future<Result<BaseModel, Failure>> deleteAccount();
+  Future<Result<BaseModel, Failure>> logout();
+
   Future<Result<BaseModel<UserModel>, Failure>> updateProfile({
     required String name,
     required String email,
     required String phone
   });
-  // Future<BaseModel> deleteAccount();
-Future<Result<BaseModel, Failure>> feedback({
-  required String msg
-});
+  Future<Result<BaseModel, Failure>> feedback({
+    required String msg
+  });
 }
 
 class SettingDataSourceImpl implements SettingDataSource{
@@ -62,6 +64,28 @@ class SettingDataSourceImpl implements SettingDataSource{
         ),
     ).handleCallbackWithFailure();
 
+    return result;
+  }
+
+  @override
+  Future<Result<BaseModel, Failure>> deleteAccount() async{
+    final result = await sl<NetworkService>(instanceName: ConstantManager.dioService).callApi(
+        NetworkRequest(
+            method: RequestMethod.delete,
+            path: ApiConstants.profile,
+        ),
+    ).handleCallbackWithFailure();
+    return result;
+  }
+
+  @override
+  Future<Result<BaseModel, Failure>> logout() async{
+    final result = await sl<NetworkService>(instanceName: ConstantManager.dioService).callApi(
+      NetworkRequest(
+        method: RequestMethod.post,
+        path: ApiConstants.logout,
+      ),
+    ).handleCallbackWithFailure();
     return result;
   }
 }

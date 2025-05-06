@@ -17,7 +17,6 @@ import 'package:shamsoon/features/Authentication/presentation/widgets/Custome_go
 import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
 import 'package:shamsoon/features/home/presentation/views/layout_view.dart';
 
-import 'otp_view.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
