@@ -14,18 +14,7 @@ import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.d
 import 'package:shamsoon/features/Authentication/presentation/screens/forget_Password.dart';
 import 'package:shamsoon/features/Authentication/presentation/screens/sigh_up.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/Custome_google_button.dart';
-import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
 import 'package:shamsoon/features/home/presentation/views/layout_view.dart';
-
-
-// class LoginScreen extends StatelessWidget {
-//   const LoginScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return LogIn();
-//   }
-// }
 
 class LogIn extends StatelessWidget {
   LogIn({super.key});

@@ -32,5 +32,6 @@ class ApiConstants {
   // home
   static const String carbons = '$users/carbons/1';
   static const String solarPanel = '$users/solarPanels/1';
+  static const String notifications = '$users/notifications';
 
 }

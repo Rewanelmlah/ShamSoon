@@ -16,7 +16,7 @@ class ApiConstants {
   static const String sendEmailVerification = '$users/email/verify/send';
   static const String verifyEmail = '$users/email/verify';
   static const String forgetPassword = '$users/forget-password';
-  static const String storeFcmToken = '$users/forget-password';
+  static const String storeFcmToken = '$users/store-fcm-token';
 
   // Posts
   static const String posts = '$users/posts';

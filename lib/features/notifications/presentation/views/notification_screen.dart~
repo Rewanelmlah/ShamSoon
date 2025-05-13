@@ -35,10 +35,7 @@ class NotificationScreen extends StatelessWidget {
                 paginationData: PaginationData(totalPages: response.data.totalPagesNumber)
           ),
           errorMapper: ErrorMapper(errorWhenDio: (e) => e.response?.data['message'],),
-          itemBuilder: (data, index) => CustomNotificationTile(
-              title: data[index].body?? '',
-              onTap: () {}
-          ),
+          itemBuilder: (data, index) => CustomNotificationTile(title: 'Your panel needs cleaning!', onTap: () {}),
         ),
       ),
     );
