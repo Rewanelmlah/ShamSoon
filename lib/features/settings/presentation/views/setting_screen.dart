@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
 import 'package:shamsoon/core/helpers/helpers.dart';
 import 'package:shamsoon/core/helpers/navigation.dart';
+import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:shamsoon/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:shamsoon/features/settings/presentation/views/contact_us.dart';
 import 'package:shamsoon/features/settings/presentation/views/personal_info.dart';
@@ -46,7 +47,7 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(14.w),
-      child: Column(
+      child: ListView(
         children: [
           SizedBox(height: 30.h),
           CustomTile(
@@ -75,6 +76,30 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
                   activeTrackColor: AppColors.primaryColor,
                   value: CacheStorage.read(CacheConstants.appMode) == AppMode.dark.name? true : false,
                   onChanged: (value) => Helpers.changeAppMode(value? AppMode.dark : AppMode.light),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 20.h),
+          Container(
+            width: double.infinity,
+            height: 65.h,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(17.r),
+              border: Border.all(color: AppColors.primaryColor, width: 2.w),
+            ),
+            child: ListTile(
+              leading: Icon(Icons.palette_outlined, size: 32.sp, color: Colors.teal),
+              title: Text("Notifications", style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold)),
+              trailing: ValueListenableBuilder(
+                valueListenable: Helpers.notifications,
+                builder: (context, value, child) => Switch(
+                  activeTrackColor: AppColors.primaryColor,
+                  value: value,
+                  onChanged: (value) {
+                    Helpers.changeNotificationStatus(value);
+                    context.read<SettingCubit>().changeNotify(value);
+                  },
                 ),
               ),
             ),

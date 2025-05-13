@@ -118,7 +118,6 @@ class LogIn extends StatelessWidget {
                           msg: state.msg,
                           actionWhenSuccess: () async {
                         if(state.phase == AuthPhase.login){
-                          log('json test${state.user!.toJson().toString()}');
                           await context.read<UserCubit>().setUserLoggedIn(
                               user: state.user!,
                               token: state.user!.token!,

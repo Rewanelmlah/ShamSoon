@@ -6,7 +6,6 @@ class UserModel {
   final String phoneNumber;
   final String? token;
   final int id;
-  final bool isNotified;
 
   UserModel({
     required this.id,
@@ -14,7 +13,6 @@ class UserModel {
     required this.phoneNumber,
     required this.email,
     required this.token,
-    this.isNotified = false
   });
 
   // factory UserModel.initial() => UserModel(
@@ -31,15 +29,13 @@ class UserModel {
     String? email,
     String? token,
     int? id,
-    bool? isNotified
   }) {
     return UserModel(
       fullName: fullName ?? this.fullName,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       email: email ?? this.email,
       token: token ?? this.token,
-      id: id?? this.id,
-      isNotified: isNotified ?? this.isNotified
+      id: id?? this.id
     );
   }
 
@@ -51,7 +47,6 @@ class UserModel {
       phoneNumber: json['user']["phone"],
       email: json['user']["email"],
       token: json["token"],
-      isNotified: json["isNotified"]?? false,
     );
   }
 
@@ -68,8 +63,7 @@ class UserModel {
       'id': id,
       "username": fullName,
       "phone": phoneNumber,
-      "email": email,
-      "isNotified": isNotified
+      "email": email
     },
     'token': token
   };

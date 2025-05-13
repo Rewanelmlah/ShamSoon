@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shamsoon/core/extensions/padding_extension.dart';
 import 'package:shamsoon/core/helpers/cache.dart';
 import 'package:shamsoon/core/helpers/navigation.dart';
+import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../src/config/language/locale_keys.g.dart';
 import '../shared/base_state.dart';
@@ -24,6 +25,13 @@ class Helpers {
   static void changeAppMode(AppMode mode){
     appMode.value = mode;
     CacheStorage.write(CacheConstants.appMode, appMode.value.name);
+  }
+
+  static ValueNotifier<bool> notifications = ValueNotifier(UserCubit.instance.user.isNotified);
+  static void changeNotificationStatus(bool enable){
+    notifications.value = enable;
+    final user = UserCubit.instance.user.copyWith(isNotified: enable);
+    UserCubit.instance.updateUser(user);
   }
 
   static bool isCubitProvided<T extends StateStreamableSource>(BuildContext context) {

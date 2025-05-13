@@ -10,7 +10,6 @@ import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
 import '../../../../core/helpers/global_variables.dart';
 import '../../../../core/shared/models/user_model.dart';
 
-
 abstract interface class SettingDataSource{
   Future<Result<BaseModel, Failure>> deleteAccount({
     required String password,
@@ -26,6 +25,8 @@ abstract interface class SettingDataSource{
   Future<Result<BaseModel, Failure>> feedback({
     required String msg
   });
+
+  Future<Result<BaseModel, Failure>> changeNotify(bool isNotify);
 }
 
 class SettingDataSourceImpl implements SettingDataSource{
@@ -92,6 +93,18 @@ class SettingDataSourceImpl implements SettingDataSource{
         method: RequestMethod.post,
         path: ApiConstants.logout,
       ),
+    ).handleCallbackWithFailure();
+    return result;
+  }
+
+  @override
+  Future<Result<BaseModel, Failure>> changeNotify(bool isNotify) async{
+    final result = await sl<NetworkService>(instanceName: ConstantManager.dioService).callApi(
+        NetworkRequest(
+          method: RequestMethod.post,
+          path: ApiConstants.changeNotify,
+          body: {'is_notify' : isNotify},
+        ),
     ).handleCallbackWithFailure();
     return result;
   }
