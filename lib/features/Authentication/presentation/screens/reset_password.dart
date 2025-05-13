@@ -7,7 +7,11 @@ import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.d
 import 'package:shamsoon/features/Authentication/presentation/screens/login.dart';
 import 'package:shamsoon/features/Authentication/presentation/widgets/customtextformfield.dart';
 
+import '../../../../core/app_colors.dart';
 import '../../../../core/helpers/helpers.dart';
+import '../../../../core/helpers/validators.dart';
+import '../../../../core/widgets/text_fields/default_text_field.dart';
+
 import '../cubit/auth_state.dart';
 class ResetPassword extends StatelessWidget {
   final String email;
@@ -49,22 +53,29 @@ class ResetPassword extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 30.h),
-                  CustomTextFormField(
-                    hintText: "Enter New Password",
-                    obscureText: true,
-                    suffixIcon: Icons.visibility,
-                    onSuffixIconPressed: () {
-                      print("Toggle password visibility");
-                    },
+                  DefaultTextField(
+                    borderColor: AppColors.primaryColor,
+                    title: 'Enter your password',
+                    validator: Validators.validateEmpty,
+                    controller: passCont,
+                    isPassword: true,
+                    hintStyle: TextStyle(
+                      color: Colors.grey[500],
+                      fontSize: 13.sp, // Responsive font size
+                    ),
                   ),
-                  SizedBox(height: 30.h),
-                  CustomTextFormField(
-                    hintText: "Confirm Your Password",
-                    obscureText: true,
-                    suffixIcon: Icons.visibility,
-                    onSuffixIconPressed: () {
-                      print("Toggle password visibility");
-                    },
+
+                  SizedBox(height: 15.h),
+                  DefaultTextField(
+                    borderColor: AppColors.primaryColor,
+                    title: 'Confirm your password',
+                    validator: (value) => Validators.validatePasswordConfirm(value, passCont.text),
+                    controller: confirmPassCont,
+                    isPassword: true,
+                    hintStyle: TextStyle(
+                      color: Colors.grey[500],
+                      fontSize: 13.sp, // Responsive font size
+                    ),
                   ),
                   SizedBox(
                     height: 30.h,

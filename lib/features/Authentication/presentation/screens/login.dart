@@ -8,6 +8,7 @@ import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:shamsoon/core/helpers/validators.dart';
 import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
+import 'package:shamsoon/core/widgets/text_fields/default_text_field.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_cubit.dart';
 import 'package:shamsoon/features/Authentication/presentation/cubit/auth_state.dart';
 import 'package:shamsoon/features/Authentication/presentation/screens/forget_Password.dart';
@@ -67,21 +68,27 @@ class LogIn extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30.h),
-              CustomTextFormField(
-                validator: Validators.validateEmail,
-                controller: emailCont,
-                hintText: "Enter your Email",
-              ),
-              SizedBox(height: 20.h),
-              CustomTextFormField(
+                  DefaultTextField(
+                    borderColor: AppColors.primaryColor,
+                    validator: Validators.validateEmail,
+                    controller: emailCont,
+                    title: "Enter your Email",
+                    hintStyle: TextStyle(
+                      color: Colors.grey[500],
+                      fontSize: 13.sp, // Responsive font size
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+              DefaultTextField(
+                borderColor: AppColors.primaryColor,
+                title: 'Enter your password',
                 validator: Validators.validateEmpty,
                 controller: passCont,
-                hintText: "Enter your password",
-                obscureText: true,
-                suffixIcon: Icons.visibility,
-                onSuffixIconPressed: () {
-                  print("Toggle password visibility");
-                },
+                isPassword: true,
+                hintStyle: TextStyle(
+                  color: Colors.grey[500],
+                  fontSize: 13.sp, // Responsive font size
+                ),
               ),
               SizedBox(height: 10.h),
               Row(

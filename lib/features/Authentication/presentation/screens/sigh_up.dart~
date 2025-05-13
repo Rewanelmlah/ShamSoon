@@ -98,7 +98,7 @@ class SignUpScreen extends StatelessWidget {
                     fontSize: 13.sp, // Responsive font size
                   ),
                 ),
-
+              
                 SizedBox(height: 15.h),
                 DefaultTextField(
                   borderColor: AppColors.primaryColor,

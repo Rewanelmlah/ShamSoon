@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../app_colors.dart';
 import '../../helpers/app_sizes.dart';
@@ -155,7 +156,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
           fontWeight: FontWeight.w300,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppCircular.r10),
+          borderRadius: BorderRadius.circular(40.r),
           borderSide: widget.hasBorderColor == true
               ? BorderSide(
                   color: widget.borderColor ?? Colors.grey,
@@ -163,7 +164,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
               : BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppCircular.r10),
+          borderRadius: BorderRadius.circular(40.r),
           borderSide: const BorderSide(color: AppColors.primaryColor),
         ),
         errorBorder: OutlineInputBorder(
