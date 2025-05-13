@@ -6,6 +6,9 @@ import 'package:shamsoon/features/Authentication/presentation/screens/login.dart
 import 'package:shamsoon/features/home/presentation/views/layout_view.dart';
 import 'package:shamsoon/features/onboarding/onboarding_screen.dart';
 
+import '../../core/helpers/constant_manager.dart';
+import '../../core/notification/notification_service.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -39,9 +42,22 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  void _initApp() async {
+    NotificationNavigator(
+      onRoutingMessage: (message) {
+        NotificationRoutes.navigateByType(message.data);
+      },
+      onNoInitialMessage: () {},
+    ); // TODO add notification navigator
+
+    await ConstantManager.serviceLocator<NotificationService>()
+        .setupNotifications();
+  }
+
   @override
   void initState() {
     super.initState();
+    _initApp();
     Future.delayed(const Duration(seconds: 2), () {
       _handleNavigation();
       // Navigator.pushReplacement(

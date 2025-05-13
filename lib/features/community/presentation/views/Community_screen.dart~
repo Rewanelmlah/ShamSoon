@@ -51,6 +51,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                                 child: AddPostScreen()
                             ));
                             if(result == 'success'){
+                              log('sdojhslkdjhsd');
                               setState(() {});
                             }
                           },

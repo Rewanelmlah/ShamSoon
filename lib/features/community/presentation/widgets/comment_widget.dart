@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shamsoon/features/community/data/models/post.dart';
+import '../../../../core/helpers/navigation.dart';
 import '../../../../core/shared/cubits/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/loading_button.dart';
@@ -119,7 +120,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                           index: index,
                           comment: data[index]
                       );
-                      Navigator.pop(context);
+                      Go.back();
                     },
                     color: Colors.red,
                     title: 'Yes, Delete'
@@ -177,10 +178,14 @@ class _CommentWidgetState extends State<CommentWidget> {
             widget.comments[widget.index].content?? 'no content',
             style: TextStyle(fontSize: 12.sp),
           ),
-          trailing:  context.read<UserCubit>().user.id == widget.post.userId? IconButton(
+          trailing: IconButton(
               onPressed: () => _showMenu(context, data: widget.comments, index: widget.index),
               icon: const Icon(Icons.more_vert)
-          ) : null,
+          ),
+          // trailing:  context.read<UserCubit>().user.id == widget.post.userId? IconButton(
+          //     onPressed: () => _showMenu(context, data: widget.comments, index: widget.index),
+          //     icon: const Icon(Icons.more_vert)
+          // ) : null,
         ),
       ),
     );

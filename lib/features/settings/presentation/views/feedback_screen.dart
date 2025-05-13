@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/extensions/padding_extension.dart';
+import 'package:shamsoon/core/helpers/navigation.dart';
 import 'package:shamsoon/core/helpers/validators.dart';
 import 'package:shamsoon/core/widgets/app_text.dart';
 import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
@@ -50,16 +51,9 @@ class _FeedbackBody extends StatelessWidget {
             borderColor: AppColors.primaryColor,
           ),
         ),
-        BlocListener<SettingCubit, SettingState>(
-          listener: (context, state) => Helpers.manageBlocConsumer(
-              state.baseStatus,
-              msg: state.msg,
-              actionWhenSuccess: () => Navigator.pop(context)
-          ),
-          child: LoadingButton(title:'Submit',
-              onTap: () => _formKey.currentState!.validate()?
-          context.read<SettingCubit>().feedback(msg: cont.text) : null
-          ),
+        LoadingButton(title:'Submit',
+            onTap: () => _formKey.currentState!.validate()?
+        context.read<SettingCubit>().feedback(msg: cont.text) : null
         )
       ],
     ).paddingAll(16);

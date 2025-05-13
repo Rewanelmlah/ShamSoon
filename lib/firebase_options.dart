@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDuDIYmuasweq52g5lLAT7Vz6Eb2tVNtLU',
-    appId: '1:715654205357:android:16ed78d2786123c6085b24',
-    messagingSenderId: '715654205357',
-    projectId: 'shamsoon-f7732',
-    storageBucket: 'shamsoon-f7732.firebasestorage.app',
+    apiKey: 'AIzaSyCODmLEz2c2OsnRe2UPRH4QyHVRxNvId74',
+    appId: '1:527742348421:android:e3a57f09c4a7f34e25cdec',
+    messagingSenderId: '527742348421',
+    projectId: 'shamsoon-5d661',
+    storageBucket: 'shamsoon-5d661.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB4Nyh-AQSAJ3nUoUFajDWsQyHLa1D0jK0',
-    appId: '1:715654205357:ios:509347f58e40b5d7085b24',
-    messagingSenderId: '715654205357',
-    projectId: 'shamsoon-f7732',
-    storageBucket: 'shamsoon-f7732.firebasestorage.app',
+    apiKey: 'AIzaSyBvacm0EU9b_ElHhywa1vvtF1T9lBPs1OY',
+    appId: '1:527742348421:ios:146c96d1652446d225cdec',
+    messagingSenderId: '527742348421',
+    projectId: 'shamsoon-5d661',
+    storageBucket: 'shamsoon-5d661.firebasestorage.app',
     iosBundleId: 'com.example.shamsoon',
   );
+
 }

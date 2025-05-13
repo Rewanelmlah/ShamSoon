@@ -53,14 +53,14 @@ class _HomeBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   const CustomResponsiveContainer(text: 'Number of panels', icon: Icons.solar_power_outlined, number: '12'),
-                  CustomResponsiveContainer(text: 'Co2 Saved'.toString(), icon: Icons.wb_incandescent_outlined, number: '9k/h')
+                  CustomResponsiveContainer(text: 'Co2 savedx'.toString(), icon: Icons.wb_incandescent_outlined, number: '9k/h')
                 ],),
               SizedBox(height: 15.h,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const CustomResponsiveContainer(text: 'Battaries Number', icon: Icons.battery_charging_full_outlined, number: '4'),
-                  CustomResponsiveContainer(text: 'Equivalent Trees'.toString(), icon: Icons.forest_outlined, number: '7')
+                  const CustomResponsiveContainer(text: 'battaries Number', icon: Icons.battery_charging_full_outlined, number: '4'),
+                  CustomResponsiveContainer(text: 37.toString(), icon: Icons.forest_outlined, number: '7')
                 ],),
               SizedBox(height: 10.h,),
               Text('Recommended Maintenance companies',style: TextStyle(fontSize: 13.sp,fontWeight: FontWeight.bold),),

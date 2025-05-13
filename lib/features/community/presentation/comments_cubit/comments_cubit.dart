@@ -58,7 +58,7 @@ class CommentsCubit extends Cubit<CommentsState> {
           ));
         },
             (error) {
-          commentsController.addItemAt(originalComment, index);
+          commentsController.addItemAt(index, originalComment);
           emit(state.copyWith(
               baseStatus: BaseStatus.error,
               msg: error.message
@@ -73,7 +73,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     required String newComment
   })async{
     final originalComment = comment.copyWith();
-    commentsController.access(index).content = newComment;
+    commentsController.accessElement(index)?.content = newComment;
     final result = await commentsDataSource.updateComment(
         postId: comment.postId.toString(),
         newComment: newComment,
@@ -87,7 +87,7 @@ class CommentsCubit extends Cubit<CommentsState> {
           ));
         },
             (error) {
-              commentsController.access(index).content = originalComment.content;
+              commentsController.accessElement(index)?.content = originalComment.content;
           emit(state.copyWith(
               baseStatus: BaseStatus.error,
               msg: error.message

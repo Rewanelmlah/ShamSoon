@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "715654205357",
-    "project_id": "shamsoon-f7732",
-    "storage_bucket": "shamsoon-f7732.firebasestorage.app"
+    "project_number": "527742348421",
+    "project_id": "shamsoon-5d661",
+    "storage_bucket": "shamsoon-5d661.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:715654205357:android:16ed78d2786123c6085b24",
+        "mobilesdk_app_id": "1:527742348421:android:e3a57f09c4a7f34e25cdec",
         "android_client_info": {
           "package_name": "com.example.shamsoon"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDuDIYmuasweq52g5lLAT7Vz6Eb2tVNtLU"
+          "current_key": "AIzaSyCODmLEz2c2OsnRe2UPRH4QyHVRxNvId74"
         }
       ],
       "services": {

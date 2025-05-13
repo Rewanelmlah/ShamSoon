@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
+import 'package:shamsoon/core/extensions/padding_extension.dart';
 import 'package:shamsoon/features/notifications/presentation/views/notification_screen.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -23,21 +24,44 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           radius: 24.r,
           backgroundImage: AssetImage('assets/images/logo.png'),
         ),
-      ),
-      centerTitle: true,
-      title: Text(
-        'Welcome back !',
-        style: TextStyle(
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 20.sp,
-        ),
+      ).paddingAll(5),
+      // centerTitle: true,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Welcome back !',
+            style: TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 14.sp,
+            ),
+          ),
+          Text(
+            'Make the sun works for you.',
+            style: TextStyle(
+              color: AppColors.primaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 10.sp,
+            ),
+          ),
+        ],
       ),
       actions: [
         IconButton(
           icon: Icon(
             Icons.notifications_outlined,
-            size: 28.sp,
+            size: 20.sp,
+            color: AppColors.primaryColor,
+          ),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
+          },
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.calendar_month,
+            size: 20.sp,
             color: AppColors.primaryColor,
           ),
           onPressed: () {
@@ -45,6 +69,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           },
         ),
       ],
-    );
+    ).paddingTop(10);
   }
 }

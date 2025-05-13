@@ -26,7 +26,7 @@ class _SuccessedVerifyState extends State<SuccessedVerify> {
   void _startTimer()async{
     await Future.delayed(const Duration(seconds: 3));
     if(widget.type == OtpType.verification){
-      Go.offAll(const LoginScreen());
+      Go.offAll( LogIn());
     }else{
       Go.offAll(ResetPassword(email: widget.email));
     }
@@ -64,10 +64,11 @@ class _SuccessedVerifyState extends State<SuccessedVerify> {
             SizedBox(
               height: 30.h,
             ),
-            CustomButton(
-              text: 'Reset Password',
-              onPressed: () {},
-            ),
+            if(widget.type == OtpType.checkOtpAfterForgetPass)
+              CustomButton(
+                text: 'Reset Password',
+                onPressed: () {},
+              ),
             SizedBox(
               height: 30.h,
             )

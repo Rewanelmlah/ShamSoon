@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:multiple_result/multiple_result.dart';
 import '../../features/Authentication/presentation/screens/login.dart';
@@ -25,6 +27,7 @@ extension ErrorHandler<T extends dynamic> on Future<T> {
     } on BlockedException catch (e) {
       return Error(Failure(e.message));
     }on UnauthorizedException catch(e){
+      log('unAuth');
       Go.offAll(LogIn());
       return Result.error(Failure(e.message));
     }on ServerException catch (e) {

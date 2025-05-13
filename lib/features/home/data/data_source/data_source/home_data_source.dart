@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:shamsoon/core/network/api_endpoints.dart';
 import 'package:shamsoon/core/network/network_request.dart';
@@ -39,7 +40,9 @@ class HomeDataSourceImpl extends HomeDataSource{
           method: RequestMethod.get,
           path: ApiConstants.solarPanel
       ),
-      mapper: (json) => GetSolarPanelResponse.fromJson(json),
+      mapper: (json) {
+        return GetSolarPanelResponse.fromJson(json);
+      },
     );
     return result;
   }

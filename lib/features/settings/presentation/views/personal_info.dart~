@@ -38,7 +38,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         emailController.text != userData.email ||
         phoneController.text != userData.phoneNumber
     ){
-
       canChange = true;
       setState(() {});
       return true;
@@ -87,7 +86,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
               BlocListener<SettingCubit, SettingState>(
                 listener: (context, state) => Helpers.manageBlocConsumer(
                   state.baseStatus,
-                  msg: state.msg,
+                    msg: state.msg,
                   actionWhenSuccess: () => context.read<UserCubit>().updateUser(state.user!),
                 ),
                 child: LoadingButton(title: "Save",

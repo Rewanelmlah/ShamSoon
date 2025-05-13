@@ -6,12 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:shamsoon/core/error/exceptions.dart';
-import 'package:shamsoon/features/Authentication/presentation/screens/login.dart';
 import '../../../generated/assets.dart';
-import '../helpers/navigation.dart';
 import 'custom_messages.dart';
-
 enum RankingType {gridView, listView}
 enum AsyncCallStatus {initial, loading, success, error, networkError}
 
@@ -31,7 +27,7 @@ class EasyPagination<T, E> extends StatefulWidget {
   final Widget Function(List<E> data, int index) itemBuilder;
   final Widget? loadingBuilder;
   final Widget Function(String errorMsg)? errorBuilder;
-  final EasyPaginationController<E>? controller;
+  final EasyPaginationController<E> controller;
   final double? mainAxisSpacing;
   final double? crossAxisSpacing;
   final double? childAspectRatio;
@@ -40,6 +36,7 @@ class EasyPagination<T, E> extends StatefulWidget {
   final bool? shrinkWrap;
 
   const EasyPagination.gridView({super.key,
+    required this.controller,
     required this.asyncCall,
     required this.mapper,
     required this.errorMapper,
@@ -52,7 +49,6 @@ class EasyPagination<T, E> extends StatefulWidget {
     this.refreshIndicatorColor,
     this.loadingBuilder,
     this.errorBuilder,
-    this.controller,
     this.shrinkWrap,
     this.mainAxisSpacing,
     this.crossAxisSpacing,
@@ -62,6 +58,7 @@ class EasyPagination<T, E> extends StatefulWidget {
   }) : rankingType = RankingType.gridView;
 
   const EasyPagination.listView({super.key,
+    required this.controller,
     required this.asyncCall,
     required this.mapper,
     required this.errorMapper,
@@ -74,7 +71,6 @@ class EasyPagination<T, E> extends StatefulWidget {
     this.refreshIndicatorColor,
     this.loadingBuilder,
     this.errorBuilder,
-    this.controller,
     this.shrinkWrap,
     this.scrollDirection,
   }) : rankingType = RankingType.listView,
@@ -92,13 +88,12 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
   AsyncCallStatus status = AsyncCallStatus.initial;
   int currentPage = 1;
   late int totalPages;
-  // ValueNotifier<List<E>> newItems = ValueNotifier([]);
-  List<E> newItems = [];
-
 
   @override
   void initState() {
     super.initState();
+    dev.log('from scratch');
+    dev.log(widget.controller.items.value.length.toString());
     scrollController = RetainableScrollController();
     scrollController.addListener(_onScroll);
     _fetchData();
@@ -130,26 +125,26 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
     }
   }
 
-  Future<void> _fetchData() async {
+  Future<void> _fetchData({bool isRefresh = false}) async {
     setState(() => status = AsyncCallStatus.loading);
+    if(isRefresh){
+      resetDataWhenRefresh();
+    }
     scrollController.retainOffset();
     try {
       final mapperResult = await _manageMapper();
-      setState(() {
-        if(currentPage <= mapperResult.paginationData.totalPages!.toInt()){
+      if(currentPage <= mapperResult.paginationData.totalPages!.toInt()){
+        setState(() {
           currentPage++;
-        }
-        newItems.addAll(mapperResult.data);
-        if(widget.controller != null){
-          widget.controller!.updateItems(newItems);
-        }
-        setState(() => status = AsyncCallStatus.success);
-      });
-      if(widget.onSuccess != null){
-        widget.onSuccess!(newItems);
+          status = AsyncCallStatus.success;
+        });
       }
-      scrollController.restoreOffset();
+      widget.controller.updateItems(mapperResult.data);
+      if(widget.onSuccess != null){
+        widget.onSuccess!(widget.controller.items.value);
+      }
 
+      scrollController.restoreOffset();
     } on PaginationNetworkError{
       setState(() => status = AsyncCallStatus.networkError);
     }on Exception catch(e){
@@ -157,61 +152,21 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
         errorMsg = widget.errorMapper.errorWhenDio!(e);
       }else if(e is HttpException){
         errorMsg = widget.errorMapper.errorWhenHttp!(e);
-      }else if(e is UnauthorizedException){
-        Go.offAll(LogIn());
       }else{
-        errorMsg = e.toString();
+        errorMsg = 'There is error occur $e';
       }
 
       _logError(e);
       if(widget.onError != null){
         widget.onError!(errorMsg);
       }
-      errorMsg = 'There is error occur $e';
       setState(() => status = AsyncCallStatus.error);
     }
   }
 
-  Future<void> _fetchDataWhenRefresh() async {
-    setState(() => status = AsyncCallStatus.loading);
+  void resetDataWhenRefresh() {
     currentPage = 1;
-    newItems= [];
-    widget.controller!.items.value = [];
-    scrollController.retainOffset();
-    try {
-      final mapperResult = await _manageMapper();
-      setState(() {
-        if(currentPage <= mapperResult.paginationData.totalPages!.toInt()){
-          currentPage++;
-        }
-        newItems.addAll(mapperResult.data);
-        if(widget.controller != null){
-          widget.controller!.updateItems(newItems);
-        }
-        setState(() => status = AsyncCallStatus.success);
-      });
-
-      scrollController.restoreOffset();
-    } on PaginationNetworkError{
-      setState(() => status = AsyncCallStatus.networkError);
-    }on Exception catch(e){
-      if(e is DioException){
-        errorMsg = widget.errorMapper.errorWhenDio!(e);
-      }else if(e is HttpException){
-        errorMsg = widget.errorMapper.errorWhenHttp!(e);
-      }else if(e is UnauthorizedException){
-        Go.offAll(LogIn());
-      }else{
-        errorMsg = e.toString();
-      }
-
-      _logError(e);
-      if(widget.onError != null){
-        widget.onError!(errorMsg);
-      }
-      errorMsg = 'There is error occur $e';
-      setState(() => status = AsyncCallStatus.error);
-    }
+    widget.controller.items.value.clear();
   }
 
   Future<DataListAndPaginationData<E>> _manageMapper()async{
@@ -246,40 +201,34 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
 
   Widget _listView() {
     return ValueListenableBuilder(
-      valueListenable: widget.controller!.items,
-      builder: (context, value, child) {
-        dev.log('changed');
-        return ListView.builder(
-          physics: widget.scrollPhysics?? const AlwaysScrollableScrollPhysics(),
-          scrollDirection: widget.scrollDirection?? Axis.vertical,
-          shrinkWrap: widget.shrinkWrap?? false,
-          controller: scrollController,
-          // itemCount: withLoading ? newItems.length + 1 :
-          // currentPage <= totalPages? newItems.length + 1 : newItems.length,
-          // itemCount: newItems.length + 1,
-          itemCount: widget.showNoDataAlert? value.length + 1 :
-          status == AsyncCallStatus.loading? value.length + 1 : value.length,
-          itemBuilder: (context, index) {
-            if (index < value.length) {
-              return widget.itemBuilder(value, index);
-            } else {
-              if(widget.showNoDataAlert){
-                return currentPage > totalPages?
-                const Text('No more data', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey)) :
-                _loadingWidget;
-              }else{
-                return _loadingWidget;
-              }
+      valueListenable: widget.controller.items,
+      builder: (context, value, child) => ListView.builder(
+        physics: widget.scrollPhysics?? const AlwaysScrollableScrollPhysics(),
+        scrollDirection: widget.scrollDirection?? Axis.vertical,
+        shrinkWrap: widget.shrinkWrap?? false,
+        controller: scrollController,
+        itemCount: widget.showNoDataAlert? value.length + 1 :
+        status == AsyncCallStatus.loading? value.length + 1 : value.length,
+        itemBuilder: (context, index) {
+          if (index < value.length) {
+            return widget.itemBuilder(value, index);
+          } else {
+            if(widget.showNoDataAlert){
+              return currentPage > totalPages?
+              const Text('No more data', textAlign: TextAlign.center, style: TextStyle(color: Colors.grey)) :
+              _loadingWidget;
+            }else{
+              return _loadingWidget;
             }
-          },
-        );
-      },
+          }
+        },
+      ),
     );
   }
 
   Widget _gridView() {
     return ValueListenableBuilder(
-      valueListenable: widget.controller!.items,
+      valueListenable: widget.controller.items,
       builder: (context, value, child) => GridView.count(
         physics: widget.scrollPhysics?? const AlwaysScrollableScrollPhysics(),
         shrinkWrap: widget.shrinkWrap?? false,
@@ -290,8 +239,7 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
         scrollDirection: widget.scrollDirection?? Axis.vertical,
         controller: scrollController,
         children: List.generate(
-          widget.showNoDataAlert? value.length + 1 :
-          status == AsyncCallStatus.loading? value.length + 1 : value.length, (index) {
+          value.length + 1, (index) {
           if (index < value.length) {
             return widget.itemBuilder(value, index);
           } else {
@@ -309,7 +257,7 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
   }
 
   Widget get _buildLoadingView{
-    if(widget.controller!.items.value.isEmpty){
+    if(widget.controller.items.value.isEmpty){
       return _loadingWidget;
     }else{
       return _listRanking();
@@ -326,7 +274,7 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
   }
 
   Widget get _buildErrorWidget{
-    if(widget.controller!.items.value.isNotEmpty){
+    if(widget.controller.items.value.isNotEmpty){
       if(status == AsyncCallStatus.networkError){
         MessageUtils.showSimpleToast(msg: 'Check your internet connection', color: Colors.red);
       }else{
@@ -366,9 +314,11 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
 
 
   Widget get _buildSuccessWidget{
-    if(widget.controller!.items.value.isNotEmpty){
+    dev.log('the list is ${widget.controller.items.value.length}');
+    if(widget.controller.items.value.isNotEmpty){
       return _listRanking();
     }else{
+      dev.log('the list is ${widget.controller.items.value.length}');
       return Column(
         children: [
           Lottie.asset(Assets.lottieNoData),
@@ -382,12 +332,42 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
   @override
   Widget build(BuildContext context) {
     return PaginationHelperRefreshIndicator(
-      onRefresh: () async => await _fetchDataWhenRefresh(),
+      onRefresh: () async => await _fetchData(isRefresh: true),
       refreshIndicatorBackgroundColor: widget.refreshIndicatorBackgroundColor,
       refreshIndicatorColor: widget.refreshIndicatorColor,
-      child: status == AsyncCallStatus.error || status == AsyncCallStatus.networkError?
-      _buildErrorWidget : status == AsyncCallStatus.loading?
-      _buildLoadingView : _buildSuccessWidget,
+      child: ValueListenableBuilder(
+        valueListenable: widget.controller._needToRefresh,
+        builder: (context, value, child) =>
+        status == AsyncCallStatus.error || status == AsyncCallStatus.networkError?
+        _buildErrorWidget : status == AsyncCallStatus.loading?
+        _buildLoadingView : _buildSuccessWidget,
+      ),
+    );
+  }
+}
+
+
+class PaginationHelperRefreshIndicator extends StatelessWidget {
+
+  final Future<void> Function() onRefresh;
+  final Widget child;
+  final Color? refreshIndicatorBackgroundColor;
+  final Color? refreshIndicatorColor;
+  const PaginationHelperRefreshIndicator({super.key,
+    required this.onRefresh,
+    this.refreshIndicatorBackgroundColor,
+    this.refreshIndicatorColor,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+        backgroundColor: refreshIndicatorBackgroundColor,
+        color: refreshIndicatorColor,
+        triggerMode: RefreshIndicatorTriggerMode.anywhere,
+        onRefresh: onRefresh,
+        child: child
     );
   }
 }
@@ -461,13 +441,15 @@ class PaginationNetworkError extends EasyPaginationError{
 class EasyPaginationController<E> {
   // Make items a ValueNotifier
   final ValueNotifier<List<E>> items = ValueNotifier<List<E>>([]);
+  final ValueNotifier<bool> _needToRefresh = ValueNotifier<bool>(false);
 
-  void _updateView(){
+  void _notify(){
     items.notifyListeners();
   }
 
   void updateItems(List<E> newItems) {
-    items.value = newItems;
+    items.value.addAll(newItems);
+    _notify();
   }
 
   E? getRandomItem() {
@@ -480,136 +462,86 @@ class EasyPaginationController<E> {
     return items.value.where(condition).toList();
   }
 
+  void filterAndUpdate(bool Function(E item) condition) {
+    items.value = List.from(filter(condition));
+    _notify();
+  }
+
+
   void sort(int Function(E a, E b) compare) {
     items.value.sort(compare);
-    _updateView();
+    _notify();
+  }
+
+  void _executeWholeRefresh(){
+    _needToRefresh.value = !_needToRefresh.value;
+  }
+
+  void _checkAndNotifyBeforeAdding(){
+    if(items.value.length == 1){
+      _executeWholeRefresh();
+    }else{
+      _notify();
+    }
+  }
+
+  void _checkAndNotifyAfterRemoving(){
+    if(items.value.isEmpty){
+      _executeWholeRefresh();
+    }else{
+      _notify();
+    }
   }
 
   void addItem(E item) {
     items.value.add(item);
-    _updateView();
+    _checkAndNotifyBeforeAdding();
   }
 
-  void addItemAt(E item, int index) {
+  void addItemAt(int index, E item) {
     items.value.insert(index, item);
-    _updateView();
+    _checkAndNotifyBeforeAdding();
   }
 
   void addAtBeginning(E item) {
     items.value.insert(0, item);
-    _updateView();
+    _checkAndNotifyBeforeAdding();
   }
 
-  E access(int index) {
-    return items.value.elementAt(index);
+  E? accessElement(int index) {
+    return items.value.elementAtOrNull(index);
   }
 
-  void replaceWith(int index, E item) {
-    items.value[index] = item;
-    _updateView();
+  void replaceWith(int oldItemIndex, E item) {
+    items.value[oldItemIndex] = item;
+    _notify();
   }
 
   void refresh(){
-    _updateView();
-  }
-
-  void removeAt(int index){
-    items.value.removeAt(index);
-    _updateView();
+    _notify();
   }
 
   void removeItem(E item) {
     items.value.remove(item);
-    _updateView();
+    _checkAndNotifyAfterRemoving();
+  }
+
+  void removeAt(int index){
+    items.value.removeAt(index);
+    _checkAndNotifyAfterRemoving();
+  }
+
+  void removeWhere(bool Function(E item) condition){
+    items.value.removeWhere(condition);
+    _checkAndNotifyAfterRemoving();
   }
 
   void clear() {
     items.value.clear();
+    _checkAndNotifyAfterRemoving();
   }
 
-  // Don't forget to dispose the ValueNotifier when done
   void dispose() {
     items.dispose();
-  }
-}
-
-// class EasyPaginationController<E> {
-//   List<E> items = [];
-//   // ValueNotifier<List<E>> _items = ValueNotifier([]);
-//
-//   // void reFetchDataFromScratch(){
-//   //   _items = [];
-//   //   currentPage = 1;
-//   //   newItems = [];
-//   //   errorMsg = '';
-//   //   _fetchData();
-//   // }
-//
-//   void updateItems(List<E> newItems) {
-//     items = newItems;
-//   }
-//
-//   E? getRandomItem() {
-//     if (items.isEmpty) return null;
-//     final random = math.Random();
-//     return items[random.nextInt(items.length)];
-//   }
-//
-//   List<E> filter(bool Function(E item) condition) {
-//     return items.where(condition).toList();
-//   }
-//
-//   void sort(int Function(E a, E b) compare) {
-//     items.sort(compare);
-//   }
-//
-//   void addItem(E item) {
-//     items.add(item);
-//   }
-//
-//   void removeItem(E item) {
-//     items.remove(item);
-//   }
-//
-//   void clear() {
-//     items.clear();
-//   }
-//
-// // VoidCallback? onRefreshRequested;
-// //
-// // void refresh() {
-// //   if (onRefreshRequested != null) {
-// //     onRefreshRequested!();
-// //   }
-// // }
-//
-// // Dispose resources
-// // void dispose() {
-// //   _streamController.close();
-// // }
-// }
-
-class PaginationHelperRefreshIndicator extends StatelessWidget {
-
-  final Future<void> Function() onRefresh;
-  final Widget child;
-  final Color? refreshIndicatorBackgroundColor;
-  final Color? refreshIndicatorColor;
-  const PaginationHelperRefreshIndicator({super.key,
-    required this.onRefresh,
-    this.refreshIndicatorBackgroundColor,
-    this.refreshIndicatorColor,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-        backgroundColor: refreshIndicatorBackgroundColor,
-        color: refreshIndicatorColor,
-        triggerMode: RefreshIndicatorTriggerMode.anywhere,
-        onRefresh: onRefresh,
-        child: child
-    );
   }
 }

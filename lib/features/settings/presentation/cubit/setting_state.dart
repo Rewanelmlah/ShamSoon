@@ -4,7 +4,7 @@ import 'package:shamsoon/core/shared/models/user_model.dart';
 import '../../../../core/shared/base_state.dart';
 import '../../../../core/shared/cubits/user_cubit/user_cubit.dart';
 
-enum SheetType { logout, deleteAccount }
+enum SheetType { logout, deleteAccount, none }
 final class SettingState extends Equatable {
   final BaseStatus baseStatus;
   final String msg;
@@ -21,7 +21,7 @@ final class SettingState extends Equatable {
   factory SettingState.initial() => SettingState(
     baseStatus: BaseStatus.initial,
     msg: '',
-    type: SheetType.logout,
+    type: SheetType.none,
     user: UserCubit.instance.user
   );
 

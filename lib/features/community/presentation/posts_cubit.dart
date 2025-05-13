@@ -37,7 +37,7 @@ class PostsCubit extends Cubit<PostsState> {
               msg: success.message
           )),
           (error) {
-            controller.addItemAt(post, index);
+            controller.addItemAt(index, post);
             emit(state.copyWith(
                 baseStatus: BaseStatus.error,
                 msg: error.message
@@ -54,7 +54,7 @@ class PostsCubit extends Cubit<PostsState> {
   }) async {
     final originalPost = post.copyWith(); // Make a snapshot copy
     // Now safe to mutate controller's item
-    controller.access(index).content = content;
+    controller.accessElement(index)?.content = content;
 
     final result = await dataSource.updatePost(
       newTitle: newTitle,
@@ -70,7 +70,7 @@ class PostsCubit extends Cubit<PostsState> {
         ));
       },
           (error) {
-        controller.access(index).content = originalPost.content;
+        controller.accessElement(index)?.content = originalPost.content;
         controller.refresh();
         emit(state.copyWith(
           baseStatus: BaseStatus.error,

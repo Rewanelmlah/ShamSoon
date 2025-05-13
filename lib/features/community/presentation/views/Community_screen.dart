@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,6 +51,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
                                 child: AddPostScreen()
                             ));
                             if(result == 'success'){
+                              log('sdojhslkdjhsd');
+                              ctx.read<PostsCubit>().controller.clear();
                               setState(() {});
                             }
                           },

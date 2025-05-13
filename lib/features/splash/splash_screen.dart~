@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigateBasedToken()async{
     bool result = await UserCubit.instance.checkTokenExistOrNot();
     if(result){
-      UserCubit.instance.init();
+      await UserCubit.instance.init();
       Go.offAll(LayoutScreen());
     }else{
       Go.offAll(LogIn());
@@ -42,6 +42,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    NotificationNavigator(
+      onRoutingMessage: (message) {
+        NotificationRoutes.navigateByType(message.data);
+      },
+      onNoInitialMessage: () {},
+    ); // TODO add notification navigator
+
+    await ConstantManager.serviceLocator<NotificationService>()
+        .setupNotifications();
     Future.delayed(const Duration(seconds: 2), () {
       _handleNavigation();
       // Navigator.pushReplacement(
