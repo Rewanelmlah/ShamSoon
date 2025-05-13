@@ -36,6 +36,8 @@ abstract interface class AuthDataSource{
     required String confirmPassword,
   });
   Future<Result<BaseModel<void>, Failure>> sendEmailVerification();
+
+  Future<Result<BaseModel, Failure>> storeFcmToken(String fcmToken);
 }
 
 class AuthDataSourceImpl implements AuthDataSource{
@@ -141,4 +143,17 @@ class AuthDataSourceImpl implements AuthDataSource{
         )
     ).handleCallbackWithFailure();
   }
+
+  @override
+  Future<Result<BaseModel, Failure>> storeFcmToken(String fcmToken) async{
+    return await authDataSource.callApi(
+        NetworkRequest(
+          method: RequestMethod.post,
+          path: ApiConstants.storeFcmToken,
+          body: {
+            'fcm_token' : fcmToken
+          }
+        )).handleCallbackWithFailure();
+  }
+  
 }

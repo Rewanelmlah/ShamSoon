@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shamsoon/core/notification/notification_service.dart';
 import 'package:shamsoon/features/Authentication/data/data_source.dart';
 import 'package:shamsoon/features/Authentication/data/models/register.dart';
 import '../../../../core/shared/base_state.dart';
@@ -16,11 +17,13 @@ class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWith(baseStatus: BaseStatus.loading, phase: AuthPhase.login));
     final result = await authDataSource.login(email: email, pass: pass);
     result.when(
-          (success) => emit(state.copyWith(
-            baseStatus: BaseStatus.success,
-            msg: success.message,
-            userModel: success.data,
-          )),
+          (success) {
+            emit(state.copyWith(
+              baseStatus: BaseStatus.success,
+              msg: success.message,
+              userModel: success.data,
+            ));
+          },
           (error) => emit(state.copyWith(
             baseStatus: BaseStatus.error,
             msg: error.message
@@ -67,7 +70,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.when(
           (success) => emit(state.copyWith(
           baseStatus: BaseStatus.success,
-          msg: success.message
+          msg: success.message,
       )),
           (error) => emit(state.copyWith(
           baseStatus: BaseStatus.error,
@@ -149,6 +152,12 @@ class AuthCubit extends Cubit<AuthState> {
           baseStatus: BaseStatus.error,
           msg: error.message
       )),
+    );
+  }
+
+  Future<void> storeFcmToken()async{
+    await authDataSource.storeFcmToken(
+        NotificationService.deviceToken
     );
   }
 }

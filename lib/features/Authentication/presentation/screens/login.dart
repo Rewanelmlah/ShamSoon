@@ -135,6 +135,7 @@ class LogIn extends StatelessWidget {
                               token: state.user!.token!,
                               isRemember: rememberMe.value
                           );
+                          await context.read<AuthCubit>().storeFcmToken();
                           Go.offAll(LayoutScreen());
                         }},
                       ),
