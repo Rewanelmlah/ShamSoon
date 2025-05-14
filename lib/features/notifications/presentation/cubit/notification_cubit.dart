@@ -35,17 +35,22 @@ class NotificationCubit extends Cubit<NotificationState> {
   }
 
   Future<void> deleteAllNotifications()async{
+    final notificationsList = [...controller.items.value];
+    controller.clear();
     final result = await notificationDataSource.deleteAllNotification();
     result.when((success) => emit(
         state.copyWith(
             baseStatus: BaseStatus.success,
             msg: success.message
         )),
-          (error) => emit(
-          state.copyWith(
-              baseStatus: BaseStatus.success,
-              msg: error.message
-          )),);
+          (error) {
+            emit(
+                state.copyWith(
+                    baseStatus: BaseStatus.success,
+                    msg: error.message
+                ));
+            controller.updateItems(notificationsList);
+          },);
   }
 
   Future<void> getNotificationsCount()async{

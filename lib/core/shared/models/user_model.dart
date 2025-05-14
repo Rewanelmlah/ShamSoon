@@ -51,7 +51,7 @@ class UserModel {
       phoneNumber: json['user']["phone"],
       email: json['user']["email"],
       token: json["token"],
-      isNotified: json['user']["isNotified"],
+      isNotified: _getNotifyStatus(json['user']["is_notify"]),
     );
   }
 
