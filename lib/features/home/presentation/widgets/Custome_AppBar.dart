@@ -56,12 +56,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         BlocProvider(
-          create: (context) => NotificationCubit(),
+          create: (context) => NotificationCubit()..getNotificationsCount(),
           child: BlocBuilder<NotificationCubit, NotificationState>(
             builder: (ctx, state) => IconButton(
              icon: badges.Badge(
                showBadge: state.notificationCount! > 0,
-               position: badges.BadgePosition.topEnd(top: -15,end: -5),
+               position: badges.BadgePosition.topEnd(top: -15,end: -8),
                badgeContent: AppText(state.notificationCount.toString()),
                child: Icon(Icons.notifications_outlined, size: 20.sp, color: AppColors.primaryColor),
              ),

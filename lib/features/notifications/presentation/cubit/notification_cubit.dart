@@ -67,4 +67,8 @@ class NotificationCubit extends Cubit<NotificationState> {
               msg: error.message
           )),);
   }
+
+  void clearNotificationsCount() {
+    emit(state.copyWith(notificationCount: 0));
+  }
 }

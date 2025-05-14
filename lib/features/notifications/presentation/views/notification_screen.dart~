@@ -56,7 +56,7 @@ class NotificationScreen extends StatelessWidget {
               child: EasyPagination<BaseModel<GetNotificationsResponse>, NotificationModel>.listView(
                 controller: ctx.read<NotificationCubit>().controller,
                 loadingBuilder: CustomLoading.showLoadingView(),
-                onSuccess: (data, currentPage) =>
+                onSuccess: (data, currentPage) => 
                 currentPage == 1? context.read<NotificationCubit>().clearNotificationsCount() : null,
                 asyncCall: (currentPage) async => await NotificationDataSource().getNotifications(currentPage),
                 mapper: (response) => DataListAndPaginationData(

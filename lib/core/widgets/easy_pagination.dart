@@ -20,7 +20,7 @@ class EasyPagination<T, E> extends StatefulWidget {
   final Color? refreshIndicatorBackgroundColor;
   final Color? refreshIndicatorColor;
   final ErrorMapper errorMapper;
-  final Function(List<E> data)? onSuccess;
+  final Function(List<E> data, int currentPage)? onSuccess;
   final Function(String errorMessage)? onError;
   final Future<T> Function(int currentPage) asyncCall;
   final DataListAndPaginationData<E> Function(T response) mapper;
@@ -141,7 +141,7 @@ class _EasyPaginationState<T, E> extends State<EasyPagination<T, E>> {
       }
       widget.controller.updateItems(mapperResult.data);
       if(widget.onSuccess != null){
-        widget.onSuccess!(widget.controller.items.value);
+        widget.onSuccess!(widget.controller.items.value, currentPage);
       }
 
       scrollController.restoreOffset();
