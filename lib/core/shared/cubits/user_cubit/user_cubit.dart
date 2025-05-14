@@ -51,7 +51,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
 
   Future<void> logout() async {
     await Future.wait([
-      CacheStorage.delete(_userKey),
+      CacheStorage.deleteAll(),
       SecureStorage.delete(_tokenKey),
     ]);
     _clearUser();

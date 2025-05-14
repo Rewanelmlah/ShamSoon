@@ -51,8 +51,16 @@ class UserModel {
       phoneNumber: json['user']["phone"],
       email: json['user']["email"],
       token: json["token"],
-      isNotified: json["isNotified"]?? false,
+      isNotified: json['user']["isNotified"],
     );
+  }
+
+  static bool _getNotifyStatus(int? status) {
+    if (status == 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Map<String, dynamic> toJson() => {

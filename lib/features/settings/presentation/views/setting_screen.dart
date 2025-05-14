@@ -4,13 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shamsoon/core/app_colors.dart';
 import 'package:shamsoon/core/helpers/helpers.dart';
 import 'package:shamsoon/core/helpers/navigation.dart';
-import 'package:shamsoon/core/shared/cubits/user_cubit/user_cubit.dart';
+import 'package:shamsoon/core/shared/models/user_model.dart';
 import 'package:shamsoon/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:shamsoon/features/settings/presentation/views/contact_us.dart';
 import 'package:shamsoon/features/settings/presentation/views/personal_info.dart';
 import 'package:shamsoon/features/settings/presentation/widgets/custome_tile.dart';
 import 'package:shamsoon/features/settings/presentation/widgets/logout_button.dart';
-
 import '../../../../core/helpers/cache.dart';
 import '../../../../core/helpers/constant_manager.dart';
 import 'feedback_screen.dart';

@@ -8,6 +8,7 @@ class CustomNotificationTile extends StatelessWidget {
 
   const CustomNotificationTile({super.key, required this.title, required this.onTap});
 
+  stl
   @override
   Widget build(BuildContext context) {
     return Container(

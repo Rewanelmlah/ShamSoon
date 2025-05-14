@@ -34,6 +34,7 @@ class ApiConstants {
   static const String solarPanel = '$users/solarPanels/1';
   static const String notifications = '$users/notifications';
   static const String changeNotify = '$users/notification-permission';
+  static const String notificationCount = '$users/notifications/unread-count';
 
 
 }

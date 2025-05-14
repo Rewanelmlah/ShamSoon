@@ -1,8 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
+import 'package:shamsoon/core/extensions/context_extension.dart';
 import 'package:shamsoon/core/extensions/sized_box_helper.dart';
-
+import 'package:shamsoon/core/widgets/app_text.dart';
+import 'package:shamsoon/core/widgets/buttons/loading_button.dart';
+import 'package:shamsoon/generated/assets.dart';
+import '../helpers/app_sizes.dart';
 import '../helpers/navigation.dart';
+import 'buttons/default_button.dart';
+import 'custom_loading.dart' show CustomLoading;
+
+Future<dynamic> deleteBottomSheet({
+  required BuildContext context,
+  required dynamic Function()? onTap,
+}) {
+  return showDefaultBottomSheet(
+    child: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: AppMargin.mH10,
+        children: [
+          Lottie.asset(Assets.lottieError),
+          const AppText(
+            'Delete notification?',
+            fontWeight: FontWeight.bold,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              LoadingButton(
+                margin: EdgeInsets.zero,
+                title: 'Delete',
+                textColor: Colors.white,
+                color: Colors.red,
+                width: context.width * .4,
+                height: 45.h,
+                onTap: () => onTap!(),
+              ),
+              DefaultButton(
+                margin: EdgeInsets.zero,
+                title: 'Cancel',
+                textColor: Colors.black,
+                color: Colors.grey,
+                width: context.width * .4,
+                height: 35.h,
+                onTap: () => Go.back(),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
 
 Future showDefaultBottomSheet({BuildContext? context, required Widget child}) {
   return showModalBottomSheet(

@@ -10,7 +10,7 @@ class GetNotificationsResponse{
         notifications: (json['notifications']['data'] as List)
             .map((e) => NotificationModel.fromJson(e))
             .toList(),
-        totalPagesNumber: json['notifications']['total']
+        totalPagesNumber: json['notifications']['last_page']
     );
   }
 }
@@ -20,19 +20,19 @@ class NotificationModel{
   int? userId;
   String? title;
   String? body;
-  List? data;
+  // List? data;
   bool? read;
   String? createdAt;
   String? updatedAt;
 
-  NotificationModel({this.id, this.userId, this.title, this.body, this.data, this.read, this.createdAt, this.updatedAt});
+  NotificationModel({this.id, this.userId, this.title, this.body, this.read, this.createdAt, this.updatedAt});
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     title = json['title'];
     body = json['body'];
-    data = json['data'];
+    // data = json['data'];
     read = json['read'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

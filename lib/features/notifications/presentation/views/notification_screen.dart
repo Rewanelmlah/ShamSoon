@@ -1,46 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shamsoon/core/extensions/padding_extension.dart';
+import 'package:shamsoon/core/helpers/helpers.dart';
 import 'package:shamsoon/core/shared/base_model.dart';
+import 'package:shamsoon/core/widgets/app_text.dart';
+import 'package:shamsoon/core/widgets/custom_loading.dart';
+import 'package:shamsoon/core/widgets/default_bottom_sheet.dart';
 import 'package:shamsoon/core/widgets/easy_pagination.dart';
 import 'package:shamsoon/features/notifications/data/data_source.dart';
 import 'package:shamsoon/features/notifications/data/models/notification_model.dart';
+import 'package:shamsoon/features/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:shamsoon/features/notifications/presentation/widgets/notification_container.dart';
-class NotificationScreen extends StatelessWidget {
-  NotificationScreen({super.key});
+import '../../../../core/app_colors.dart';
+import '../cubit/notification_state.dart';
 
-  final EasyPaginationController<NotificationModel> _controller = EasyPaginationController();
+class NotificationScreen extends StatelessWidget {
+  const NotificationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios, size: 24.sp),
-        ),
-        title: Text(
-          "Notifications",
-          style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(14.w),
-        child: EasyPagination<BaseModel<GetNotificationsResponse>, NotificationModel>.listView(
-          controller: _controller,
-          asyncCall: (currentPage) async => await NotificationDataSource().getNotifications(currentPage),
-          mapper: (response) => DataListAndPaginationData(
-              data: response.data.notifications,
-                paginationData: PaginationData(totalPages: response.data.totalPagesNumber)
+    return Builder(
+      builder: (ctx) {
+        return BlocListener<NotificationCubit, NotificationState>(
+          listener: (context, state) => Helpers.manageBlocConsumer(
+              state.baseStatus,
+              msg: state.msg,
+            actionWhenSuccess: () => Navigator.pop(ctx),
           ),
-          errorMapper: ErrorMapper(errorWhenDio: (e) => e.response?.data['message'],),
-          itemBuilder: (data, index) => CustomNotificationTile(
-              title: data[index].body?? '',
-              onTap: () {}
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back_ios, size: 24.sp),
+              ),
+              title: Text(
+                "Notifications",
+                style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => deleteBottomSheet(
+                    context: ctx,
+                    onTap: () => ctx.read<NotificationCubit>().deleteAllNotifications()
+                  ),
+                    child: const AppText('Delete All', color: AppColors.primaryColor,)
+                )
+              ],
+            ),
+            body: Padding(
+              padding: EdgeInsets.all(14.w),
+              child: EasyPagination<BaseModel<GetNotificationsResponse>, NotificationModel>.listView(
+                controller: ctx.read<NotificationCubit>().controller,
+                loadingBuilder: CustomLoading.showLoadingView(),
+                asyncCall: (currentPage) async => await NotificationDataSource().getNotifications(currentPage),
+                mapper: (response) => DataListAndPaginationData(
+                    data: response.data.notifications,
+                      paginationData: PaginationData(totalPages: response.data.totalPagesNumber)
+                ),
+                errorMapper: ErrorMapper(errorWhenDio: (e) => e.response?.data['message'],),
+                itemBuilder: (data, index) => CustomNotificationTile(
+                    title: data[index].body?? '',
+                    onTap: () => deleteBottomSheet(
+                      context: ctx,
+                      onTap: () => ctx.read<NotificationCubit>().deleteSpecificNotification(index: index, notification: data[index]),
+                    )
+                ).paddingSymmetric(vertical: 10.h),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }

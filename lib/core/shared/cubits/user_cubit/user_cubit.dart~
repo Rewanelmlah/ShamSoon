@@ -89,13 +89,13 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     emit(UserState.initial());
   }
 
-  UserModel get user => state.userModel!;
+  // UserModel get user => state.userModel!;
 
-  // UserModel get user {
-  //   final Map<String, dynamic>? userMap =
-  //   CacheStorage.read(_userKey, isDecoded: true);
-  //   return UserModel.fromJson(userMap!);
-  // }
+  UserModel get user {
+    final Map<String, dynamic>? userMap =
+    CacheStorage.read(_userKey, isDecoded: true);
+    return UserModel.fromJson(userMap!);
+  }
 
   static UserCubit get instance  => sl<UserCubit>();
 

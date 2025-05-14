@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:shamsoon/core/extensions/error_handler_extension.dart';
 import 'package:shamsoon/core/network/network_service.dart';
@@ -18,11 +17,43 @@ class NotificationDataSource{
         method: RequestMethod.get,
         path: ApiConstants.notifications,
         queryParameters: {
-          'current_page' : currentPage
+          'current_page' : currentPage,
+          'per_page' : 10
         },
       ),
       mapper: (json) => GetNotificationsResponse.fromJson(json)
     );
+    return result;
+  }
+
+  Future<Result<BaseModel, Failure>> deleteSpecificNotification(int notificationId)async{
+    final result = await networkService.callApi(
+        NetworkRequest(
+          method: RequestMethod.delete,
+          path: '${ApiConstants.notifications}/$notificationId',
+        ),
+    ).handleCallbackWithFailure();
+    return result;
+  }
+
+  Future<Result<BaseModel, Failure>> deleteAllNotification()async{
+    final result = await networkService.callApi(
+      NetworkRequest(
+        method: RequestMethod.delete,
+        path: ApiConstants.notifications,
+      ),
+    ).handleCallbackWithFailure();
+    return result;
+  }
+
+  Future<Result<BaseModel<int>, Failure>> getNotificationsCount()async{
+    final result = await networkService.callApi<int>(
+      NetworkRequest(
+        method: RequestMethod.get,
+        path: ApiConstants.notificationCount,
+      ),
+      mapper: (json) => json['unread_count'],
+    ).handleCallbackWithFailure();
     return result;
   }
 }

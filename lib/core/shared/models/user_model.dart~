@@ -6,6 +6,7 @@ class UserModel {
   final String phoneNumber;
   final String? token;
   final int id;
+  final bool isNotified;
 
   UserModel({
     required this.id,
@@ -13,6 +14,7 @@ class UserModel {
     required this.phoneNumber,
     required this.email,
     required this.token,
+    this.isNotified = false
   });
 
   // factory UserModel.initial() => UserModel(
@@ -29,13 +31,15 @@ class UserModel {
     String? email,
     String? token,
     int? id,
+    bool? isNotified
   }) {
     return UserModel(
       fullName: fullName ?? this.fullName,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       email: email ?? this.email,
       token: token ?? this.token,
-      id: id?? this.id
+      id: id?? this.id,
+      isNotified: isNotified ?? this.isNotified
     );
   }
 
@@ -47,7 +51,16 @@ class UserModel {
       phoneNumber: json['user']["phone"],
       email: json['user']["email"],
       token: json["token"],
+      isNotified: _getNotifyStatus(json['user']["isNotified"]),
     );
+  }
+
+  static bool _getNotifyStatus(int? status) {
+    if (status == 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Map<String, dynamic> toJson() => {
@@ -63,7 +76,8 @@ class UserModel {
       'id': id,
       "username": fullName,
       "phone": phoneNumber,
-      "email": email
+      "email": email,
+      "isNotified": isNotified
     },
     'token': token
   };
