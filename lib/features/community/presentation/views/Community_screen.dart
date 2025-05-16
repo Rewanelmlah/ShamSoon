@@ -65,7 +65,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   asyncCall: (currentPage) => PostsDataSourceImpl().getPosts(),
                   mapper: (response) => DataListAndPaginationData(
                       data: response.data.posts,
-                      paginationData: PaginationData(totalPages: response.data.totalPages)
+                      paginationData: PaginationData(totalPages: 1)
                   ),
                   errorMapper: ErrorMapper(errorWhenDio: (e) => e.response?.data['message']),
                   itemBuilder: (data, index) => PostCard(post: data[index], index: index),

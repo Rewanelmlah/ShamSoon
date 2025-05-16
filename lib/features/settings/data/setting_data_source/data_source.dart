@@ -45,8 +45,8 @@ class SettingDataSourceImpl implements SettingDataSource{
       mapper: (json) => UserCubit.instance.user.copyWith(
           id: json['id'],
           fullName: json['username'],
-          phoneNumber: json['phoneNumber'],
-          email: json['email'],
+          phoneNumber: json['phone'],
+          email: json['new_email'],
       ),
     ).handleCallbackWithFailure();
 

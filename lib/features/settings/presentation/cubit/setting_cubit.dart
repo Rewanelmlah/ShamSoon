@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shamsoon/features/settings/data/setting_data_source/data_source.dart';
 import 'package:shamsoon/features/settings/presentation/cubit/setting_state.dart';
@@ -16,6 +18,7 @@ class SettingCubit extends Cubit<SettingState> {
     final result = await settingDataSource.updateProfile(name: name, email: email, phone: phone);
     result.when(
         (success) {
+          log('the phone cubit ${success.data.phoneNumber}');
           emit(state.copyWith(
               baseStatus: BaseStatus.success,
               msg: success.message,

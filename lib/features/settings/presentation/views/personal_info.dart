@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,12 +40,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
         emailController.text != userData.email ||
         phoneController.text != userData.phoneNumber
     ){
-      canChange = true;
-      setState(() {});
+      setState(() => canChange = true);
       return true;
     }
-    canChange = false;
-    setState(() {});
+    setState(() => canChange = false);
     return false;
   }
 
