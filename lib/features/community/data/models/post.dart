@@ -22,6 +22,8 @@
                         "role_id": 1
                     },*/
 
+import 'package:shamsoon/features/community/data/models/comments.dart';
+
 class PostsResponse{
   List<Post> posts;
   final int totalPages;
@@ -48,6 +50,8 @@ class Post{
   String? createdAt;
   String? updatedAt;
   User? user;
+  int? likeCount;
+  List<PostComment>? comments;
 
   Post({
     this.index,
@@ -57,7 +61,9 @@ class Post{
     required this.content,
     required this.createdAt,
     required this.updatedAt,
-    required this.user
+    required this.user,
+    this.likeCount,
+    this.comments
 });
 
   Post copyWith({
@@ -69,6 +75,8 @@ class Post{
     String? createdAt,
     String? updatedAt,
     User? user,
+    int ? likeCount,
+    List<PostComment>? comments,
 }) => Post(
     index: index ?? this.index,
     id: id ?? this.id,
@@ -77,7 +85,9 @@ class Post{
     content: content ?? this.content,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
-    user: user ?? this.user
+    user: user ?? this.user,
+    likeCount: likeCount ?? this.likeCount,
+    comments: comments ?? this.comments
 );
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
@@ -87,7 +97,11 @@ class Post{
     content: json["content"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
-    user: json['user'] != null? User.fromJson(json["user"]) : null
+    user: json['user'] != null? User.fromJson(json["user"]) : null,
+    likeCount: json['likes_count'],
+    comments: (json['comments'] as List)
+        .map((e) => PostComment.fromJson(e))
+        .toList(),
   );
 }
 
@@ -134,7 +148,6 @@ class User{
     phoneVerifiedAt: json["phone_verified_at"]?? '',
     emailVerifiedAt: json["email_verified_at"]?? '',
     fcmToken: json["fcm_token"]?? '',
-    // status: json["status"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
     socialId: json["social_id"]?? '',

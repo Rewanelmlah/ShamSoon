@@ -203,7 +203,7 @@ class _PostCardState extends State<PostCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  LikeButton(postId: widget.post.id ?? 0),
+                  LikeButton(postId: widget.post.id ?? 0, likesCount: widget.post.likeCount ?? 0),
                   SizedBox(width: 25.w),
                   Icon(
                     Icons.comment_outlined,
@@ -211,7 +211,13 @@ class _PostCardState extends State<PostCard> {
                     color: AppColors.primaryColor,
                   ),
                   SizedBox(width: 4.w),
-                  Text('replies', style: TextStyle(fontSize: 14.sp)),
+                  Row(
+                    children: [
+                      Text('replies', style: TextStyle(fontSize: 14.sp)),
+                      if(widget.post.comments!.isNotEmpty)
+                        Text(' (${widget.post.comments!.length})', style: TextStyle(fontSize: 14.sp)),
+                    ],
+                  ),
                 ],
               ),
             ),

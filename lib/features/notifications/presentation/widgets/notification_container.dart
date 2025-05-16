@@ -12,7 +12,6 @@ class CustomNotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 65.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(17.r),
         border: Border.all(color: AppColors.primaryColor, width: 2.w),
