@@ -15,8 +15,10 @@ import 'Successed_verify.dart';
 enum OtpType{verification, checkOtpAfterForgetPass}
 class OTPScreen extends StatefulWidget {
   final OtpType type;
+  final String? email;
   const OTPScreen({super.key,
-    required this.type
+    required this.type,
+    this.email
   });
 
   @override
@@ -28,7 +30,9 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   void initState() {
-    context.read<AuthCubit>().sendEmailVerification();
+    if(widget.type == OtpType.verification){
+      context.read<AuthCubit>().sendEmailVerification();
+    }
     super.initState();
   }
   @override
@@ -90,14 +94,14 @@ class _OTPScreenState extends State<OTPScreen> {
                     listener: (context, state) => Helpers.manageBlocConsumer(
                         state.baseStatus,
                       msg: state.msg,
-                      actionWhenSuccess: () => Go.to(SuccessedVerify(type: widget.type, email: state.user!.email)),
+                      actionWhenSuccess: () => Go.to(SuccessedVerify(type: widget.type, email: widget.email!)),
                     ),
                       builder: (context, state) =>
                           LoadingButton(
                             title: 'Verify',
-                            onTap: () => widget.type == OtpType.checkOtpAfterForgetPass ?
-                            context.read<AuthCubit>().sendOtp(email: state.user!.email, otp: pinCode) :
-                            context.read<AuthCubit>().verifyEmail(
+                            onTap: ()async => widget.type == OtpType.checkOtpAfterForgetPass ?
+                            await context.read<AuthCubit>().sendOtp(email: widget.email!, otp: pinCode) :
+                            await context.read<AuthCubit>().verifyEmail(
                               email: state.user!.email,
                               otp: pinCode,
                           ),

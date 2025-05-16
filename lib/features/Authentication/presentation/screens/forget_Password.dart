@@ -62,7 +62,7 @@ class ForgetPassword extends StatelessWidget {
                         msg: state.msg,
                         actionWhenSuccess: () async {
                           if(state.phase == AuthPhase.forgetPassword){
-                            Go.to( const OTPScreen(type: OtpType.checkOtpAfterForgetPass));
+                            Go.to(OTPScreen(type: OtpType.checkOtpAfterForgetPass, email: emailCont.text,));
                           }}
                     ),
                     child: LoadingButton(

@@ -55,7 +55,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.when(
           (success) => emit(state.copyWith(
           baseStatus: BaseStatus.success,
-          msg: success.message
+          msg: success.message,
       )),
           (error) => emit(state.copyWith(
           baseStatus: BaseStatus.error,

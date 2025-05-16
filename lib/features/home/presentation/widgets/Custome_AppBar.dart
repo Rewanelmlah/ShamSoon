@@ -62,7 +62,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
              icon: badges.Badge(
                showBadge: state.notificationCount! > 0,
                position: badges.BadgePosition.topEnd(top: -15,end: -8),
-               badgeContent: AppText(state.notificationCount.toString()),
+               badgeContent: AppText(state.notificationCount.toString(), fontSize: state.notificationCount! > 9 ? 10.sp : 14.sp,),
                child: Icon(Icons.notifications_outlined, size: 20.sp, color: AppColors.primaryColor),
              ),
               onPressed: () {

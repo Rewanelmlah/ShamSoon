@@ -99,9 +99,9 @@ class Post{
     updatedAt: json["updated_at"],
     user: json['user'] != null? User.fromJson(json["user"]) : null,
     likeCount: json['likes_count'],
-    comments: (json['comments'] as List)
+    comments: json['comments'] != null? (json['comments'] as List)
         .map((e) => PostComment.fromJson(e))
-        .toList(),
+        .toList() : null,
   );
 }
 

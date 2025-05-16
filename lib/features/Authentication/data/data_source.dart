@@ -128,7 +128,7 @@ class AuthDataSourceImpl implements AuthDataSource{
     return await authDataSource.callApi(
         NetworkRequest(
           method: RequestMethod.post,
-          path: ApiConstants.checkOtp,
+          path: ApiConstants.resetPassword,
           body: {'email' : email, 'password' : password, 'confirm_password' : confirmPassword},
         )
     ).handleCallbackWithFailure();
