@@ -9,8 +9,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../helpers/constant_manager.dart';
 
-
-
 part 'navigation_types.dart';
 part 'notification_routes.dart';
 
@@ -79,6 +77,7 @@ class NotificationService {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
     final notification = message.notification;
+
     await _flutterLocalNotificationsPlugin.show(notification.hashCode,
         notification?.title ?? '', notification?.body, notificationDetails,
         payload: json.encode(message.toMap()));

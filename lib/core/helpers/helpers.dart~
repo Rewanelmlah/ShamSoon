@@ -175,17 +175,17 @@ class Helpers {
                 ListTile(
                   leading: const Icon(Icons.photo_camera),
                   title: Text(LocaleKeys.camera),
-                  // onTap: () async {
-                  //   Go.to(const CameraScreen());
-                  // },
                   onTap: () async {
-                    final currentImage =
-                        await picker.pickImage(source: ImageSource.camera);
-                    if (currentImage != null) {
-                      image = File(currentImage.path);
-                    }
-                    Go.back();
+                    Go.to(const CameraScreen());
                   },
+                  // onTap: () async {
+                  //   final currentImage =
+                  //       await picker.pickImage(source: ImageSource.camera);
+                  //   if (currentImage != null) {
+                  //     image = File(currentImage.path);
+                  //   }
+                  //   Go.back();
+                  // },
                 ),
               ],
             ).paddingAll(10),

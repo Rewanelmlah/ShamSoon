@@ -17,13 +17,6 @@ class UserModel {
     this.isNotified = false
   });
 
-  // factory UserModel.initial() => UserModel(
-  //   id: 0,
-  //   fullName: '',
-  //   phoneNumber: '',
-  //   email: '',
-  //   token: '',
-  // );
 
   UserModel copyWith({
     String? fullName,

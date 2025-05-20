@@ -9,6 +9,7 @@ import 'package:badges/badges.dart' as badges;
 
 import '../../../notifications/presentation/cubit/notification_cubit.dart';
 import '../../../notifications/presentation/cubit/notification_state.dart';
+import '../views/maintenance_screen.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -81,7 +82,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: AppColors.primaryColor,
           ),
           onPressed: () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const MaintenanceScreen()));
           },
         ),
       ],

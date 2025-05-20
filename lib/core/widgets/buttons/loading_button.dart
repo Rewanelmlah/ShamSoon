@@ -52,7 +52,7 @@ class LoadingButton extends StatelessWidget {
           onTap: () async => await onTap(),
           width: width ?? MediaQuery.sizeOf(context).width,
           minWidth: AppSize.sW50,
-          height: 35.h,
+          height: height?? 35.h,
           color: color ?? AppColors.primaryColor,
           borderRadius: borderRadius ?? AppSize.sH10,
           disabledColor: color ?? AppColors.primaryColor,

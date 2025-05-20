@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shamsoon/features/home/presentation/views/prediction_screen.dart';
-import '../../../../core/app_colors.dart';
-
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
 
@@ -54,7 +52,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-    _cameraController?.dispose();
+    // _cameraController?.dispose();
     super.dispose();
   }
 
@@ -85,7 +83,7 @@ class _CameraScreenState extends State<CameraScreen> {
                       height: 0.4.sh,
                       child: Stack(
                         children: [
-                          CameraPreview(_cameraController!),
+                          // CameraPreview(_cameraController!),
                           Center(
                             child: Container(
                               width: 0.50.sw,  // 45% of screen width
@@ -99,7 +97,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         ],
                       ),
                     )
-                  : const Center(child: CircularProgressIndicator()),
+                  : Center(child: CircularProgressIndicator()),
             ),
             Container(
               color: Colors.white,

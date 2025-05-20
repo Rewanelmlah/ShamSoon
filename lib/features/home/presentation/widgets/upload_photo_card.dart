@@ -15,7 +15,7 @@ class UploadphotoCard extends StatelessWidget {
   const UploadphotoCard({super.key});
 
   void _uploadImage(BuildContext context)async{
-    final imageFile = await Helpers.getImage();
+    final imageFile = await Helpers.getImageFromCameraOrDevice();
     if(imageFile == null) return;
     if(context.mounted){
       _manageSelectingImage(context, image: imageFile);
